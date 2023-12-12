@@ -30,7 +30,7 @@ export const POST = async (request: Request) => {
     return NextResponse.json<APIResponse<unknown>>(
       {
         status: 200,
-        message: "Login Succesfully",
+        message: "success POST /login",
         data: result,
       },
       {
@@ -41,7 +41,7 @@ export const POST = async (request: Request) => {
     return NextResponse.json<APIResponse<never>>(
       {
         status: 500,
-        message: "Internal Server Error !",
+        message: "internal server error",
       },
       {
         status: 500,
