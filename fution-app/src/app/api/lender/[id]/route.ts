@@ -6,9 +6,9 @@ import LenderModel from "@/models/lender";
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { id } = params;
-        const business = await LenderModel.readById(id);
+        const lender = await LenderModel.readById(id);
     
-        if (!business) {
+        if (!lender) {
             return NextResponse.json<APIResponse<never>>({
                 status: 404,
                 error: "data not found"
@@ -19,8 +19,8 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
     
         return NextResponse.json<APIResponse<unknown>>({
             status: 200,
-            message: "success GET /business/[id]",
-            data: business
+            message: "success GET /lender/[id]",
+            data: lender
         })
     } catch (error) {
         return errorHandler(error);
