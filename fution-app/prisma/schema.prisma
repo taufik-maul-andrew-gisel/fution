@@ -48,13 +48,15 @@ model Business {
 }
 
 model Lender {
-  id               String   @id @default(uuid())
-  name             String
-  budget           Decimal
-  expectedInterest String
-  user             User     @relation(fields: [userId], references: [id])
-  userId           String   @unique
-  Record           Record[]
+  id          String   @id @default(uuid())
+  name        String
+  minBudget   Decimal
+  maxBudget   Decimal
+  minInterest Decimal
+  maxInterest Decimal
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  Record      Record[]
 }
 
 model Record {

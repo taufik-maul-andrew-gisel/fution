@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
-const users = require("../../data/users.json");
-const businesses = require("../../data/businesses.json");
-const lenders = require("../../data/lenders.json");
+const users = require("../../../data/users.json");
+const businesses = require("../../../data/businesses.json");
+const lenders = require("../../../data/lenders.json");
 const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
