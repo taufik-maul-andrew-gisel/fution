@@ -1,0 +1,32 @@
+[
+    {
+        "id": "f84b2d57-3b51-4a3f-99f2-7c0378a44b7f",
+        "username": "andrew",
+        "password": "andrew",
+        "role": "BUSINESS"
+    },
+    {
+        "id": "70866311-d331-4eaf-9145-e75b1ff22b52",
+        "username": "giselle",
+        "password": "giselle",
+        "role": "BUSINESS"
+    },
+    {
+        "id": "b6a996f3-b7b0-4989-9010-9d741be0bcea",
+        "username": "taufik",
+        "password": "taufik",
+        "role": "BUSINESS"
+    },
+    {
+        "id": "d290a7c2-6669-4b14-99fa-ff43c90c47be",
+        "username": "maul",
+        "password": "maul",
+        "role": "LENDER"
+    },
+    {
+        "id": "6044a5a0-6844-4e91-8856-cb1c995da61d",
+        "username": "shellin",
+        "password": "shellin",
+        "role": "LENDER"
+    }
+]

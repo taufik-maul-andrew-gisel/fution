@@ -1,0 +1,14 @@
+[
+    {
+        "name": "PT. MaulPinjol",
+        "budget": 2000,
+        "expectedInterest": "11.51% - 14.50%",
+        "userId": "d290a7c2-6669-4b14-99fa-ff43c90c47be"
+    },
+    {
+        "name": "Trust in Zeus",
+        "budget": 10000,
+        "expectedInterest": "15.35% - 19.99%",
+        "userId": "6044a5a0-6844-4e91-8856-cb1c995da61d"
+    }
+]

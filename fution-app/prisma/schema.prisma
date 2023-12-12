@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// enums
+enum UserRole {
+  BUSINESS
+  LENDER
+}
+
+enum LoanStatus {
+  PENDING // not approved yet by lender
+  REJECTED // rejected by lender
+  DEBT // accepted: lender gave money, but not paid back by business before the due date
+  OVERDUE // accepted: lender gave money, but not paid back by business past the due date
+  PAID // accepted: lender gave money, and paid back by business on time
+}
+
+// models
+model User {
+  id       String    @id @default(uuid())
+  username String    @unique
+  password String
+  role     UserRole
+  Business Business?
+  Lender   Lender?
+}
+
+model Business {
+  id             String   @id @default(uuid())
+  name           String
+  monthlyRevenue Decimal
+  creditScore    Int
+  description    String
+  credential     Int      @default(100)
+  tagline        String
+  user           User     @relation(fields: [userId], references: [id])
+  userId         String   @unique
+  Record         Record[]
+}
+
+model Lender {
+  id               String   @id @default(uuid())
+  name             String
+  budget           Decimal
+  expectedInterest String
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String   @unique
+  Record           Record[]
+}
+
+model Record {
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  amount    Decimal
+  status    LoanStatus
+  due       DateTime
+  loanee    Business   @relation(fields: [loaneeId], references: [id])
+  loaneeId  String
+  loaner    Lender     @relation(fields: [loanerId], references: [id])
+  loanerId  String
+}
