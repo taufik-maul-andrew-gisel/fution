@@ -21,6 +21,7 @@ async function load() {
             return user;
         });
         await prisma.user.createMany({ data: usersHashed });
+        console.log("seeded user");
 
         await prisma.business.createMany({ data: businesses });
         console.log("seeded business");
