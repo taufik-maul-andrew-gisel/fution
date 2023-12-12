@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { APIResponse } from "../../typedef";
 import BusinessModel from "@/models/business";
+import errorHandler from "../../errorHandler";
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -22,11 +23,6 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
             data: business
         })
     } catch (error) {
-        return NextResponse.json<APIResponse<never>>({
-            status: 500,
-            error: "internal server error"
-        }, { 
-            status: 500 
-        });
+        return errorHandler(error);
     }
 }

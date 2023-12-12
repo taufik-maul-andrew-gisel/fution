@@ -7,7 +7,11 @@ export default class User {
     return await prisma.user.findMany();
   }
 
-  static async GetUserByUsername(username: string) {
+  static async getById(id: string) {
+    return await prisma.user.findFirst({ where: { id } });
+  }
+
+  static async getByUsername(username: string) {
     const user = await prisma.user.findUnique({
       where: {
         username,
@@ -16,7 +20,7 @@ export default class User {
     return user;
   }
 
-  static async GetUserWithoutPassword(username: string) {
+  static async getByUsernameWithoutPassword(username: string) {
     const user = await prisma.user.findUnique({
       where: {
         username,

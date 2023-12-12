@@ -1,6 +1,7 @@
 import LenderModel from "@/models/lender";
 import { APIResponse } from "../typedef";
 import { NextResponse } from "next/server";
+import errorHandler from "../errorHandler";
 
 export async function GET() {
     try {
@@ -11,12 +12,6 @@ export async function GET() {
             data: lenders
         })
     } catch (error) {
-        console.error(error);
-        return NextResponse.json<APIResponse<never>>({
-            status: 500,
-            error: "internal server error"
-        }, { 
-            status: 500
-        });
+        return errorHandler(error);
     }
 }

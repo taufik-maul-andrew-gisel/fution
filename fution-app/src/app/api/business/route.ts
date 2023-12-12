@@ -1,7 +1,17 @@
 import BusinessModel from "@/models/business";
 import { NextRequest, NextResponse } from "next/server";
 import { APIResponse } from "../typedef";
-import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
+import errorHandler from "../errorHandler";
+import { z } from "zod";
+import User from "@/models/user";
+
+const businessInputSchema = z.object({
+    name: z.string().min(1),
+    monthlyRevenue: z.number().min(0),
+    creditScore: z.number().min(300).max(850),
+    description: z.string().min(100),
+    tagline: z.string().min(1)
+});
 
 export async function GET() {
     try {
@@ -12,13 +22,7 @@ export async function GET() {
             data: businesses
         });
     } catch (error) {
-        console.error(error);
-        return NextResponse.json<APIResponse<never>>({
-            status: 500,
-            error: "internal server error"
-        }, { 
-            status: 500
-        });
+        return errorHandler(error);
     }
 }
 
@@ -26,11 +30,25 @@ export async function POST(req: NextRequest) {
     try {
         const input = await req.json();
 
-        // TODO: get from middleware (login info)
-        const userId = "f84b2d57-3b51-4a3f-99f2-7c0378a44b7f";
-        input.userId = userId;
+        // validate input (with zod)
+        const parsed = businessInputSchema.safeParse(input);
+        if (!parsed.success) {
+            throw parsed.error;
+        }
 
-        const newBusiness = await BusinessModel.add(input);
+        // TODO: get from middleware (login info)
+        const userId = "5c992b9f-356b-4b60-8106-83ecf84cb660";
+        if ((await User.getById(userId))?.role !== "BUSINESS") {
+            return NextResponse.json<APIResponse<never>>(
+                { status: 403, error: "User's role is not BUSINESS" },
+                { status: 403 }
+            )
+        }
+        
+        const { name, monthlyRevenue, creditScore, description, tagline } = parsed.data;
+        const newBusiness = await BusinessModel.add({
+            name, monthlyRevenue, creditScore, description, tagline, userId
+        });
         return NextResponse.json<APIResponse<unknown>>({
             status: 201,
             message: "success POST /business",
@@ -39,17 +57,6 @@ export async function POST(req: NextRequest) {
             status: 201
         })
     } catch (error) {
-        let status = 500, errorMsg = "internal server error";
-        console.error(error);
-        
-        if (error instanceof PrismaClientValidationError || error instanceof PrismaClientKnownRequestError) {
-            status = 400;
-            errorMsg = error.message;
-        }
-
-        return NextResponse.json<APIResponse<never>>(
-            { status, error: errorMsg },
-            { status }
-        );
+        return errorHandler(error);
     }
 }

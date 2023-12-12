@@ -3,10 +3,12 @@ import { compareTextWithHash } from "@/utils/bcryptjs";
 import { NextResponse } from "next/server";
 import { APIResponse } from "../typedef";
 import { createToken } from "@/utils/jwt";
+import errorHandler from "../errorHandler";
+
 export const POST = async (request: Request) => {
   try {
     const data = await request.json();
-    const foundUser = await User.GetUserByUsername(data.username);
+    const foundUser = await User.getByUsername(data.username);
     if (!foundUser || !compareTextWithHash(data.password, foundUser.password)) {
       return NextResponse.json<APIResponse<never>>(
         {
@@ -38,14 +40,6 @@ export const POST = async (request: Request) => {
       }
     );
   } catch (error) {
-    return NextResponse.json<APIResponse<never>>(
-      {
-        status: 500,
-        message: "internal server error",
-      },
-      {
-        status: 500,
-      }
-    );
+    return errorHandler(error);
   }
 };
