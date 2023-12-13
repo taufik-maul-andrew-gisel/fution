@@ -6,7 +6,7 @@ import { z } from "zod";
 
 const recordPutSchema = z.object({
     amount: z.number().min(0),
-    interest: z.number().min(0).max(100),
+    interest: z.number().min(0),
     due: z.date()
 }).refine(schema => schema.due > new Date(), "Due date cannot be in the past");
 

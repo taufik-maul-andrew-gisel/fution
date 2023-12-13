@@ -19,8 +19,10 @@ export default class LenderModel {
 
     static async add(input: {
         name: string;
-        budget: number;
-        expectedInterest: string;
+        minBudget: number;
+        maxBudget: number;
+        minInterest: number;
+        maxInterest: number;
         userId: string;
     }) {
         return await prisma.lender.create({ data: input });
