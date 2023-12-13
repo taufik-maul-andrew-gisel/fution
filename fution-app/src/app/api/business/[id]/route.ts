@@ -9,12 +9,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
         const business = await BusinessModel.readById(id);
     
         if (!business) {
-            return NextResponse.json<APIResponse<never>>({
-                status: 404,
-                error: "data not found"
-            }, {
-                status: 404
-            })
+            throw new Error("data not found");
         }
     
         return NextResponse.json<APIResponse<unknown>>({

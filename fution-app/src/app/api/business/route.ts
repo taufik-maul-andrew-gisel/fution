@@ -39,10 +39,7 @@ export async function POST(req: NextRequest) {
         // TODO: get from middleware (login info)
         const userId = "5c992b9f-356b-4b60-8106-83ecf84cb660";
         if ((await User.getById(userId))?.role !== "BUSINESS") {
-            return NextResponse.json<APIResponse<never>>(
-                { status: 403, error: "User's role is not BUSINESS" },
-                { status: 403 }
-            )
+            throw new Error("user's role is not BUSINESS");
         }
         
         const { name, monthlyRevenue, creditScore, description, tagline } = parsed.data;
