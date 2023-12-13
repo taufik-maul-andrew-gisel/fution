@@ -29,4 +29,12 @@ export default class RecordModel {
             loanerId: lenderId,
         } })
     }
+
+    static async update(input: { id: string, amount: number, due: Date, interest: number }) {
+        const { id, amount, due, interest } = input;
+        return await prisma.record.update({
+            where: { id },
+            data: { amount, due, interest }
+        })
+    }
 }

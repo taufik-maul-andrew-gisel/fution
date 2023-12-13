@@ -3,7 +3,6 @@ import errorHandler from "../errorHandler";
 import { APIResponse } from "../typedef";
 import RecordModel from "@/models/record";
 import { z } from "zod";
-import User from "@/models/user";
 
 const recordInputSchema = z.object({
     amount: z.number().min(0),
@@ -39,7 +38,11 @@ export async function POST(req: NextRequest) {
 
         // step 3: POST to db, return response
         const { amount, due, businessId, lenderId } = parsed.data;
-        await RecordModel.add({ amount, due, businessId, lenderId });
+        const newRecord = await RecordModel.add({ amount, due, businessId, lenderId });
+        return NextResponse.json<APIResponse<unknown>>(
+            { status: 201, message: "success POST /record", data: newRecord }, 
+            { status: 201 }
+        )
     } catch (error) {
         return errorHandler(error);
     }
