@@ -8,9 +8,9 @@ import User from "@/models/user";
 const lenderInputSchema = z.object({
     name: z.string().min(1),
     minBudget: z.number().min(0),
-    maxBudget: z.number(),
+    maxBudget: z.number().min(0),
     minInterest: z.number().min(0),
-    maxInterest: z.number()
+    maxInterest: z.number().min(0)
 }).refine(schema => {
     return (
         (schema.maxBudget > schema.minBudget) && 
@@ -42,19 +42,19 @@ export async function POST(req: NextRequest) {
         }
 
         // TODO: get from middleware (login info)
-        const userId = "5c992b9f-356b-4b60-8106-83ecf84cb660";
+        const userId = "05c54bbb-08fd-495f-b2d8-0394fc60417c";
         if ((await User.getById(userId))?.role !== "LENDER") {
             throw new Error("user's role is not LENDER");
         }
         
-        // const { name, monthlyRevenue, creditScore, description, tagline } = parsed.data;
-        // const newBusiness = await BusinessModel.add({
-        //     name, monthlyRevenue, creditScore, description, tagline, userId
-        // });
+        const { name, minBudget, maxBudget, minInterest, maxInterest } = parsed.data;
+        const newBusiness = await LenderModel.add({
+            name, minBudget, maxBudget, minInterest, maxInterest, userId
+        });
         return NextResponse.json<APIResponse<unknown>>({
             status: 201,
             message: "success POST /lender",
-            // data: newBusiness
+            data: newBusiness
         }, {
             status: 201
         })
