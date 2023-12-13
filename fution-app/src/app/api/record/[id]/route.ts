@@ -40,13 +40,26 @@ export async function PUT(
 
 // sirecord status
 export async function PATCH(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params;
-    const data = await RecordModel.readById(id);
-    console.log(data, "iniii");
+    const record = await RecordModel.readById(id);
+
+    if (!record) {
+      throw new Error("data not found");
+    }
+    const result = await req.json();
+    const updatedData = await RecordModel.patchStatus({
+      id,
+      status: result.status,
+    });
+    return NextResponse.json<APIResponse<unknown>>({
+      status: 200,
+      message: "success PATCH /record/[id]",
+      data: updatedData,
+    });
   } catch (error) {
     return errorHandler(error);
   }
