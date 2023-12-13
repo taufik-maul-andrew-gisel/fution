@@ -10,21 +10,26 @@ const recordPutSchema = z.object({
     due: z.date()
 }).refine(schema => schema.due > new Date(), "Due date cannot be in the past");
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
-    try {
-        const { id } = params;
-        const record = await RecordModel.readById(id);
-        
-        if (!record) {
-            throw new Error("data not found");
-        }
-        
-        return NextResponse.json<APIResponse<unknown>>(
-            { status: 200, message: "success GET /record/[id]", data: record }
-        );
-    } catch (error) {
-        return errorHandler(error);
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params;
+    const record = await RecordModel.readById(id);
+
+    if (!record) {
+      throw new Error("data not found");
     }
+
+    return NextResponse.json<APIResponse<unknown>>({
+      status: 200,
+      message: "success GET /record/[id]",
+      data: record,
+    });
+  } catch (error) {
+    return errorHandler(error);
+  }
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
@@ -55,17 +60,30 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         return errorHandler(error);
     }
 }
+      
+      
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params;
+    const record = await RecordModel.readById(id);
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-    try {
-        // find product by id
-        const { id } = params;
-        const record = await RecordModel.readById(id);
-        
-        if (!record) {
-            throw new Error("data not found");
-        }
-    } catch (error) {
-        return errorHandler(error);
+    if (!record) {
+      throw new Error("data not found");
     }
+    const result = await req.json();
+    const updatedData = await RecordModel.patchStatus({
+      id,
+      status: result.status,
+    });
+    return NextResponse.json<APIResponse<unknown>>({
+      status: 200,
+      message: "success PATCH /record/[id]",
+      data: updatedData,
+    });
+  } catch (error) {
+    return errorHandler(error);
+  }
 }
