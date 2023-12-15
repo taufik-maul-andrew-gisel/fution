@@ -1,4 +1,4 @@
-const link = "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.CPIFORECAST.TOT.AGRWTH.Q/OECD?contentType=csv&detail=code&separator=comma&csv-lang=en&startPeriod=2019-Q4&endPeriod=2025-Q4"
+const link = "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.CPIFORECAST.TOT.AGRWTH.Q/OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"
 async function getRealTimeInflation() {
     const res = await fetch(link);
     const csvData = await res.text();

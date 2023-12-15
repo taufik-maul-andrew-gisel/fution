@@ -18,20 +18,21 @@ function calculateInterest(initValue: Decimal, interest: Decimal, inflations: De
         next: [initValue, initValue, initValue, initValue],
     }
 
+    // uncomment to enforce 0% interest (although inflation rate will still apply, and intended to always apply)
+    // interest = new Decimal(0);
+
     // calc curr amount to pay after interest
     let RHS = new Decimal(1);
     inflations.forEach(infl => {
-        const numr = interest.dividedBy(100).add(1);
-        const denumr = infl.dividedBy(100).add(1);
-        RHS = numr.dividedBy(denumr).times(RHS);
+        const innerRHS = interest.add(infl).dividedBy(400).add(1);
+        RHS = innerRHS.times(RHS);
     })
     output.curr = RHS.times(output.curr);
 
     RHS = new Decimal(1);
     nextPredInfls.forEach((infl, i) => {
-        const numr = interest.dividedBy(100).add(1);
-        const denumr = infl.dividedBy(100).add(1);
-        RHS = numr.dividedBy(denumr).times(RHS);
+        const innerRHS = interest.add(infl).dividedBy(400).add(1);
+        RHS = innerRHS.times(RHS);
         output.next[i] = RHS.times(output.curr);
     })
 

@@ -1,18 +1,8 @@
-// pages/register.tsx
 "use client";
 import React, { useState } from "react";
+import { createAccount } from "./action";
 
-const RegisterPage: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [Role, setRole] = useState<string>("");
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // Further processing here, e.g., sending to server API
-    console.log("Username:", username, "Password:", password);
-  };
-
+const RegisterPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div
@@ -41,7 +31,7 @@ const RegisterPage: React.FC = () => {
         </div>
         <div className="flex flex-col justify-center h-full">
           <h2 className="text-center text-3xl font-extrabold">Register</h2>
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <form action={createAccount} className="mt-8 space-y-6">
             <div>
               <label htmlFor="username" className="sr-only">
                 Username
@@ -53,8 +43,6 @@ const RegisterPage: React.FC = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
@@ -68,8 +56,6 @@ const RegisterPage: React.FC = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div>
@@ -79,11 +65,11 @@ const RegisterPage: React.FC = () => {
               <select
                 id="role"
                 name="role"
-                onChange={(e) => setRole(e.target.value)}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               >
-                <option value="lender">Lender</option>
-                <option value="business">Business</option>
+                <option className="hidden disabled">Select Your Role</option>
+                <option value="LENDER">Lender</option>
+                <option value="BUSINESS">Business</option>
               </select>
               {/* <input
                 id="role"
