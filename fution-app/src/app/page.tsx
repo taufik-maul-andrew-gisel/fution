@@ -93,7 +93,7 @@ export default function Home() {
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* main container div */}
 
-        <div className="flex flex-row bg-[rgba(0,140,255,0.338)] font-white h-screen w-full">
+        <div className="flex flex-row bg-sky-950 font-white h-screen w-full">
           {/* 1st div */}
           <div className="flex flex-col text-[white] p-10">
             {/* 1.1 div */}
@@ -411,7 +411,7 @@ export default function Home() {
         {/* ------------------------------------------------------------------------------- */}
         {/* FOOTER SECTION */}
         {/* main div */}
-        <div className="bg-[rgba(0,140,255,0.338)] flex flex-row justify-center content-center  p-14 gap-12">
+        <div className="bg-sky-950 flex flex-row justify-center content-center  p-14 gap-12">
           {/* 1st div */}
           <div className="flex flex-col text-left pl-8">
             <h2 className="font-semibold text-lg text-blue-300">FuTion</h2>
@@ -454,7 +454,7 @@ export default function Home() {
           </div>
           {/* 2nd div */}
           {/* 3rd div */}
-          <div className="flex flex-col text-left px-8 py-0">
+          <div className="flex flex-col text-left px-8s py-0">
             <h2 className="font-semibold text-lg text-blue-300">
               SOCIAL MEDIA
             </h2>
