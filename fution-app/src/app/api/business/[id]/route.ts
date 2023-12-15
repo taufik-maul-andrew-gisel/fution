@@ -11,11 +11,14 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
         if (!business) {
             throw new Error("data not found");
         }
+
+        const { creditScore, credential } = business;
+        const { status, credibility } = BusinessModel.getCredibility(creditScore, credential);
     
         return NextResponse.json<APIResponse<unknown>>({
             status: 200,
             message: "success GET /business/[id]",
-            data: business
+            data: { ...business, status, credibility }
         })
     } catch (error) {
         return errorHandler(error);
