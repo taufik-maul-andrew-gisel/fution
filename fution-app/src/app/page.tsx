@@ -1,24 +1,21 @@
-import Link from "next/link";
-
 export default function Home() {
   return (
     <>
       {/* <body className="box-border m-0 p-0 font-sans"> */}
       {/* FUTION'S NAVBAR SECTION */}
+
       <body className="m-0 p-0 bg-white">
         <div className="flex flex-row justify-center items-center shadow-[0_1px_8px_#ddd] bg-white sticky z-[2] top-0">
           <img
             src="https://media.discordapp.net/attachments/1182644325969047673/1184452706723704958/Logo_Fution-transformed-removebg-preview.png?ex=658c068b&is=6579918b&hm=be9bee5adb5de639ff2907f57dd3b6f32869213486f0789008c6aab397fe50b5&=&format=webp&quality=lossless&width=500&height=500"
             alt=""
-            className=" w-[140px] h-[100px] mr-[500px] object-cover"
+            className="h-28 mr-96 w-28"
           />
           <h3 className="px-5 py-0 text-black">How it works</h3>
           <h3 className="px-5 py-0 text-black">About us</h3>
           <h3 className="px-5 py-0 text-black">FAQ</h3>
+          <h3 className="px-5 py-0 text-black">Login</h3>
           <h3 className="px-5 py-0 text-black">Register</h3>
-          <Link href={"/login"}>
-            <h3 className="px-5 py-0 text-black">Login</h3>
-          </Link>
         </div>
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
@@ -39,12 +36,12 @@ export default function Home() {
               <div className="text-white flex flex-col items-center h-full justify-center px-10 gap-10">
                 {/*  */}
 
-                <h1 className="font-extrabold leading-10 tracking-tight text-left text-white text-center sm:leading-none text-lg sm:text-9xl">
+                <h1 className="font-extrabold leading-10 tracking-tight text-white text-center sm:leading-none text-7xl">
                   <span className="inline md:block">Welcome to FuTion</span>
                 </h1>
 
                 {/*  */}
-                <span>
+                <span className="flex items-center p-8">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Explicabo, ducimus facere voluptatibus debitis dignissimos
                   tenetur omnis, eaque odit molestias tempore, sunt aspernatur
@@ -201,7 +198,7 @@ export default function Home() {
           </div>
           {/* 1st div */}
           {/* 2nd div */}
-          <div className="self-center px-[120px] py-10">
+          <div className="self-center px-32 py-10">
             <img
               src="https://cdn.dribbble.com/userupload/9517221/file/original-f9ffd848c54e2e2c5a68dd5333c70e9c.jpg?resize=400x0"
               alt=""
@@ -213,7 +210,7 @@ export default function Home() {
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* ------------------------------------------------------------------------------- */}
         {/* CARDS SECTION */}
-        <div className="flex flex-col justify-center content-center text-center bg-slate-400  p-[100px] text-black">
+        <div className="flex flex-col justify-center content-center text-center bg-slate-400  p-28 text-black">
           <span className="underline leading-8 underline-offset-8	decoration-8 decoration-blue-800 pb-6">
             <h2 className="text-4xl font-bold">Testimonial</h2>
           </span>
@@ -223,7 +220,7 @@ export default function Home() {
               {/* 1st div */}
               <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
                 {/* 1.1 div */}
-                <div className="h-[76px] w-[76px] p-0.5 rounded-[50%]">
+                <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
                     src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
                     alt=""
@@ -232,7 +229,7 @@ export default function Home() {
                 </div>
                 {/* 1.1 div */}
                 {/* 1.2 div */}
-                <div className="ml-[30px]">
+                <div className="ml-8">
                   <div className="font-semibold text-lg text-[#111011]">
                     Jane Jana
                   </div>
@@ -263,7 +260,7 @@ export default function Home() {
               {/* 1st div */}
               <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
                 {/* 1.1 div */}
-                <div className="h-[76px] w-[76px] p-0.5 rounded-[50%]">
+                <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
                     src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
                     alt=""
@@ -272,7 +269,7 @@ export default function Home() {
                 </div>
                 {/* 1.1 div */}
                 {/* 1.2 div */}
-                <div className="ml-[30px]">
+                <div className="ml-8">
                   <div className="font-semibold text-lg text-[#111011]">
                     Jane Jana
                   </div>
@@ -302,7 +299,7 @@ export default function Home() {
               {/* 1st div */}
               <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
                 {/* 1.1 div */}
-                <div className="h-[76px] w-[76px] p-0.5 rounded-[50%]">
+                <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
                     src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
                     alt=""
@@ -311,7 +308,7 @@ export default function Home() {
                 </div>
                 {/* 1.1 div */}
                 {/* 1.2 div */}
-                <div className="ml-[30px]">
+                <div className="ml-8">
                   <div className="font-semibold text-lg text-[#111011]">
                     Jane Jana
                   </div>
@@ -341,7 +338,7 @@ export default function Home() {
         {/* ------------------------------------------------------------------------------- */}
         {/* ROLE SECTION */}
         {/* main div */}
-        <div className="bg-white flex flex-col p-[50px] text-black">
+        <div className="bg-white flex flex-col p-14 text-black">
           {/* 1st div */}
           {/* <div className="flex flex-col items-center">
             <h1 className="mb-0">MARKETPLACE FuTion</h1>
@@ -374,7 +371,7 @@ export default function Home() {
               </div>
             </div>
             {/* 2.1 div */}
-            <div className="h-[200px] border-l-2 border-l-[black] border-solid" />
+            <div className="h-52 border-l-2 border-l-[black] border-solid" />
             {/* 2.2 div */}
             <div className="p-5">
               <h2 className="font-semibold text-lg">FuTion</h2>
@@ -386,7 +383,7 @@ export default function Home() {
               </p>
             </div>
             {/* 2.2 div */}
-            <div className="h-[200px] border-l-2 border-l-[black] border-solid" />
+            <div className="h-52 border-l-2 border-l-[black] border-solid" />
             {/* 2.3 div */}
             <div className="p-5">
               <h2 className="font-semibold text-lg">BORROWERS</h2>
@@ -414,7 +411,7 @@ export default function Home() {
         {/* ------------------------------------------------------------------------------- */}
         {/* FOOTER SECTION */}
         {/* main div */}
-        <div className="bg-[rgba(0,140,255,0.338)] flex flex-row justify-center content-center  p-[50px] gap-12">
+        <div className="bg-[rgba(0,140,255,0.338)] flex flex-row justify-center content-center  p-14 gap-12">
           {/* 1st div */}
           <div className="flex flex-col text-left pl-8">
             <h2 className="font-semibold text-lg text-blue-300">FuTion</h2>
@@ -424,7 +421,7 @@ export default function Home() {
           </div>
           {/* 1st div */}
           {/* 2nd div */}
-          <div className="flex flex-col text-left px-[30px] py-0">
+          <div className="flex flex-col text-left px-8 py-0">
             {/* 2.1 div */}
             <h2 className="font-semibold text-lg text-blue-300">CONTACT US</h2>
             <div className="pb-3">
@@ -457,7 +454,7 @@ export default function Home() {
           </div>
           {/* 2nd div */}
           {/* 3rd div */}
-          <div className="flex flex-col text-left px-[30px] py-0">
+          <div className="flex flex-col text-left px-8 py-0">
             <h2 className="font-semibold text-lg text-blue-300">
               SOCIAL MEDIA
             </h2>
