@@ -1,4 +1,4 @@
-function getQuartersBetweenTwoDates(start: Date, end: Date) {
+export function getQuartersBetweenTwoDates(start: Date, end: Date) {
     let startYear = start.getFullYear();
     let startMonth = start.getMonth() + 1;
     let endYear = end.getFullYear();
@@ -29,4 +29,11 @@ function getQuartersBetweenTwoDates(start: Date, end: Date) {
     return output;
 }
 
-export default getQuartersBetweenTwoDates;
+export function getNextQuarter(year: number, q: number) {
+    let nextYear = year, nextQ = q + 1;
+    if (q + 1 > 4) {
+        nextYear = nextYear + 1;
+        nextQ = 1;
+    }
+    return { nextYear, nextQ }
+}

@@ -71,4 +71,6 @@ model Record {
   loaneeId  String
   loaner    Lender     @relation(fields: [loanerId], references: [id])
   loanerId  String
+
+  @@unique([loaneeId, loanerId])
 }

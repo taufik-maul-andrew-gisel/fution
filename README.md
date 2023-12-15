@@ -40,16 +40,16 @@ We have 4 MVPs. The first three run exclusively on the server side, and they hav
 
 Our application uses a green-yellow-red system to filter loan applicants (businesses) based on how credible they are. The formula is as follows:
 
-There are two entities to be considered, credit score and credibility.
+There are two entities to be considered, credit score and credentials.
 
-Credibility is the percentage of how many loans a business is able to pay back on time.
+Credential is the percentage of two differently weighted factors (the former is weighted two times more than the latter): how many loans a business is able to pay back on time, and how many rejected requests a business makes.
 Credit score is, uh, _obviously_ the business's credit score.
 
 We average out those two entities, and separate out the top 80% for green, 65 to 79% for yellow, and 0 to 64% for red.
 
 # MVP \#2: Interest
 
-Calculates the compound interest of each business's loan debt, both in the _present_ as well as several terms in the _future_. The interest applies for each term, where a term -- in this project -- is defined as a quarter of a year. Whenever the current date's month hits 1, 4, 7, or 10 (in other words, when the date hits the 1<sup>st</sup> of January, April, July, or October), the term changes, hence a new interest is compounded to the total amount of debt the business has to pay back to its lender.
+Calculates the compound interest of each business's outstanding loan, both in the _present_ as well as several terms in the _future_. The interest applies for each term, where a term -- in this project -- is defined as a quarter of a year. Whenever the current date's month hits 1, 4, 7, or 10 (in other words, when the date hits the 1<sup>st</sup> of January, April, July, or October), the term changes, hence a new interest is compounded to the total amount of debt the business has to pay back to its lender.
 
 Every time the API endpoint `GET /record/debt/:id` is called, the whole algorithm of interest calculation will be re-executed, calling `new Date()`, i.e., the current date, to ensure that the amount of terms for the interest to be applied will always be up-to-date.
 

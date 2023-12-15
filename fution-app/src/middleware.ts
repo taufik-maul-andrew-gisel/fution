@@ -25,6 +25,7 @@ export const middleware = async (request: NextRequest) => {
     // ------------- delete later --------------
     if (request.url.includes("/api/record/debt")) return NextResponse.next();
     if (request.url.includes("/api/business")) return NextResponse.next();
+    if (request.url.includes("/api/record")) return NextResponse.next();
     // ------------- delete later --------------
 
     const cookiesStore = cookies();

@@ -27,15 +27,15 @@ export default function errorHandler(error: any) {
   if (error instanceof Error) {
     if (error.message.includes("user's role is not")) {
       status = 403;
-      error = error.message;
+      errorMsg = error.message;
     }
     if (error.message === "data not found") {
       status = 404;
-      error = error.message;
+      errorMsg = error.message;
     }
     if (error.message === "Unauthorized") {
       status = 401;
-      error = error.message;
+      errorMsg = error.message;
     }
   }
 
