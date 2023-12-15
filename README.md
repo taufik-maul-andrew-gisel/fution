@@ -1,4 +1,4 @@
-## FuTion: your small business FUnding soluTION
+# FuTion
 
 ## FuTion: your small business FUnding soluTION
 
@@ -32,7 +32,20 @@ This application is aimed to aid small businesses in matching them with several 
 
 ---
 
+# Minimum Viable Products (MVP)
+
+We have 4 MVPs. The first three run exclusively on the server side, and they have completely **_zero dependencies_**.
+
 # MVP \#1: Credential
+
+Our application uses a green-yellow-red system to filter loan applicants (businesses) based on how credible they are. The formula is as follows:
+
+There are two entities to be considered, credit score and credibility.
+
+Credibility is the percentage of how many loans a business is able to pay back on time.
+Credit score is, uh, _obviously_ the business's credit score.
+
+We average out those two entities, and separate out the top 80% for green, 65 to 79% for yellow, and 0 to 64% for red.
 
 # MVP \#2: Interest
 
