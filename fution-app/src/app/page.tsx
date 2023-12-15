@@ -1,9 +1,10 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <>
       {/* <body className="box-border m-0 p-0 font-sans"> */}
       {/* FUTION'S NAVBAR SECTION */}
-
       <body className="m-0 p-0 bg-white">
         <div className="flex flex-row justify-center items-center shadow-[0_1px_8px_#ddd] bg-white sticky z-[2] top-0">
           <img
@@ -14,8 +15,10 @@ export default function Home() {
           <h3 className="px-5 py-0 text-black">How it works</h3>
           <h3 className="px-5 py-0 text-black">About us</h3>
           <h3 className="px-5 py-0 text-black">FAQ</h3>
-          <h3 className="px-5 py-0 text-black">Login</h3>
           <h3 className="px-5 py-0 text-black">Register</h3>
+          <Link href={"/login"}>
+            <h3 className="px-5 py-0 text-black">Login</h3>
+          </Link>
         </div>
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
