@@ -1,3 +1,5 @@
+import { login } from "./action";
+
 const Login = () => {
   return (
     <>
@@ -269,7 +271,7 @@ const Login = () => {
               Please log in using your FuTion account{" "}
             </h1>
             {/* Form */}
-            <form action="#" method="POST" className="space-y-4">
+            <form action={login} method="POST" className="space-y-4">
               <div>
                 <label
                   htmlFor="username"
@@ -281,7 +283,7 @@ const Login = () => {
                   type="text"
                   id="username"
                   name="username"
-                  className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                  className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
                 />
               </div>
 
@@ -296,7 +298,7 @@ const Login = () => {
                   type="password"
                   id="password"
                   name="password"
-                  className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                  className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
                 />
               </div>
               <div className="mt-4 text-sm text-gray-600 text-center">
