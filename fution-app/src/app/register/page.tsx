@@ -5,6 +5,7 @@ import React, { useState } from "react";
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [Role, setRole] = useState<string>("");
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -70,6 +71,30 @@ const RegisterPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+            </div>
+            <div>
+              <label htmlFor="role" className="sr-only">
+                role
+              </label>
+              <select
+                id="role"
+                name="role"
+                onChange={(e) => setRole(e.target.value)}
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              >
+                <option value="lender">Lender</option>
+                <option value="business">Business</option>
+              </select>
+              {/* <input
+                id="role"
+                name="role"
+                type="role"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="role"
+                value={role}
+                onChange={(e) => setPassword(e.target.value)}
+              /> */}
             </div>
             <div>
               <button
