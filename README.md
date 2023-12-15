@@ -1,6 +1,4 @@
-# fution
-
-## your small business FUnding soluTION
+## FuTion: your small business FUnding soluTION
 
 ## App Description
 
@@ -8,17 +6,26 @@ This application matches small businesses with several potential lenders. It con
 
 ## Endpoints
 
-1. `POST /register`
-2. `POST /register/business`
-3. `POST /register/lender`
-4. `POST /login`
-5. `GET /business` (Home page that contains all lenders)
-6. `GET /business/requests/` (consists of all lenders the business have sent request to)
-7. `POST /business/request-funds/:lenderId`
-8. `GET /lenders` (Home page that contains cards, lenders pov)
-9. `POST /lenders/lend-funds/:businessId`
+1. `POST /login`
+2. `POST /register`
 
-#### Details
+##### Business
 
-10. `GET /business/:lenderId`
-11. `GET /lenders/:businessId`
+3. `GET /business` get all businesses
+4. `POST /business` register a new business
+5. `GET /business/:id` get a business by id
+
+##### Lender
+
+6. `GET /lender` get all lenders
+7. `POST /lender` register a new lender
+8. `GET /lender/:id` get a lender by id
+
+##### Record
+
+9. `GET /record` get all records
+10. `POST /record` register a new record -> business request loan to lender
+11. `GET /record/:id` get a record by id
+12. `PUT /record/:id` update an existing record -> negotiation process between business and lender
+13. `PATCH /record/:id` change the status of an existing record (e.g. from DEBT to PAID)
+14. `GET /record/debt/:id` get the amount for a business to pay its debt to a lender after interest and inflation

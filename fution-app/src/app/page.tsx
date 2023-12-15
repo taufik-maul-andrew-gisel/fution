@@ -9,7 +9,7 @@ export default function Home() {
           <img
             src="https://media.discordapp.net/attachments/1182644325969047673/1184452706723704958/Logo_Fution-transformed-removebg-preview.png?ex=658c068b&is=6579918b&hm=be9bee5adb5de639ff2907f57dd3b6f32869213486f0789008c6aab397fe50b5&=&format=webp&quality=lossless&width=500&height=500"
             alt=""
-            className=" w-[140px] h-[100px] mr-[500px]"
+            className=" w-[140px] h-[100px] mr-[500px] object-cover"
           />
           <h3 className="px-5 py-0 text-black">How it works</h3>
           <h3 className="px-5 py-0 text-black">About us</h3>

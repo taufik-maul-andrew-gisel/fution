@@ -21,27 +21,21 @@ export default function errorHandler(error: any) {
     error instanceof PrismaClientKnownRequestError
   ) {
     status = 400;
-    errorMsg = error.message;
+    errorMsg = error.message.replace(/(\r\n|\n|\r)/gm, "");
   }
 
   if (error instanceof Error) {
     if (error.message.includes("user's role is not")) {
-      return NextResponse.json<APIResponse<never>>(
-        { status: 403, error: error.message },
-        { status: 403 }
-      );
+      status = 403;
+      error = error.message;
     }
     if (error.message === "data not found") {
-      return NextResponse.json<APIResponse<never>>(
-        { status: 404, error: error.message },
-        { status: 404 }
-      );
+      status = 404;
+      error = error.message;
     }
     if (error.message === "Unauthorized") {
-      return NextResponse.json<APIResponse<never>>(
-        { status: 404, error: error.message },
-        { status: 404 }
-      );
+      status = 401;
+      error = error.message;
     }
   }
 
