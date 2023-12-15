@@ -6,17 +6,36 @@ import { Decimal } from "@prisma/client/runtime/library";
  * The inflation forecast data will be scraped from here: https://data.oecd.org/price/inflation-forecast.htm#indicator-chart
  * And will be re-scraped for every request a client makes to GET /record or GET /record/[id].
  * 
- * @param currValue current money in $
+ * @param initValue current money in $
  * @param interest interest rate, in percentage (e.g., 11.2 for 11.2% interest rate)
- * @param inflation inflation rate, in percentage
- * @param period number of time periods (e.g., if a period is a month, 5 months would be 5 periods)
+ * @param inflations array of inflation rates, in percentage. The array length determines the period (a period is 1/4 year)
+ * @param nextPredInfls the predicted inflation rate in the next time periods
  */
-function calculateInterest(currValue: Decimal, interest: Decimal, inflation: Decimal, period: Decimal) {
-    // currValue * ((1 + interest / 100) / (1 + inflation / 100) ** period)
-    const numr = interest.dividedBy(100).add(1);
-    const denumr = inflation.dividedBy(100).add(1);
+function calculateInterest(initValue: Decimal, interest: Decimal, inflations: Decimal[], nextPredInfls: Decimal[]) {
+    const output = {
+        init: initValue,
+        curr: initValue,
+        next: [initValue, initValue, initValue, initValue],
+    }
 
-    return numr.dividedBy(denumr).pow(period).times(currValue);
+    // calc curr amount to pay after interest
+    let RHS = new Decimal(1);
+    inflations.forEach(infl => {
+        const numr = interest.dividedBy(100).add(1);
+        const denumr = infl.dividedBy(100).add(1);
+        RHS = numr.dividedBy(denumr).times(RHS);
+    })
+    output.curr = RHS.times(output.curr);
+
+    RHS = new Decimal(1);
+    nextPredInfls.forEach((infl, i) => {
+        const numr = interest.dividedBy(100).add(1);
+        const denumr = infl.dividedBy(100).add(1);
+        RHS = numr.dividedBy(denumr).times(RHS);
+        output.next[i] = RHS.times(output.curr);
+    })
+
+    return output
 }
 
 export default calculateInterest;

@@ -22,6 +22,10 @@ export const middleware = async (request: NextRequest) => {
       // console.log("API", request.method, request.url);
     }
 
+    // ------------- delete later --------------
+    if (request.url.includes("/api/record/debt")) return NextResponse.next();
+    // ------------- delete later --------------
+
     const cookiesStore = cookies();
     const token = cookiesStore.get("token");
     // console.log(token, "ini token");
@@ -32,7 +36,7 @@ export const middleware = async (request: NextRequest) => {
       return NextResponse.json({
         statusCode: 401,
         error: "Unauthorized",
-      });
+      }, { status: 401 });
     }
     const tokenData = await readPayloadJose<{
       id: string;

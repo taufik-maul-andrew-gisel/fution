@@ -6,10 +6,9 @@ async function getRealTimeInflation() {
     const jsonData = csvToJson(csvData);
     const usaData = jsonData.filter(d => d['"LOCATION"'] === '"USA"');
     return usaData.map(d => ({ 
-        time: d['"TIME"'].substring(1, 8), 
+        time: d['"TIME"'].substring(1, 8) as string, 
         interestRate: Number(d['"Value"']) 
     }))
-    
 }
 
 function csvToJson(csv: string) {

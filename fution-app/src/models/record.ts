@@ -3,6 +3,7 @@ import prisma from "../../prisma/config";
 import getQuartersBetweenTwoDates from "@/utils/quarter";
 import calculateInterest from "@/utils/interest";
 import { Decimal } from "@prisma/client/runtime/library";
+import getRealTimeInflation from "@/utils/inflationData";
 
 export default class RecordModel {
   static async readAll() {
@@ -52,16 +53,43 @@ export default class RecordModel {
     const record = await RecordModel.readById(id);
     if (!record) return;
     
-    // need 4 params: currValue, interest, inflation, period
-    const currValue = record.amount;
+    // need 4 params: initValue, interest, inflations, futureInflation
+    const initValue = record.amount;
     const interest = record.interest;
-    const inflation = new Decimal(5); // TODO: replace later
-    const period = new Decimal(getQuartersBetweenTwoDates(record.createdAt, new Date()));
+    const period = getQuartersBetweenTwoDates(record.createdAt, new Date());
+    const inflationData = await getRealTimeInflation();
 
-    console.log(currValue, calculateInterest(currValue, interest, inflation, period))
+    // get inflation rate for each term, plus the future prediction for the next four terms
+    const inflations = inflationData.filter(infl => {
+      const year = Number(infl.time.substring(0, 4));
+      const term = Number(infl.time[infl.time.length - 1]);
+      let startYear = period.start.year, startQ = period.start.q;
+      let endYear = period.end.year, endQ = period.end.q;
 
-    return record;
+      if (year > startYear && year < endYear) return true;
+      if (year === startYear && term >= startQ) return true;
+      if (year === endYear && term <= endQ) return true;
+
+      // also want to get the future four terms
+      for (let i = 0; i < 4; i++) {
+        const { nextYear, nextQ } = getNextQuarter(endYear, endQ)
+        if (year === nextYear && term === nextQ) return true;
+        endYear = nextYear;
+        endQ = nextQ;
+      }
+    }).map(infl => new Decimal(infl.interestRate))
+
+    return calculateInterest(initValue, interest, inflations.slice(0, -4), inflations.slice(-4));
   }
 }
 
 
+// helper function: get next quarter
+function getNextQuarter(year: number, q: number) {
+  let nextYear = year, nextQ = q + 1;
+  if (q + 1 > 4) {
+    nextYear = nextYear + 1;
+    nextQ = 1;
+  }
+  return { nextYear, nextQ }
+}
