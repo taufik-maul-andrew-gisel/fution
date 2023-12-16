@@ -101,8 +101,9 @@ const BusinessCardsDetailPage = () => {
                     >
                       Request Fund
                     </a> */}
-                    <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#192077]">
-                      Request Fund
+
+                    <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#2c9a30] transition-all duration-150 ease-in hover:bg-[#000000]">
+                      Negotiate
                     </button>
                   </div>
                 </div>

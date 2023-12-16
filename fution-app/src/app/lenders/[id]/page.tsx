@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const LenderCardDetailPage = () => {
   return (
     <>
@@ -83,7 +85,7 @@ const LenderCardDetailPage = () => {
               <div className="border-b">
                 <div className="flex justify-between px-6 -mb-px">
                   <h3 className="text-blue-dark py-4 font-normal text-lg">
-                    LENDING INFORMATION
+                    LOAN INFORMATION
                   </h3>
                 </div>
               </div>
@@ -119,19 +121,38 @@ const LenderCardDetailPage = () => {
                   </div>
                 </div>
               </div>
+              <div className="flex-grow flex px-6 py-6 text-grey-darker items-center border-b -mx-4">
+                <div className="w-2/5 xl:w-1/4 px-4 flex items-center">
+                  <p className="text-lg font-bold">STATUS</p>
+                </div>
+                <div className="flex w-3/5 md:w/12">
+                  <div className="w-1/2 px-4">
+                    <div className="text-right text-grey">
+                      PENDING (WILL CHANGE)
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* 2nd table */}
           {/* Request fund button */}
           <div className="bg-white border-t ">
             <div className="container mx-auto px-4 mt-2">
-              <div className="md:flex md:flex-row-reverse items-center py-4">
-                <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#192077]">
-                  Accept Request
+              <div className="md:flex md:flex-row-reverse items-center py-4 gap-3">
+                <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#2c9a30] transition-all duration-150 ease-in hover:bg-[#000000]">
+                  Negotiate
                 </button>
-                <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#231f39] transition-all duration-150 ease-in hover:bg-[#192077]">
-                  Video Call
+
+                <button className="flex-1 border border-[#a22222] rounded-[4px] py-3 text-white bg-[#ff3a3a] transition-all duration-150 ease-in hover:bg-[#000000]">
+                  Reject
                 </button>
+                <Link
+                  href={"/videocall"}
+                  className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#4076ff] transition-all duration-150 ease-in hover:bg-[#000000]"
+                >
+                  <div className="flex justify-center">Call</div>
+                </Link>
               </div>
             </div>
           </div>
