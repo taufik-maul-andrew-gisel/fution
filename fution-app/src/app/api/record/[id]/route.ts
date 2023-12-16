@@ -47,9 +47,9 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         // find out who's making the request - business or loaner?
         const role = req.headers.get("x-user-role") as UserRole;
         if (record.updatedAmount % 2 === 0 && role === "LENDER") {
-            throw new Error("user's role is not LENDER");
-        } else if (record.updatedAmount % 2 !== 0 && role === "BUSINESS") {
             throw new Error("user's role is not BUSINESS");
+        } else if (record.updatedAmount % 2 !== 0 && role === "BUSINESS") {
+            throw new Error("user's role is not LENDER");
         }
 
         // get user input to PUT
