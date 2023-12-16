@@ -30,14 +30,14 @@ export const login = async (formData: FormData) => {
     const errFinalMessage = `${errPath} - ${errMessage}`;
 
     // Mengembalikan error via redirect
-    return redirect(`http://localhost:3000/login?error=${errFinalMessage}`);
+    return redirect(`/login?error=${errFinalMessage}`);
   }
   // Memvalidasi data terhadap database
   const foundUser = await User.getByUsername(parsedData.data.username);
 
   // validasi user ketemu atau tidak
   if (!foundUser) {
-    throw new Error("invalid username or passowrd");
+    return redirect(`/login?error=Invalid username or password`);
   }
   // compare password user
   const comparepassword = compareTextWithHash(
@@ -46,7 +46,7 @@ export const login = async (formData: FormData) => {
   );
   // validasi user dan compare password
   if (!foundUser || !comparepassword) {
-    return redirect(`http://localhost:3000/login?error=Invalid%20credentials`);
+    return redirect(`/login?error=Invalid username or password`);
   }
 
   const payload = {
@@ -63,7 +63,7 @@ export const login = async (formData: FormData) => {
     // Meng-set cookie agar hanya bisa diakses melalui HTTPS, karena ini hanya untuk development, maka kita akan set false
     secure: false,
     // Meng-set expiration time dari cookies
-    expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
     // Meng-set cookie agar hanya bisa diakses melalui domain yang sama
     sameSite: "strict",
   });
