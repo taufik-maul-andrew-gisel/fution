@@ -1,18 +1,43 @@
+import Nav from "@/components/Nav";
 import Banner from "@/components/bannerHome";
 import Card from "@/components/card";
-import Navbar from "@/components/navbarHome";
+import { Business, Lender } from "@prisma/client";
 import React from "react";
-const fetchData = async () => {
-  const response = await fetch("http://localhost:3000/api/business");
-  const responseJson = await response.json();
+import { APIResponse } from "../api/typedef";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
+const fetchLender = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender`, {
+    headers: { Cookie: cookies().toString() }
+  });
+  const responseJson: APIResponse<Lender[]> = await response.json();
   console.log(responseJson);
+  
+  if(responseJson.status === 401) {
+    redirect("/login");
+  }
+  return responseJson.data;
 };
+
+const fetchBusiness = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/business`, {
+    headers: { Cookie: cookies().toString() }
+  });
+  const responseJson: APIResponse<Business[]> = await response.json();
+  if(responseJson.status === 401) {
+    redirect("/login");
+  }
+  return responseJson.data;
+}
+
+
 const Page = async () => {
-  // await fetchData();
+  console.log(await fetchLender());
   return (
     <>
       <div>
-        <Navbar />
+        <Nav />
         <Banner />
         {/* <div className="my-8 mx-8"> /}
       {/ Updated the styling here /}

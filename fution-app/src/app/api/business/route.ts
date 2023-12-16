@@ -1,6 +1,6 @@
 import BusinessModel from "@/models/business";
 import { NextRequest, NextResponse } from "next/server";
-import { APIResponse } from "../typedef";
+import { APIResponse, BusinessType } from "../typedef";
 import errorHandler from "../errorHandler";
 import { z } from "zod";
 import User from "@/models/user";

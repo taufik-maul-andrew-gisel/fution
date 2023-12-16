@@ -23,7 +23,7 @@ const Register = () => {
               </h1>
             </div>
             {/* Form */}
-            <form action={createAccount} method="POST" className="space-y-4">
+            <form action={createAccount} className="space-y-4">
               <ClientInputError />
               <div>
                 <label

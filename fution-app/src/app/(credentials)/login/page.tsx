@@ -22,7 +22,7 @@ const Login = () => {
               </h1>
             </div>
             {/* Form */}
-            <form action={login} method="POST" className="space-y-4">
+            <form action={login} className="space-y-4">
               <ClientInputError />
               <div>
                 <label

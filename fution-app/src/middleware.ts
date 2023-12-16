@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { readPayloadJose } from "./utils/jwt";
-import next from "next";
 
 export const middleware = async (request: NextRequest) => {
   if (
@@ -30,10 +29,11 @@ export const middleware = async (request: NextRequest) => {
 
     const cookiesStore = cookies();
     const token = cookiesStore.get("token");
+    console.log(token, "<<<<<");
     
     if (!token) {
       return NextResponse.json({
-        statusCode: 401,
+        status: 401,
         error: "Unauthorized",
       }, { status: 401 });
     }
