@@ -4,18 +4,16 @@ import Image from "next/image";
 export default function Home() {
   return (
     <>
-      {/* <body className="box-border m-0 p-0 font-sans"> */}
+      {/* <section className="box-border m-0 p-0 font-sans"> */}
       {/* FUTION'S NAVBAR SECTION */}
 
-      <body className="m-0 p-0 bg-white">
-        {/* FUTION'S NAVBAR SECTION */}
-        {/* ------------------------------------------------------------------------------- */}
+      <section className="m-0 p-0 bg-white">
         {/* BANNER */}
         <section>
           <div
             className="w-full bg-cover bg-center"
             style={{
-              height: "32rem",
+              height: "40rem",
               backgroundImage:
                 "url('https://c4.wallpaperflare.com/wallpaper/129/22/327/hands-greeting-handshake-wallpaper-preview.jpg')",
               backgroundPosition: "center",
@@ -48,13 +46,11 @@ export default function Home() {
             </div>
           </div>
         </section>
-
         {/* END OF BANNER */}
 
         {/* ------------------------------------------------------------------------------- */}
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* main container div */}
-
         <div className="flex flex-col md:flex-row bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 w-full">
           {/* Text Section */}
           <div className="flex flex-col text-black items-center md:items-start md:w-1/2 px-10 py-10">
@@ -139,7 +135,6 @@ export default function Home() {
                 {/* 1.2 div */}
               </div>
               {/* 1st div */}
-
               {/* 2nd div */}
               <div className="text-justify text-sm font-medium text-[#111011] leading-[1.6]">
                 <p>
@@ -247,88 +242,67 @@ export default function Home() {
                 Saatnya mengembangkan usaha yang produktif
               </p>
             </div>
-            <div className="flex flex-wrap -mx-4 text-center">
-              {/* PEMODAL */}
+            <div className="flex flex-wrap -mx-4 text-center items-stretch">
+              {/* <!-- Card 1: PEMODAL --> */}
               <div className="w-full md:w-1/3 px-4 mb-6 md:mb-0">
-                <div className="px-6 py-8 bg-white shadow rounded">
-                  <div className="mb-3">
-                    {/* Icon or image */}
-                    <div className="flex items-center justify-center p-4 max-w-sm mx-auto bg-white">
-                      <img
-                        className="h-12 w-12" // Adjust the size as needed
-                        src={"/loanMoney.png"}
-                        alt="Loan Money Icon"
-                      />
-                    </div>
-
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      Lenders
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">
-                    Jangka waktu dapat disesuaikan dengan siklus bisnis peminjam
+                <div className="flex flex-col h-full px-6 py-8 bg-white shadow rounded">
+                  <img
+                    src="/loanMoney.png"
+                    alt="Loan Money Icon"
+                    style={{ height: "200px", width: "200px" }} // Adjusted logo size
+                    className="mx-auto mb-4"
+                  />
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    Lenders
+                  </h3>
+                  <p className="text-gray-600 flex-grow">
+                    Be part of empowering SMEs by becoming a Lender at FuTion
                   </p>
-                  <div className="flex items-center justify-center h-full w-full">
-                    <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
-                      <img
-                        src="/logo1.png"
-                        alt="Logo"
-                        className="inline-block h-6 w-6 mr-2"
-                      />
-                      Get Started
-                    </button>
-                  </div>
+                  <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+                    Register As Lenders
+                  </button>
                 </div>
               </div>
-              {/* DANAMAS */}
+
+              {/* <!-- Card 2: DANAMAS --> */}
               <div className="w-full md:w-1/3 px-4 mb-6 md:mb-0">
-                <div className="px-6 py-8 bg-white shadow rounded">
-                  <div className="mb-3">
-                    {/* Icon or image */}
-                    <img
-                      src="/icons/platform.svg"
-                      alt="DANAMAS"
-                      className="mx-auto mb-4"
-                    />
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      DANAMAS
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">
+                <div className="flex flex-col h-full px-6 py-8 bg-white shadow rounded">
+                  <img
+                    src="/logo.png"
+                    alt="Fution"
+                    style={{ height: "200px", width: "200px" }} // Adjusted logo size
+                    className="mx-auto mb-4"
+                  />
+                  <p className="text-gray-600 flex-grow">
                     Menyeleksi akun peminjam dan pemodal
                   </p>
-                  <a href="#" className="text-blue-600 hover:underline">
+                  <a
+                    href="#"
+                    className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
+                  >
                     Pelajari lebih lanjut
                   </a>
                 </div>
               </div>
-              {/* PEMINJAM */}
+
+              {/* <!-- Card 3: PEMINJAM --> */}
               <div className="w-full md:w-1/3 px-4">
-                <div className="px-6 py-8 bg-white shadow rounded">
-                  <div className="mb-3">
-                    {/* Icon or image */}
-                    <img
-                      src="/icons/borrower.svg"
-                      alt="PEMINJAM"
-                      className="mx-auto mb-4"
-                    />
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      PEMINJAM
-                    </h3>
-                  </div>
-                  <p className="text-gray-600 mb-6">
+                <div className="flex flex-col h-full px-6 py-8 bg-white shadow rounded">
+                  <img
+                    src="/loanMoney.png"
+                    alt="Loan Money Icon"
+                    style={{ height: "200px", width: "200px" }} // Adjusted logo size
+                    className="mx-auto mb-4"
+                  />
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    Borrowers
+                  </h3>
+                  <p className="text-gray-600 flex-grow">
                     Pinjaman modal kerja mulai dari Rp 500.000
                   </p>
-                  <div className="flex items-center justify-center h-full w-full">
-                    <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
-                      <img
-                        src="/logo1.png"
-                        alt="Logo"
-                        className="inline-block h-6 w-6 mr-2"
-                      />
-                      Get Started
-                    </button>
-                  </div>
+                  <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+                    Register As Borrowers
+                  </button>
                 </div>
               </div>
             </div>
@@ -479,9 +453,9 @@ export default function Home() {
           </div>
           {/* 4th div */}
         </div>
-      </body>
+      </section>
       {/* FOOTER SECTION */}
-      {/* </body> */}
+      {/* </section> */}
     </>
   );
 }
