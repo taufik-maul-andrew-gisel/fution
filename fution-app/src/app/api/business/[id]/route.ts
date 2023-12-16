@@ -10,7 +10,6 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
             throw new Error("data not found");
         }
 
-        await BusinessModel.updateBasedOnExistingRecords(id);
         const business = await BusinessModel.readById(id);
 
         return NextResponse.json<APIResponse<unknown>>({

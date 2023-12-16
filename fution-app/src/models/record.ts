@@ -26,7 +26,6 @@ export default class RecordModel {
     return await prisma.record.create({ data: {
       amount,
       due,
-      status: "PENDING",
       loaneeId: businessId,
       loanerId: lenderId,
     } })

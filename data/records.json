@@ -1,0 +1,37 @@
+[
+    {
+        "amount": 1000,
+        "createdAt": "2022-12-12",
+        "due": "2023-01-01",
+        "loaneeId": "cc0a50b0-1f36-4ba1-8871-f27fec5484b5",
+        "loanerId": "9c5c9ce8-ed62-4bd5-8613-5094411c5790"
+    },
+    {
+        "amount": 2000,
+        "createdAt": "2023-01-12",
+        "due": "2024-01-01",
+        "loaneeId": "5f55ecbd-6a9d-4259-a11c-c028cfa212a3",
+        "loanerId": "9c5c9ce8-ed62-4bd5-8613-5094411c5790"
+    },
+    {
+        "amount": 3000,
+        "createdAt": "2023-04-12",
+        "due": "2024-10-01",
+        "loaneeId": "9e531be0-ba1f-4ad4-9fee-6f675860af56",
+        "loanerId": "9c5c9ce8-ed62-4bd5-8613-5094411c5790"
+    },
+    {
+        "amount": 4000,
+        "createdAt": "2023-12-12",
+        "due": "2024-10-01",
+        "loaneeId": "cc0a50b0-1f36-4ba1-8871-f27fec5484b5",
+        "loanerId": "4dc6bf94-755e-423c-84fd-de59ae2ba6e5"
+    },
+    {
+        "amount": 5000,
+        "createdAt": "2015-06-12",
+        "due": "2025-01-01",
+        "loaneeId": "9e531be0-ba1f-4ad4-9fee-6f675860af56",
+        "loanerId": "4dc6bf94-755e-423c-84fd-de59ae2ba6e5"
+    }
+]

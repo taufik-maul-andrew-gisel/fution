@@ -42,8 +42,8 @@ Our application uses a green-yellow-red system to filter loan applicants (busine
 
 There are two entities to be considered, credit score and credentials.
 
-Credential is the percentage of two differently weighted factors (the former is weighted two times more than the latter): how many loans a business is able to pay back on time, and how many rejected requests a business makes.
-Credit score is, uh, _obviously_ the business's credit score.
+-   Credential is the percentage of two differently weighted factors (the former is weighted two times more than the latter): how many loans a business is able to pay back on time, and how many rejected requests a business makes.
+-   Credit score is, uh, _obviously_ the business's credit score.
 
 We average out those two entities, and separate out the top 80% for green, 65 to 79% for yellow, and 0 to 64% for red.
 

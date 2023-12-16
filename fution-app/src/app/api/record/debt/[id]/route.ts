@@ -17,7 +17,7 @@ export async function GET(
 
         return NextResponse.json<APIResponse<unknown>>({
             status: 200,
-            message: "success GET /record/refresh/[id]",
+            message: "success GET /record/debt/[id]",
             data: record,
         });
     } catch (error) {

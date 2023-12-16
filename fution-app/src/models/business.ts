@@ -1,4 +1,3 @@
-import { Business } from "@prisma/client";
 import prisma from "../../prisma/config";
 import RecordModel from "./record";
 
@@ -61,19 +60,23 @@ export default class BusinessModel {
     static async readAll() {
         let data = await prisma.business.findMany();
 
-        let returnData = data.map(d => {
+        let returnData = await Promise.all(data.map(async (d) => {
+            const updated = await BusinessModel.updateBasedOnExistingRecords(d.id);
             const { status, credibility } = BusinessModel.getCredibility(
-                d.creditScore, 
-                d.credential
+                d.creditScore,
+                updated.credential
             );
             return { ...d, status, credibility }
-        })
+        }));
         return returnData;
     }
 
     static async readById(id: string) {
         const business = await prisma.business.findFirst({ where: { id } });
         if (!business) return;
+
+        // update credibility
+        await BusinessModel.updateBasedOnExistingRecords(id);
 
         // get credit score percentage
         // credit score runs from 300 to 850
