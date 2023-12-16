@@ -7,7 +7,7 @@ export default function Home() {
       {/* FUTION'S NAVBAR SECTION */}
 
       <body className="m-0 p-0 bg-white">
-        <Nav />
+      
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
         {/* BANNER */}

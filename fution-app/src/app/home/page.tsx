@@ -47,8 +47,6 @@ const Page = async () => {
 
   return (
     <>
-      <div>
-        <Nav />
         <div
           className="flex justify-center items-center text-white text-center "
           style={{
@@ -80,7 +78,6 @@ const Page = async () => {
           }) }
         </ul>
 
-      </div>
     </>
   );
 };
