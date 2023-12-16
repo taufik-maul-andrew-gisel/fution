@@ -117,7 +117,7 @@ export default function Home() {
                 {/* 1.1 div */}
                 <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
-                    src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
+                    src={"/profile1.jpg"}
                     alt=""
                     className=" w-full h-full rounded-[50%] border-2 border-black"
                   />
@@ -156,7 +156,7 @@ export default function Home() {
                 {/* 1.1 div */}
                 <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
-                    src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
+                    src={"/profile2.jpg"}
                     alt=""
                     className=" w-full h-full rounded-[50%] border-2 border-black"
                   />
@@ -195,7 +195,7 @@ export default function Home() {
                 {/* 1.1 div */}
                 <div className="h-20 w-20 p-0.5 rounded-[50%]">
                   <img
-                    src="https://iheartcraftythings.com/wp-content/uploads/2021/05/Cartoon-People-DRAWING-%E2%80%93-STEP-4.jpg"
+                    src={"/profile3.jpg"}
                     alt=""
                     className=" w-full h-full rounded-[50%] border-2 border-black"
                   />
