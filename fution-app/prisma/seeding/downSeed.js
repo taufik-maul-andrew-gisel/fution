@@ -3,6 +3,9 @@ const prisma = new PrismaClient();
 
 async function down() {
     try {
+        await prisma.record.deleteMany();
+        console.log("deleted records");
+
         await prisma.lender.deleteMany();
         console.log("deleted lender");
 

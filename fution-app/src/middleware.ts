@@ -23,7 +23,6 @@ export const middleware = async (request: NextRequest) => {
     }
 
     // ------------- delete later --------------
-      // if (request.url.includes("/api/record/debt")) return NextResponse.next();
     // if (request.url.includes("/api/business")) return NextResponse.next();
     // if (request.url.includes("/api/record")) return NextResponse.next();
     // if (request.url.includes("/api/lender")) return NextResponse.next();
@@ -31,10 +30,7 @@ export const middleware = async (request: NextRequest) => {
 
     const cookiesStore = cookies();
     const token = cookiesStore.get("token");
-    // console.log(token, "ini token");
-
-    // const token =
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY4NGIyZDU3LTNiNTEtNGEzZi05OWYyLTdjMDM3OGE0NGI3ZiIsInVzZXJuYW1lIjoiYW5kcmV3Iiwicm9sZSI6IkJVU0lORVNTIiwiaWF0IjoxNzAyNDYxNTc5fQ._VHJHxS8HzNjlFScUwleU3VZp06E7Xfv5eguXnwMBm0";
+    
     if (!token) {
       return NextResponse.json({
         statusCode: 401,

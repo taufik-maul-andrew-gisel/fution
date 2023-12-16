@@ -3,6 +3,7 @@ import errorHandler from "../../errorHandler";
 import RecordModel from "@/models/record";
 import { APIResponse } from "../../typedef";
 import { z } from "zod";
+import { UserRole } from "@prisma/client";
 
 const recordPutSchema = z.object({
     amount: z.number().min(0),
@@ -34,12 +35,21 @@ export async function GET(
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
     try {
-        // find product by id
         const { id } = params;
         const record = await RecordModel.readById(id);
-        
         if (!record) {
             throw new Error("data not found");
+        }
+        if (record.status === "REJECTED") {
+            throw new Error("can't update REJECTED record");
+        }
+
+        // find out who's making the request - business or loaner?
+        const role = req.headers.get("x-user-role") as UserRole;
+        if (record.updatedAmount % 2 === 0 && role === "BUSINESS") {
+            throw new Error("user's role is not LENDER");
+        } else if (record.updatedAmount % 2 !== 0 && role === "LENDER") {
+            throw new Error("user's role is not BUSINESS");
         }
 
         // get user input to PUT

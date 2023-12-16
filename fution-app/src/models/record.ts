@@ -1,6 +1,6 @@
 import { LoanStatus } from "@prisma/client";
 import prisma from "../../prisma/config";
-import getQuartersBetweenTwoDates from "@/utils/quarter";
+import { getQuartersBetweenTwoDates, getNextQuarter } from "@/utils/quarter";
 import calculateInterest from "@/utils/interest";
 import { Decimal } from "@prisma/client/runtime/library";
 import getRealTimeInflation from "@/utils/inflationData";
@@ -26,19 +26,40 @@ export default class RecordModel {
     return await prisma.record.create({ data: {
       amount,
       due,
-      status: "PENDING",
       loaneeId: businessId,
       loanerId: lenderId,
     } })
   }
 
   static async update(input: { id: string, amount: number, due: Date, interest: number }) {
-    const { id, amount, due, interest } = input;
+    let { id, amount, due, interest } = input;
+
+    // if input value doesn't change at all, change status to DEBT
+    // otherwise, simply update the value and keep status as PENDING
+    const currData = await prisma.record.findFirst({
+      where: { id },
+      select: { amount: true, due: true, interest: true, updatedAmount: true }
+    })
+    if (!currData) return;
+    if ((new Decimal(amount)).equals(currData.amount) && 
+    (new Decimal(interest)).equals(currData.interest)) {
+      return await RecordModel.patchStatus({ id, status: "DEBT" });
+    }
+
+    
     return await prisma.record.update({
       where: { id },
-      data: { amount, due, interest }
+      data: { 
+        amount: new Decimal(amount), 
+        due, 
+        interest: new Decimal(interest), 
+        // increment update count by 1 to allow validation for business/lender
+        // so that they can't request PUT twice (or more)
+        updatedAmount: currData.updatedAmount + 1
+      }
     })
   }
+
   
   static async patchStatus(input: { id: string; status: LoanStatus }) {
     const { id, status } = input;
@@ -46,6 +67,14 @@ export default class RecordModel {
       where: { id },
       data: { status },
     });
+  }
+
+  static async getRecordsByLoaneeId(loaneeId: string) {
+    return await prisma.record.findMany({ where: { loaneeId } })
+  }
+
+  static async getRecordsByLoanerId(loanerId: string) {
+    return await prisma.record.findMany({ where: { loanerId } })
   }
 
   // get the amount due after interest is applied
@@ -65,10 +94,9 @@ export default class RecordModel {
       const term = Number(infl.time[infl.time.length - 1]);
       let startYear = period.start.year, startQ = period.start.q;
       let endYear = period.end.year, endQ = period.end.q;
-
-      if (year > startYear && year < endYear) return true;
+      
+      if (year > startYear && year < endYear && term <= endQ) return true;
       if (year === startYear && term >= startQ) return true;
-      if (year === endYear && term <= endQ) return true;
 
       // also want to get the future four terms
       for (let i = 0; i < 4; i++) {
@@ -79,17 +107,8 @@ export default class RecordModel {
       }
     }).map(infl => new Decimal(infl.interestRate))
 
+    if (inflations.length === 4) inflations.unshift(new Decimal(0));
+
     return calculateInterest(initValue, interest, inflations.slice(0, -4), inflations.slice(-4));
   }
-}
-
-
-// helper function: get next quarter
-function getNextQuarter(year: number, q: number) {
-  let nextYear = year, nextQ = q + 1;
-  if (q + 1 > 4) {
-    nextYear = nextYear + 1;
-    nextQ = 1;
-  }
-  return { nextYear, nextQ }
 }

@@ -60,15 +60,18 @@ model Lender {
 }
 
 model Record {
-  id        String     @id @default(uuid())
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  amount    Decimal
-  interest  Decimal    @default(0)
-  status    LoanStatus
-  due       DateTime
-  loanee    Business   @relation(fields: [loaneeId], references: [id])
-  loaneeId  String
-  loaner    Lender     @relation(fields: [loanerId], references: [id])
-  loanerId  String
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  updatedAmount Int        @default(1)
+  amount        Decimal
+  interest      Decimal    @default(0)
+  status        LoanStatus @default(PENDING)
+  due           DateTime
+  loanee        Business   @relation(fields: [loaneeId], references: [id])
+  loaneeId      String
+  loaner        Lender     @relation(fields: [loanerId], references: [id])
+  loanerId      String
+
+  @@unique([loaneeId, loanerId])
 }
