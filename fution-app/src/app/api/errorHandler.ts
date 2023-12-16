@@ -15,7 +15,7 @@ export default function errorHandler(error: any) {
     status = 400;
     errorMsg = error.issues.map((e) => e.path + " - " + e.message).join("\n");
   }
-
+  
   if (
     error instanceof PrismaClientValidationError ||
     error instanceof PrismaClientKnownRequestError
@@ -23,7 +23,7 @@ export default function errorHandler(error: any) {
     status = 400;
     errorMsg = error.message.replace(/(\r\n|\n|\r)/gm, "");
   }
-
+  
   if (error instanceof Error) {
     if (error.message.includes("user's role is not")) {
       status = 403;
@@ -37,8 +37,12 @@ export default function errorHandler(error: any) {
       status = 401;
       errorMsg = error.message;
     }
+    if (error.message === "can't update REJECTED record") {
+      status = 400;
+      errorMsg = error.message;
+    }
   }
-
+  
   return NextResponse.json<APIResponse<never>>(
     { status, error: errorMsg },
     { status }

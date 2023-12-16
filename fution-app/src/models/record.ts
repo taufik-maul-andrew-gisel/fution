@@ -38,7 +38,7 @@ export default class RecordModel {
     // otherwise, simply update the value and keep status as PENDING
     const currData = await prisma.record.findFirst({
       where: { id },
-      select: { amount: true, due: true, interest: true }
+      select: { amount: true, due: true, interest: true, updatedAmount: true }
     })
     if (!currData) return;
     if ((new Decimal(amount)).equals(currData.amount) && 
@@ -46,9 +46,17 @@ export default class RecordModel {
       return await RecordModel.patchStatus({ id, status: "DEBT" });
     }
 
+    
     return await prisma.record.update({
       where: { id },
-      data: { amount: new Decimal(amount), due, interest: new Decimal(interest) }
+      data: { 
+        amount: new Decimal(amount), 
+        due, 
+        interest: new Decimal(interest), 
+        // increment update count by 1 to allow validation for business/lender
+        // so that they can't request PUT twice (or more)
+        updatedAmount: currData.updatedAmount + 1
+      }
     })
   }
 
