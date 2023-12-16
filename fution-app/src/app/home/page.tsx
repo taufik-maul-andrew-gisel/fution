@@ -112,12 +112,12 @@ const Page = async () => {
               id="slider"
               className="w-full h-full overflow-x-scroll scroll whitespace-nowrap"
             >
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+              { businessData && businessData.map(d => {
+                return <CardBusiness data={d} key={d.id} />
+              }) }
+              { lenderData && lenderData.map(d => {
+                return <CardLender data={d} key={d.id} />
+              }) }
             </div>
           </div>
         </div>
@@ -129,14 +129,12 @@ const Page = async () => {
             <h2 className="text-4xl font-bold">Lenders Recommendation</h2>
           </span>
           <div className="relative overflow-y-auto">
-            <ul>
-          { businessData && businessData.map(d => {
-            return <CardBusiness data={d} key={d.id} />
-          }) }
-          { lenderData && lenderData.map(d => {
-            return <CardLender data={d} key={d.id} />
-          }) }
-        </ul>
+            { businessData && businessData.map(d => {
+              return <CardBusiness data={d} key={d.id} />
+            }) }
+            { lenderData && lenderData.map(d => {
+              return <CardLender data={d} key={d.id} />
+            }) }
           </div>
         </div>
         {/* All lenders */}

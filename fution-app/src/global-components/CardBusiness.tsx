@@ -4,7 +4,7 @@ import { BusinessType } from "@/app/api/typedef";
 
 const CardBusiness = ({ data }: { data: BusinessType }) => {
   
-  return <li>{data.name}</li>
+  return <p>{data.name}</p>
   // return (
   //   <div className="flex flex-wrap justify-center gap-4">
   //     {[1, 2, 3, 4, 5, 6, 7.8, 9].map(
