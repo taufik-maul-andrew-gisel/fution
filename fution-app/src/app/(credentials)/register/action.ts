@@ -1,7 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-import { APIResponse } from "../api/typedef";
+import { APIResponse } from "../../api/typedef";
 
 export const createAccount = async (formData: FormData) => {
   try {
