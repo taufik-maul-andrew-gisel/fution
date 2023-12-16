@@ -1,14 +1,17 @@
+import { readPayloadJose } from '@/utils/jwt';
+import { jwtDecrypt } from 'jose';
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation';
 import React from 'react'
 
-function ClientAuth({ children }: { children: React.ReactNode }) {
+async function clientAuth() {
     const token = cookies().get("token");
     if (!token || token.value.length <= 0) {
         redirect("/login");
     }
 
-    return ({ children })
+    const payload = await readPayloadJose(token.value);
+    return payload;
 }
 
-export default ClientAuth
+export default clientAuth
