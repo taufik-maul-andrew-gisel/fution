@@ -1,18 +1,18 @@
-import Nav from "@/components/Nav";
-import Banner from "@/components/bannerHome";
-import Card from "@/components/card";
-import { Business, Lender } from "@prisma/client";
+import Nav from "@/global-components/Nav";
 import React from "react";
-import { APIResponse } from "../api/typedef";
+import { APIResponse, BusinessType, LenderType } from "../api/typedef";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import clientAuth from "@/global-components/ClientAuth";
+import { UserRole } from "@prisma/client";
+import CardBusiness from "@/global-components/CardBusiness";
+import CardLender from "@/global-components/CardLender";
 
 const fetchLender = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender`, {
     headers: { Cookie: cookies().toString() },
   });
-  const responseJson: APIResponse<Lender[]> = await response.json();
-  console.log(responseJson);
+  const responseJson: APIResponse<LenderType[]> = await response.json();
 
   if (responseJson.status === 401) {
     redirect("/login");
@@ -24,15 +24,28 @@ const fetchBusiness = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/business`, {
     headers: { Cookie: cookies().toString() },
   });
-  const responseJson: APIResponse<Business[]> = await response.json();
+  const responseJson: APIResponse<BusinessType[]> = await response.json();
   if (responseJson.status === 401) {
     redirect("/login");
   }
   return responseJson.data;
 };
 
+// ------------------------------------------------------------------
+
 const Page = async () => {
-  console.log(await fetchLender());
+  const { role } = (await clientAuth()) as { role: UserRole };
+
+  let businessData: BusinessType[] | undefined,
+    lenderData: LenderType[] | undefined;
+  if (role === "BUSINESS") {
+    lenderData = await fetchLender();
+  } else if (role === "LENDER") {
+    businessData = await fetchBusiness();
+  } else {
+    redirect("/login");
+  }
+
   return (
     <>
       {/* <div> */}

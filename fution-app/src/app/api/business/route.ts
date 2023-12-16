@@ -4,7 +4,6 @@ import { APIResponse, BusinessType } from "../typedef";
 import errorHandler from "../errorHandler";
 import { z } from "zod";
 import User from "@/models/user";
-import { cookies } from "next/headers";
 
 const businessInputSchema = z.object({
   name: z.string().min(1),
