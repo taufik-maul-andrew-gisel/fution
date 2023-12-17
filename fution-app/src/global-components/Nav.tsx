@@ -3,7 +3,7 @@ import React from 'react'
 
 function Nav() {
     return (
-<div className="flex flex-row justify-between items-center shadow-[0_1px_8px_#ddd] bg-white sticky z-[2] top-0 h-10 px-10 py-4">
+<div className="sticky top-0 flex flex-row justify-between items-center shadow-[0_1px_8px_#ddd] bg-white z-10 h-10 px-10 py-4">
     <img
         src="/logo.png"
         alt=""

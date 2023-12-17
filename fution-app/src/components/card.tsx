@@ -45,9 +45,9 @@ const Card = (
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  strokewidth={1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
                   viewBox="0 0 24 24"
                   className="w-5 h-5"
                 >
@@ -70,9 +70,9 @@ const Card = (
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  strokewidth={1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
                   viewBox="0 0 24 24"
                   className="w-5 h-5"
                 >
@@ -95,9 +95,9 @@ const Card = (
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  strokewidth={1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
                   viewBox="0 0 24 24"
                   className="w-5 h-5"
                 >
@@ -120,9 +120,9 @@ const Card = (
                 <svg
                   fill="none"
                   stroke="currentColor"
-                  strokelinecap="round"
-                  strokelinejoin="round"
-                  strokewidth={1}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1}
                   viewBox="0 0 24 24"
                   className="w-5 h-5"
                 >
