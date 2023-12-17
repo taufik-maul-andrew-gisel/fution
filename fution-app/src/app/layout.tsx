@@ -19,7 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Nav />
-        {children}
+        <div className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
+          {children}
+        </div>
       </body>
     </html>
   );

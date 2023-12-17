@@ -1,121 +1,126 @@
-const BusinessCardsDetailPage = () => {
+import { APIResponse, BusinessType } from "@/app/api/typedef";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+const fetchBusinessById = async (id: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/business/${id}`, {
+    headers: { Cookie: cookies().toString() },
+  });
+  const responseJson: APIResponse<BusinessType> = await response.json();
+
+  if (responseJson.status === 401) {
+    redirect("/login");
+  }
+  return responseJson.data;
+}
+
+
+const BusinessCardDetailPage = async ({ params }: { params: { id: string } }) => {
+  const business = await fetchBusinessById(params.id);
+
   return (
     <>
-      <div className="min-h-screen flex flex-row bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 justify-center ">
-        <div className="container flex justify-center">
-          <div className="flex px-10 py-10">
-            {/* left */}
+      {/* Main container */}
+      <div className="grid grid-cols-[8fr_5fr] gap-5 justify-center p-6">
 
-            <section className="flex-1 w-96 flex flex-col gap-3  bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm mx-2 overflow-hidden">
+        {/* left side */}
+        <div className="flex flex-col row-span-2">
+          <section className="flex-1 w-full flex flex-col justify-between gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">
+            <div>
               <img
-                src="https://www.its.ac.id/it/wp-content/uploads/sites/46/2021/06/blank-profile-picture-973460_1280.png"
-                className="w-60 rounded-full  mx-auto my-10 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+                src="/profile-pic.png"
+                className="w-44 rounded-full mx-auto my-10 p-0 border-[4px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
               />
-
-              <h1 className="text-3xl font-bold text-center">Ionel Olariu</h1>
-            </section>
-
-            {/* left */}
-
-            {/* right */}
-            <div className="flex-1 gap-2 px-4 font-sans bg-grey-lighter flex flex-col   text-black">
-              {/* Budget */}
-              <div className="bg-white border-t border-b rounded shadow mb-0">
-                <div className="border-b px-6">
-                  <div className="flex justify-between">
-                    <button
-                      type="button"
-                      className="appearance-none py-4 text-blue-dark border-b border-blue-dark mr-6"
-                    >
-                      BUDGET
-                    </button>
-                  </div>
-                </div>
-
-                <div className=" flex flex-row px-2">
-                  <div className="py-8">
-                    <div className="border-r px-5">
-                      <div className="text-grey-darker mb-2 ">
-                        <span className="text-5xl">21,404</span>
-                      </div>
-                      <div className="text-sm uppercase text-grey tracking-wide">
-                        MINIMUM BUDGET
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className=" px-5 py-8">
-                    <div className="text-grey-darker mb-2 ">
-                      <span className="text-5xl">21,404</span>
-                    </div>
-                    <div className="text-sm uppercase text-grey tracking-wide">
-                      MINIMUM BUDGET
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Budget */}
-              {/* Budget */}
-              <div className="bg-white border-t border-b rounded shadow mb-0">
-                <div className="border-b px-6">
-                  <div className="flex justify-between -mb-px">
-                    <button
-                      type="button"
-                      className="appearance-none py-4 text-blue-dark border-b border-blue-dark mr-6"
-                    >
-                      INTEREST
-                    </button>
-                  </div>
-                </div>
-
-                <div className=" flex flex-row px-2">
-                  <div className="py-8">
-                    <div className="border-r px-5">
-                      <div className="text-grey-darker mb-2 ">
-                        <span className="text-5xl">21,404</span>
-                      </div>
-                      <div className="text-sm uppercase text-grey tracking-wide">
-                        MINIMUM INTEREST
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className=" px-5 py-8">
-                    <div className="text-grey-darker mb-2 ">
-                      <span className="text-5xl">21,404</span>
-                    </div>
-                    <div className="text-sm uppercase text-grey tracking-wide">
-                      MAXIMUM INTEREST
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Budget */}
-              {/* Request fund button */}
-              <div className="bg-white border-t">
-                <div className="container mx-auto px-4 mt-2">
-                  <div className="md:flex md:flex-row-reverse items-center py-4">
-                    {/* <a
-                      href="#"
-                      className="text-black font-bold inline-block leading-tight bg-blue border border-black hover:bg-blue-dark px-3 py-2 no-underline rounded"
-                    >
-                      Request Fund
-                    </a> */}
-
-                    <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#2c9a30] transition-all duration-150 ease-in hover:bg-[#000000]">
-                      Negotiate
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {/* Request fund button */}
+              <h1 className="text-2xl font-bold text-center">{business?.name}</h1>
+              <p className="block my-2 font-semibold text-center">{business?.tagline}</p>
+              <p className="mt-5 text-justify" style={{ fontSize: "0.95rem", lineHeight: "1.4rem" }}>
+                {business?.description}
+              </p>
             </div>
-            {/* right */}
-          </div>
+
+            <div className="container mx-auto px-20">
+              <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
+                <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#4ca74f]">
+                  Negotiate
+                </button>
+
+                <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e49393] transition-all duration-150 ease-in hover:bg-[#c06363]">
+                  Reject
+                </button>
+                <Link
+                  href={"/videocall"}
+                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#9ab3f2] transition-all duration-150 ease-in hover:bg-[#5d78bc]"
+                >
+                  <div className="flex justify-center">Call</div>
+                </Link>
+              </div>
+            </div>
+          </section>
         </div>
+        {/* left side */}
+
+        {/* right side */}
+          <div className="text-black">
+            <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
+              <div className="border-b">
+                <div className="flex justify-between px-6 -mb-px">
+                  <h3 className="py-6 font-bold text-xl">
+                    Business Information
+                  </h3>
+                </div>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Monthly revenue</p>
+                <p className="text-grey">{business?.monthlyRevenue.toString()}</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Credit score</p>
+                <p className="text-grey">{business?.creditScore}</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Credibility</p>
+                <p className="text-grey">{business?.credential}%</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Status</p>
+                <p className="text-grey">{business?.status}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-black">
+            <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
+              <div className="border-b">
+                <div className="flex justify-between px-6 -mb-px">
+                  <h3 className="py-6 font-bold text-xl">
+                    Business Information
+                  </h3>
+                </div>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Monthly revenue</p>
+                <p className="text-grey">CA$21.28</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Monthly revenue</p>
+                <p className="text-grey">CA$21.28</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Monthly revenue</p>
+                <p className="text-grey">CA$21.28</p>
+              </div>
+              <div className="border-b grid grid-cols-2 py-4 px-6">
+                <p className="font-semibold">Monthly revenue</p>
+                <p className="text-grey">CA$21.28</p>
+              </div>
+            </div>
+          </div>
+        {/* right side */}
       </div>
+      {/* Main container */}
     </>
   );
 };
 
-export default BusinessCardsDetailPage;
+export default  BusinessCardDetailPage;

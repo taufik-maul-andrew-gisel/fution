@@ -1,32 +1,66 @@
-import Link from "next/link";
+import { APIResponse, LenderType } from "@/app/api/typedef";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-const LenderCardDetailPage = () => {
+const fetchLenderById = async (id: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/ledner/${id}`, {
+    headers: { Cookie: cookies().toString() },
+  });
+  const responseJson: APIResponse<LenderType> = await response.json();
+
+  if (responseJson.status === 401) {
+    redirect("/login");
+  }
+  return responseJson.data;
+}
+
+
+
+const LenderCardsDetailPage = ({ params }: { params: { id: string } }) => {
+  const lender = fetchLenderById(params.id);
+
   return (
     <>
+      return (
+    <>
       {/* Main container */}
-      <div className=" flex flex-1 flex-row bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 justify-center ">
+      <div className="grid grid-cols-[5fr_7fr] gap-5 justify-center p-6">
         {/* left side */}
-        <div className="flex flex-col">
+        <div className="flex flex-col row-span-2">
           {/* cards */}
-          <section className="flex-1 w-96 flex flex-col gap-3  bg-[#231f39]/60 rounded-[6px] shadow-[0px_15px_39px_16px_rgba(52,45,91,0.65)] backdrop-blur-sm mx-2 overflow-hidden">
-            <img
-              src="https://www.its.ac.id/it/wp-content/uploads/sites/46/2021/06/blank-profile-picture-973460_1280.png"
-              className="w-60 rounded-full  mx-auto my-10 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
-            />
-            <h1 className="text-3xl font-bold text-center">Ionel Olariu</h1>
-            <p className="block my-1 text-center">NEW YORK</p>
-            <p className="mt-5 text-center font-semibold">
-              User Interface design and front
-            </p>
+          <section className="flex-1 w-full flex flex-col justify-between gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">
+            <div>
+              <img
+                src="/profile-pic.png"
+                className="w-44 rounded-full  mx-auto my-10 p-0 border-[6px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+              />
+              <h1 className="text-3xl font-bold text-center">"business?.name"</h1>
+              <p className="block my-1 font-semibold text-center">"business?.tagline"</p>
+              <p className="mt-3 text-justify" style={{ fontSize: "0.95rem", lineHeight: "1.4rem" }}>
+                business?.description
+              </p>
+            </div>
+
+            <div className="container mx-auto px-4 mt-2">
+              <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
+                <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#2c9a30] transition-all duration-150 ease-in hover:bg-[#000000]">
+                  Negotiate
+                </button>
+
+                <button className="flex-1 border border-[#a22222] rounded-[4px] py-3 text-white bg-[#ff3a3a] transition-all duration-150 ease-in hover:bg-[#000000]">
+                  Reject
+                </button>
+              </div>
+            </div>
           </section>
           {/* cards */}
         </div>
         {/* left side */}
 
         {/* right side */}
-        <div className="flex flex-col gap-3 flex-1 text-black container mx-auto px-4 mt-2 border-t">
+        {/* <div className="flex flex-col gap-3 flex-1 text-black container mx-auto px-4 mt-2 border-t"> */}
           {/* 1st table */}
-          <div className="flex-1 mb-6 lg:mb-0 lg:w-1/2 px-4 flex flex-col text-black">
+          <div className="text-black">
             <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
               <div className="border-b">
                 <div className="flex justify-between px-6 -mb-px">
@@ -80,7 +114,7 @@ const LenderCardDetailPage = () => {
           {/* 1st table */}
 
           {/* 2nd table */}
-          <div className="w-full mb-6 lg:mb-0 lg:w-1/2 px-4 flex flex-col text-black">
+          <div className="text-black">
             <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
               <div className="border-b">
                 <div className="flex justify-between px-6 -mb-px">
@@ -135,34 +169,15 @@ const LenderCardDetailPage = () => {
               </div>
             </div>
           </div>
-          {/* 2nd table */}
-          {/* Request fund button */}
-          <div className="bg-white border-t ">
-            <div className="container mx-auto px-4 mt-2">
-              <div className="md:flex md:flex-row-reverse items-center py-4 gap-3">
-                <button className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#2c9a30] transition-all duration-150 ease-in hover:bg-[#000000]">
-                  Negotiate
-                </button>
-
-                <button className="flex-1 border border-[#a22222] rounded-[4px] py-3 text-white bg-[#ff3a3a] transition-all duration-150 ease-in hover:bg-[#000000]">
-                  Reject
-                </button>
-                <Link
-                  href={"/videocall"}
-                  className="flex-1 border border-[#2235a2] rounded-[4px] py-3 text-white bg-[#4076ff] transition-all duration-150 ease-in hover:bg-[#000000]"
-                >
-                  <div className="flex justify-center">Call</div>
-                </Link>
-              </div>
-            </div>
-          </div>
-          {/* Request fund button */}
-        </div>
+        {/* </div> */}
         {/* right side */}
       </div>
       {/* Main container */}
     </>
   );
+    </>
+  );
 };
 
-export default LenderCardDetailPage;
+export default LenderCardsDetailPage;
+
