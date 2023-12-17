@@ -48,27 +48,7 @@ const Page = async () => {
 
   return (
     <>
-      {/* <div> */}
-      <Nav />
-      {/* <Banner /> */}
-      {/* <div className="my-8 mx-8"> /}
-      {/ Updated the styling here /}
-      {/ <h1 className="flex justify-center items-center text-5xl">business</h1> /}
-      {/ <Card /> /}
-      {/ </div> /}
-      <div className="my-8 mx-8">
-        {/ Updated the styling here */}
-      {/* <h1 className="flex justify-center items-center text-5xl font-sans font-bold">
-          Your Request
-        </h1> */}
-      {/* <Card />
-        <h1 className="flex justify-center items-center text-5xl">Lenders</h1>
-        <Card /> */}
-      {/* <h1 className="flex justify-center items-center text-3xl hover:text-blue-800">
-          <button>See all..</button>
-        </h1> */}
-
-      <div className="flex flex-col">
+      <div className="flex flex-col z-0">
         {/* Banner */}
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           {/* Banner foto */}
@@ -104,12 +84,11 @@ const Page = async () => {
         {/* request section */}
 
         <div className="flex flex-col justify-center content-center text-center bg-gray-200  p-28 text-black">
-          <span className="mb-6 underline leading-8 underline-offset-8	decoration-8 decoration-blue-400">
-            <h2 className="text-4xl font-bold">Your Request</h2>
+          <span className="mb-6 underline leading-6 underline-offset-8 decoration-4 decoration-blue-400">
+            <h2 className="text-3xl font-bold">Your Requests</h2>
           </span>
           <div className="relative flex items-center flex-row">
             <div
-              id="slider"
               className="w-full h-full overflow-x-scroll scroll whitespace-nowrap"
             >
               { businessData && businessData.map(d => {
@@ -125,8 +104,8 @@ const Page = async () => {
 
         {/* All lenders */}
         <div className="flex flex-col justify-center content-center text-center bg-gray-200  pt-4 p-28 text-black">
-          <span className="mb-6 underline leading-8 underline-offset-8	decoration-8 decoration-blue-400">
-            <h2 className="text-4xl font-bold">Lenders Recommendation</h2>
+        <span className="mb-6 underline leading-6 underline-offset-8 decoration-4 decoration-blue-400">
+            <h2 className="text-3xl font-bold">Featured</h2>
           </span>
           <div className="relative overflow-y-auto">
             { businessData && businessData.map(d => {
