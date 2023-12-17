@@ -6,23 +6,6 @@ import { APIResponse, RecordType } from "@/app/api/typedef";
 //to add new row in table Record
 async function onActionHandler(loaneeId: string, loanerId: string) {
   "use server";
-
-  //1. find record by loanerid & LOANEEID
-  //   async () => {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_URL}/api/record/${loaneeId}`,
-  //       {
-  //         headers: { Cookie: cookies().toString() },
-  //       }
-  //     );
-  //     const responseJson: APIResponse<RecordType> = await response.json();
-
-  //     if (responseJson.status === 200) {
-  //       redirect(`/business/{loaneeId}`);
-  //     }
-  //     return responseJson.data;
-  //   };
-
   // post
 
   // put
