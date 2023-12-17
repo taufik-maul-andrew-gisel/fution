@@ -21,13 +21,14 @@ export default class RecordModel {
     });
   }
 
-  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string }) {
-    const { amount, due, businessId, lenderId } = input;
+  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string, interest: number }) {
+    const { amount, due, businessId, lenderId, interest } = input;
     return await prisma.record.create({ data: {
       amount,
       due,
       loaneeId: businessId,
       loanerId: lenderId,
+      interest
     } })
   }
 
