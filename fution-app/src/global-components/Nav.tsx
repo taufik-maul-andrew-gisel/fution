@@ -38,8 +38,8 @@ async function Nav() {
   </Link>
 
   <div className="flex">
-      <h3 className="px-5 py-2 text-black">How it works</h3>
-      <h3 className="px-5 py-2 text-black">About us</h3>
+      <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">How it works</button>
+      <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">About us</button>
     {auth ? (
       <>
         <form
@@ -49,16 +49,16 @@ async function Nav() {
             redirect("/");
           }}
         >
-          <button className="px-5 py-2 text-black">Logout</button>
+          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Logout</button>
         </form>
       </>
     ) : (
       <>
         <Link href="/login">
-          <h3 className="px-5 py-2 text-black">Login</h3>
+          <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Login</h3>
         </Link>
         <Link href="/register">
-          <h3 className="px-5 py-2 text-black">Register</h3>
+          <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Register</h3>
         </Link>
       </>
     )}

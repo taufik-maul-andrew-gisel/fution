@@ -7,7 +7,7 @@ import getRealTimeInflation from "@/utils/inflationData";
 
 export default class RecordModel {
   static async readAll() {
-    return await prisma.record.findMany();
+    return await prisma.record.findMany({ orderBy: { updatedAt: "desc" } });
   }
 
   static async readById(id: string) {
