@@ -11,6 +11,7 @@ const businessInputSchema = z.object({
   creditScore: z.number().min(300).max(850),
   description: z.string().min(100),
   tagline: z.string().min(1),
+  email: z.string().email()
 });
 
 export async function GET() {
@@ -46,7 +47,7 @@ export async function POST(req: NextRequest) {
       throw new Error("user's role is not BUSINESS");
     }
 
-    const { name, monthlyRevenue, creditScore, description, tagline } =
+    const { name, monthlyRevenue, creditScore, description, tagline, email } =
       parsed.data;
     const newBusiness = await BusinessModel.add({
       name,
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
       description,
       tagline,
       userId,
+      email
     });
     return NextResponse.json<APIResponse<unknown>>(
       {

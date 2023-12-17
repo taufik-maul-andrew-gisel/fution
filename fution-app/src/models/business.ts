@@ -87,6 +87,7 @@ export default class BusinessModel {
 
     static async add(input: {
         name: string;
+        email: string;
         monthlyRevenue: number;
         creditScore: number;
         description: string;

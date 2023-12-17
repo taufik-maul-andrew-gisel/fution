@@ -1,7 +1,31 @@
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import React from "react";
+import { APIResponse, RecordType } from "@/app/api/typedef";
 
-async function onActionHandler() {
+//to add new row in table Record
+async function onActionHandler(loaneeId: string, loanerId: string) {
   "use server";
+
+  //1. find record by loanerid & LOANEEID
+  //   async () => {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_URL}/api/record/${loaneeId}`,
+  //       {
+  //         headers: { Cookie: cookies().toString() },
+  //       }
+  //     );
+  //     const responseJson: APIResponse<RecordType> = await response.json();
+
+  //     if (responseJson.status === 200) {
+  //       redirect(`/business/{loaneeId}`);
+  //     }
+  //     return responseJson.data;
+  //   };
+
+  // post
+
+  // put
 }
 
 function Record({
@@ -36,7 +60,9 @@ function Record({
           <button type="submit">submit</button>
         </form> */}
         <form
-          action={onActionHandler}
+          action={() => {
+            onActionHandler(params.loaneeId, params.loanerId);
+          }}
           className=" w-1/2 m-10 border-2 border-slate-200 bg-slate-50 text-black rounded-lg p-4 space-y-4"
         >
           <div>
