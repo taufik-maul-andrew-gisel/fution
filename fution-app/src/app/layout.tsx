@@ -18,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Nav />
+        <div className="sticky top-0 z-20">
+          <Nav />
+        </div>
         <div className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
           {children}
         </div>
