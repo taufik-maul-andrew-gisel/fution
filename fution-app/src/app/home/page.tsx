@@ -7,6 +7,7 @@ import clientAuth from "@/global-components/ClientAuth";
 import { UserRole } from "@prisma/client";
 import CardBusiness from "@/global-components/CardBusiness";
 import CardLender from "@/global-components/CardLender";
+import Card from "@/components/card";
 
 const fetchLender = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender`, {

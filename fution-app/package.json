@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
+    "@zegocloud/zego-uikit-prebuilt": "^1.8.15",
     "bcryptjs": "^2.4.3",
     "jose": "^5.1.3",
     "jsonwebtoken": "^9.0.2",
