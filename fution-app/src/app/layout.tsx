@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/global-components/Nav";
+import Footer from "@/global-components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <div className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   );

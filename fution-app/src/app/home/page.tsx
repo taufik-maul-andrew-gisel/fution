@@ -13,6 +13,7 @@ const fetchLender = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender`, {
     headers: { Cookie: cookies().toString() },
   });
+
   const responseJson: APIResponse<LenderType[]> = await response.json();
 
   if (responseJson.status === 401) {
@@ -70,10 +71,11 @@ const Page = async () => {
                   <h1 className="text-white font-semibold text-5xl">
                     Your story starts with us.
                   </h1>
-                  <p className="mt-4 text-lg text-blueGray-200">
-                    This is a simple example of a Landing Page you can build
-                    using Notus JS. It features multiple CSS components based on
-                    the Tailwind CSS design system.
+                  <p className="mt-4 text-lg text-white">
+                    FuTion: Where ambitions are financed and dreams realized.
+                    Join the leading platform connecting lenders to growth
+                    opportunities and borrowers to seamless funding solutions.
+                    Invest, borrow, and succeed with FuTion.
                   </p>
                 </div>
               </div>
@@ -89,15 +91,15 @@ const Page = async () => {
             <h2 className="text-3xl font-bold">Your Requests</h2>
           </span>
           <div className="relative flex items-center flex-row">
-            <div
-              className="w-full h-full overflow-x-scroll scroll whitespace-nowrap"
-            >
-              { businessData && businessData.map(d => {
-                return <CardBusiness data={d} key={d.id} />
-              }) }
-              { lenderData && lenderData.map(d => {
-                return <CardLender data={d} key={d.id} />
-              }) }
+            <div className="w-full h-full overflow-x-scroll scroll whitespace-nowrap">
+              {businessData &&
+                businessData.map((d) => {
+                  return <CardBusiness data={d} key={d.id} />;
+                })}
+              {lenderData &&
+                lenderData.map((d) => {
+                  return <CardLender data={d} key={d.id} />;
+                })}
             </div>
           </div>
         </div>
@@ -105,16 +107,18 @@ const Page = async () => {
 
         {/* All lenders */}
         <div className="flex flex-col justify-center content-center text-center bg-gray-200  pt-4 p-28 text-black">
-        <span className="mb-6 underline leading-6 underline-offset-8 decoration-4 decoration-blue-400">
+          <span className="mb-6 underline leading-6 underline-offset-8 decoration-4 decoration-blue-400">
             <h2 className="text-3xl font-bold">Featured</h2>
           </span>
           <div className="relative overflow-y-auto">
-            { businessData && businessData.map(d => {
-              return <CardBusiness data={d} key={d.id} />
-            }) }
-            { lenderData && lenderData.map(d => {
-              return <CardLender data={d} key={d.id} />
-            }) }
+            {businessData &&
+              businessData.map((d) => {
+                return <CardBusiness data={d} key={d.id} />;
+              })}
+            {lenderData &&
+              lenderData.map((d) => {
+                return <CardLender data={d} key={d.id} />;
+              })}
           </div>
         </div>
         {/* All lenders */}
