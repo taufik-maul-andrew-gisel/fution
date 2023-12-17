@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
     // step 1: get input
     const input = await req.json();
     input.due = new Date(input.due);
-
+    console.log(input, "<<<<");
+    
     // step 2: validate input
     const parsed = recordInputSchema.safeParse(input);
     if (!parsed.success) {

@@ -60,7 +60,7 @@ const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
 
                 <Link
                   className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e7e24c] transition-all duration-150 ease-in hover:bg-[#c06363]"
-                  href={`/record/${lender?.id}/9e531be0-ba1f-4ad4-9fee-6f675860af56`}
+                  href={`/recordbusiness/${params.id}`} //lendersid
                 >
                   Request Fund
                 </Link>

@@ -52,9 +52,12 @@ const BusinessCardDetailPage = async ({
 
             <div className="container mx-auto px-20">
               <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
-                <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#4ca74f]">
+                <Link
+                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#c06363]"
+                  href={`/record/${params.id}`}
+                >
                   Negotiate
-                </button>
+                </Link>
 
                 <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e49393] transition-all duration-150 ease-in hover:bg-[#c06363]">
                   Reject

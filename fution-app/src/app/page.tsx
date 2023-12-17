@@ -6,8 +6,7 @@ export default function Home() {
       {/* <body className="box-border m-0 p-0 font-sans"> */}
       {/* FUTION'S NAVBAR SECTION */}
 
-      <body className="m-0 p-0 bg-white">
-      
+      <div className="m-0 p-0 bg-white">
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
         {/* BANNER */}
@@ -541,7 +540,7 @@ export default function Home() {
           </div>
           {/* 4th div */}
         </div>
-      </body>
+      </div>
       {/* FOOTER SECTION */}
       {/* </body> */}
     </>
