@@ -37,6 +37,7 @@ model User {
 model Business {
   id             String   @id @default(uuid())
   name           String
+  email          String
   monthlyRevenue Decimal
   creditScore    Int
   description    String

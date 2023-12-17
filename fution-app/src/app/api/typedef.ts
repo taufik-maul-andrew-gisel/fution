@@ -27,6 +27,7 @@ export type BusinessType = {
     credibility: number;
     id: string;
     name: string;
+    email: string;
     monthlyRevenue: Decimal;
     creditScore: number;
     description: string;
