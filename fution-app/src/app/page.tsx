@@ -105,127 +105,61 @@ export default function Home() {
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* ------------------------------------------------------------------------------- */}
         {/* CARDS SECTION */}
-        <div className="flex flex-col justify-center content-center text-center bg-gray-200  p-28 text-black">
-          <span className="underline leading-8 underline-offset-8	decoration-8 decoration-blue-400">
-            <h2 className="text-4xl font-bold">Testimonial</h2>
-          </span>
-          <div className="w-auto flex justify-around content-center m-5 p-5">
-            {/* 1st card */}
-            <div className="w-[calc(33%_-_10px)] rounded cursor-pointer shadow-[0_4px_8px_0_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] mx-2.5 my-0 p-6 bg-white">
-              {/* 1st div */}
-              <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
-                {/* 1.1 div */}
-                <div className="h-20 w-20 p-0.5 rounded-[50%]">
-                  <img
-                    src={"/profile1.jpg"}
-                    alt=""
-                    className=" w-full h-full rounded-[50%] border-2 border-black"
-                  />
+        <div className="my-10 font-[sans-serif] text-[#333]">
+          <div className="mb- text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-extrabold">Testimonials</h2>
+          </div>
+          <div className="max-w-4xl mx-auto space-y-16">
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex">
+                <img src={"/profile1.jpg"} className="w-13 h-11 rounded-full" />
+                <div className="ml-4 text-left">
+                  <p className="text-sm font-extrabold">Sellin</p>
+                  <p className="text-xs text-gray-400">
+                    As Lender, Founder Of Trust in Zeus
+                  </p>
                 </div>
-                {/* 1.1 div */}
-                {/* 1.2 div */}
-                <div className="ml-8">
-                  <div className="font-semibold text-lg text-[#111011]">
-                    Jane Jana
-                  </div>
-                  <div className="text-xs text-[grey] font-medium">
-                    Borrower, Founder of Moonbucks
-                  </div>
-                </div>
-                {/* 1.2 div */}
               </div>
-              {/* 1st div */}
-              {/* 2nd div */}
-              <div className="text-justify text-sm font-medium text-[#111011] leading-[1.6]">
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Necessitatibus possimus deserunt nobis ad officia odit
-                  blanditiis rem praesentium, eaque error molestiae eius
-                  architecto voluptas, modi labore ipsum? Asperiores, blanditiis
-                  doloribus?
+              <div className="col-span-2">
+                <p className="text-sm leading-relaxed">
+                  Funding borrowers on FuTion is very simple and profitable
                 </p>
               </div>
-              {/* 2nd div */}
             </div>
-            {/* 1st card */}
-
-            {/* 2nd card */}
-            <div className="w-[calc(33%_-_10px)] rounded cursor-pointer shadow-[0_4px_8px_0_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] mx-2.5 my-0 p-6 bg-white m-2.5 scale-[1.12]">
-              {/* 1st div */}
-              <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
-                {/* 1.1 div */}
-                <div className="h-20 w-20 p-0.5 rounded-[50%]">
-                  <img
-                    src={"/profile2.jpg"}
-                    alt=""
-                    className=" w-full h-full rounded-[50%] border-2 border-black"
-                  />
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex">
+                <img src={"/profile1.jpg"} className="w-13 h-11 rounded-full" />
+                <div className="ml-4 text-left">
+                  <p className="text-sm font-extrabold">Maul</p>
+                  <p className="text-xs text-gray-400">
+                    As Lender, Founder Of PT. MaulPinjol
+                  </p>
                 </div>
-                {/* 1.1 div */}
-                {/* 1.2 div */}
-                <div className="ml-8">
-                  <div className="font-semibold text-lg text-[#111011]">
-                    Jane Jana
-                  </div>
-                  <div className="text-xs text-[grey] font-medium">
-                    Borrower, Founder of Moonbucks
-                  </div>
-                </div>
-                {/* 1.2 div */}
               </div>
-              {/* 1st div */}
-              {/* 2nd div */}
-              <div className="text-justify text-sm font-medium text-[#111011] leading-[1.6]">
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Necessitatibus possimus deserunt nobis ad officia odit
-                  blanditiis rem praesentium, eaque error molestiae eius
-                  architecto voluptas, modi labore ipsum? Asperiores, blanditiis
-                  doloribus?
+              <div className="col-span-2">
+                <p className="text-sm leading-relaxed">
+                  Being a financier not only makes a profit, but I help people
+                  to develop their business
                 </p>
               </div>
-              {/* 2nd div */}
             </div>
-            {/* 2nd card */}
-
-            {/* 3rd card */}
-            <div className="w-[calc(33%_-_10px)] rounded cursor-pointer shadow-[0_4px_8px_0_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] mx-2.5 my-0 p-6 bg-white">
-              {/* 1st div */}
-              <div className="flex flex-wrap items-center mb-2.5 pt-2.5">
-                {/* 1.1 div */}
-                <div className="h-20 w-20 p-0.5 rounded-[50%]">
-                  <img
-                    src={"/profile3.jpg"}
-                    alt=""
-                    className=" w-full h-full rounded-[50%] border-2 border-black"
-                  />
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="flex">
+                <img src={"/profile1.jpg"} className="w-13 h-11 rounded-full" />
+                <div className="ml-4 text-left">
+                  <p className="text-sm font-extrabold">Taufik</p>
+                  <p className="text-xs text-gray-400">
+                    As Borrower, Founder Of Asyique Pty Ltd.
+                  </p>
                 </div>
-                {/* 1.1 div */}
-                {/* 1.2 div */}
-                <div className="ml-8">
-                  <div className="font-semibold text-lg text-[#111011]">
-                    Jane Jana
-                  </div>
-                  <div className="text-xs text-[grey] font-medium">
-                    Borrower, Founder of Moonbucks
-                  </div>
-                </div>
-                {/* 1.2 div */}
               </div>
-              {/* 1st div */}
-              {/* 2nd div */}
-              <div className="text-justify text-sm font-medium text-[#111011] leading-[1.6]">
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Necessitatibus possimus deserunt nobis ad officia odit
-                  blanditiis rem praesentium, eaque error molestiae eius
-                  architecto voluptas, modi labore ipsum? Asperiores, blanditiis
-                  doloribus?
+              <div className="col-span-2">
+                <p className="text-sm leading-relaxed">
+                  With FuSion, it makes it very easy for you to borrow money
+                  from lenders to advance your business
                 </p>
               </div>
-              {/* 2nd div */}
             </div>
-            {/* 3rd card */}
           </div>
         </div>
         {/* CARDS SECTION */}
@@ -280,7 +214,7 @@ export default function Home() {
                     href="#"
                     className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg"
                   >
-                    Pelajari lebih lanjut
+                    Learn more
                   </a>
                 </div>
               </div>
@@ -295,13 +229,11 @@ export default function Home() {
                     className="mx-auto mb-4"
                   />
                   <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    Borrowers
+                    Bussiness
                   </h3>
-                  <p className="text-gray-600 flex-grow">
-                    Pinjaman modal kerja mulai dari Rp 500.000
-                  </p>
+                  <p className="text-gray-600 flex-grow">Get Money</p>
                   <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                    Register As Borrowers
+                    Register As Bussiness
                   </button>
                 </div>
               </div>
