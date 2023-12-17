@@ -71,10 +71,11 @@ const Page = async () => {
                   <h1 className="text-white font-semibold text-5xl">
                     Your story starts with us.
                   </h1>
-                  <p className="mt-4 text-lg text-blueGray-200">
-                    This is a simple example of a Landing Page you can build
-                    using Notus JS. It features multiple CSS components based on
-                    the Tailwind CSS design system.
+                  <p className="mt-4 text-lg text-white">
+                    FuTion: Where ambitions are financed and dreams realized.
+                    Join the leading platform connecting lenders to growth
+                    opportunities and borrowers to seamless funding solutions.
+                    Invest, borrow, and succeed with FuTion.
                   </p>
                 </div>
               </div>
