@@ -9,10 +9,11 @@ import { ZodError } from "zod";
 export default function errorHandler(error: any) {
   let status = 500,
     errorMsg = "internal server error";
+  // console.error(error);
 
   if (error instanceof ZodError) {
     status = 400;
-    errorMsg = error.issues.map((e) => e.path + " - " + e.message).join("\n");
+    errorMsg = error.issues.map((e) => e.path + " - " + e.message).join(", ");
   }
 
   if (

@@ -1,20 +1,20 @@
 [
-    {
-        "id": "9c5c9ce8-ed62-4bd5-8613-5094411c5790",
-        "name": "PT. MaulPinjol",
-        "minBudget": 2000,
-        "maxBudget": 10000,
-        "minInterest": 11.55,
-        "maxInterest": 14.50,
-        "userId": "d290a7c2-6669-4b14-99fa-ff43c90c47be"
-    },
-    {
-        "id": "4dc6bf94-755e-423c-84fd-de59ae2ba6e5",
-        "name": "Trust in Zeus",
-        "minBudget": 10000,
-        "maxBudget": 69690,
-        "minInterest": 15.35,
-        "maxInterest": 19.99,
-        "userId": "6044a5a0-6844-4e91-8856-cb1c995da61d"
-    }
+  {
+    "id": "9c5c9ce8-ed62-4bd5-8613-5094411c5790",
+    "name": "PT. MaulPinjol",
+    "minBudget": 2000,
+    "maxBudget": 10000,
+    "minInterest": 11.55,
+    "maxInterest": 14.5,
+    "userId": "d290a7c2-6669-4b14-99fa-ff43c90c47be"
+  },
+  {
+    "id": "4dc6bf94-755e-423c-84fd-de59ae2ba6e5",
+    "name": "Trust in Zeus",
+    "minBudget": 10000,
+    "maxBudget": 69690,
+    "minInterest": 15.35,
+    "maxInterest": 19.99,
+    "userId": "6044a5a0-6844-4e91-8856-cb1c995da61d"
+  }
 ]
