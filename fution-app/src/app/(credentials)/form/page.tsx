@@ -1,6 +1,6 @@
 import React from "react";
-import FormLender from "@/components/formLender";
-import FormBusiness from "@/components/formBusiness";
+import FormLender from "@/app/(credentials)/form/formLender";
+import FormBusiness from "@/app/(credentials)/form/formBusiness";
 import { cookies } from "next/headers";
 import { readPayloadJose } from "@/utils/jwt";
 import { NextResponse } from "next/server";
@@ -9,6 +9,7 @@ const Form = async () => {
   // const role = "LENDER";
   const cookiesStore = cookies();
   const token = cookiesStore.get("token");
+  
   if (!token) {
     return NextResponse.json(
       {

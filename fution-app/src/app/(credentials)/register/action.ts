@@ -5,6 +5,7 @@ import User from "@/models/user";
 import { z } from "zod";
 import { createToken } from "@/utils/jwt";
 import { cookies } from "next/headers";
+import { login } from "../login/action";
 
 export const createAccount = async (formData: FormData) => {
   try {
@@ -39,6 +40,7 @@ export const createAccount = async (formData: FormData) => {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store"
     });
     const responseJson: APIResponse<unknown> = await response.json();
     if (!response.ok) {
@@ -46,7 +48,7 @@ export const createAccount = async (formData: FormData) => {
       // Harapannya di sini adalah ketika ada error, maka kita akan redirect ke halaman register dengan URLSearchParams dengan key "error" yang berisi pesan errornya, dengan asumsi bahwa error SELALU string
       return redirect(`/register?error=${message}`);
     }
-
+    
     // console.log("berhasil register ni");
 
     const foundUser = await User.getByUsername(parsedData.data.username);
@@ -72,7 +74,7 @@ export const createAccount = async (formData: FormData) => {
       sameSite: "strict",
     });
 
-    // Setelah berhasil melakukan register, maka kita redirect ke halaman login
+    
     return redirect(`/form`);
   } catch (error) {
     throw error;
