@@ -1,4 +1,4 @@
-import ClientInputError from "@/components/ClientInputError";
+import ClientInputError from "@/global-components/ClientInputError";
 import { createAccount } from "./action";
 import Link from "next/link";
 import ImagePanel from "../ImagePanel";
