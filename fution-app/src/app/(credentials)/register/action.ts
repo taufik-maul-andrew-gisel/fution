@@ -1,9 +1,33 @@
 "use server";
 import { redirect } from "next/navigation";
 import { APIResponse } from "../../api/typedef";
+import User from "@/models/user";
+import { z } from "zod";
+import { createToken } from "@/utils/jwt";
+import { cookies } from "next/headers";
 
 export const createAccount = async (formData: FormData) => {
   try {
+    const loginInputSchema = z.object({
+      username: z.string(),
+      password: z.string(),
+    });
+    const username = formData.get("username");
+    const password = formData.get("password");
+
+    const parsedData = loginInputSchema.safeParse({
+      username,
+      password,
+    });
+    if (!parsedData.success) {
+      // !! Ingat, jangan di-throw kecuali ingin menghandle error di sisi client via error.tsx !
+      const errPath = parsedData.error.issues[0].path[0];
+      const errMessage = parsedData.error.issues[0].message;
+      const errFinalMessage = `${errPath} - ${errMessage}`;
+
+      // Mengembalikan error via redirect
+      return redirect(`/register?error=${errFinalMessage}`);
+    }
     const response = await fetch("http://localhost:3000/api/register", {
       method: "POST",
       // Karena backendnya menerima tipe data "json" (lihat function POST pada /src/routes/users/route.ts), maka kita harus menerima bodynya dalam bentuk json juga.
@@ -25,8 +49,31 @@ export const createAccount = async (formData: FormData) => {
 
     // console.log("berhasil register ni");
 
+    const foundUser = await User.getByUsername(parsedData.data.username);
+    if (!foundUser) {
+      return redirect(`/register?error=failed to register`);
+    }
+
+    const payload = {
+      id: foundUser.id,
+      username: foundUser.username,
+      role: foundUser.role,
+    };
+    const token = createToken(payload);
+    // Menyimpan token dengan menggunakan cookies
+    cookies().set("token", token, {
+      // Meng-set cookie agar hanya bisa diakses melalui HTTP(S)
+      httpOnly: true,
+      // Meng-set cookie agar hanya bisa diakses melalui HTTPS, karena ini hanya untuk development, maka kita akan set false
+      secure: false,
+      // Meng-set expiration time dari cookies
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
+      // Meng-set cookie agar hanya bisa diakses melalui domain yang sama
+      sameSite: "strict",
+    });
+
     // Setelah berhasil melakukan register, maka kita redirect ke halaman login
-    return redirect("/login");
+    return redirect(`/form`);
   } catch (error) {
     throw error;
   }

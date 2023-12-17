@@ -1,7 +1,3 @@
-
-
-
-
 import ClientInputError from "@/components/ClientInputError";
 import { createAccount } from "./action";
 import Link from "next/link";
@@ -56,7 +52,10 @@ const Register = () => {
               </div>
 
               <div>
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="role"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   Role
                 </label>
                 <select
