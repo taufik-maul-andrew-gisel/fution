@@ -30,9 +30,8 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const input = await req.json();
-    // TODO: get from middleware (login info)
     const userId = req.headers.get("x-user-id");
-
+    
     if (!userId) {
       throw new Error("Unauthorized");
     }
@@ -42,6 +41,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       throw parsed.error;
     }
+    
 
     if ((await User.getById(userId))?.role !== "BUSINESS") {
       throw new Error("user's role is not BUSINESS");
@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
 
     const { name, monthlyRevenue, creditScore, description, tagline, email } =
       parsed.data;
+    
     const newBusiness = await BusinessModel.add({
       name,
       monthlyRevenue,

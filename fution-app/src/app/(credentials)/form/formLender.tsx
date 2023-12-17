@@ -1,5 +1,6 @@
 import ImagePanel from "@/app/(credentials)/ImagePanel";
 import { createLender } from "@/app/(credentials)/form/actionLender";
+import ClientInputError from "@/global-components/ClientInputError";
 import Link from "next/link";
 
 import React from "react";
@@ -8,7 +9,7 @@ const FormLender = () => {
   return (
     <>
       <div
-        className="flex justify-center"
+        className="flex justify-center  min-h-screen p-0"
         style={{
           // backgroundColor: "darkviolet",
           backgroundImage: 'url("/backgroundimageformlender.jpg")',
@@ -25,14 +26,15 @@ const FormLender = () => {
           <div className="max-w-md w-full p-6">
             <div className="">
               <h1 className="text-3xl font-semibold mb-2 text-black text-center">
-                Budget and Interest
+                Lender Details
               </h1>
               <h1 className="text-sm font-semibold mb-10 text-gray-500 text-center">
-                Enter your budget and interest range{" "}
+                Enter your budget and interest range
               </h1>
             </div>
             {/* Form */}
             <form className="space-y-4" action={createLender}>
+              <ClientInputError />
               <div>
                 <label
                   htmlFor="name"
@@ -134,7 +136,7 @@ const FormLender = () => {
         </div>
         {/* Right Pane */}
       </div>
-      ;
+      
     </>
   );
 };

@@ -8,8 +8,7 @@ export const createBusiness = async (formData: FormData) => {
   try {
     const monthlyRevenue = parseFloat(formData.get("monthlyRevenue") as string);
     const creditScore = parseFloat(formData.get("creditScore") as string);
-    const fundsNeeded = parseFloat(formData.get("fundsNeeded") as string);
-    const credential = parseFloat(formData.get("credential") as string);
+    const email = formData.get("email");
 
     const baseUrl = process.env.NEXT_PUBLIC_URL;
     const response = await fetch(`${baseUrl}/api/business`, {
@@ -18,8 +17,7 @@ export const createBusiness = async (formData: FormData) => {
         name: formData.get("name"),
         monthlyRevenue,
         creditScore,
-        fundsNeeded,
-        credential,
+        email,
         description: formData.get("description"),
         tagline: formData.get("tagline"),
       }),
@@ -29,6 +27,8 @@ export const createBusiness = async (formData: FormData) => {
       },
     });
     const responseJson: APIResponse<unknown> = await response.json();
+
+    
     if (!response.ok) {
       let message = responseJson.error ?? "Something went wrong!";
       // Harapannya di sini adalah ketika ada error, maka kita akan redirect ke halaman register dengan URLSearchParams dengan key "error" yang berisi pesan errornya, dengan asumsi bahwa error SELALU string

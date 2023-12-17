@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import ImagePanel from "@/app/(credentials)/ImagePanel";
 import { createBusiness } from "@/app/(credentials)/form/actionBusiness";
+import ClientInputError from "@/global-components/ClientInputError";
 
 const FormBusiness = () => {
   return (
@@ -32,19 +33,36 @@ const FormBusiness = () => {
             </div>
             {/* Form */}
             <form className="space-y-4" action={createBusiness}>
+              <ClientInputError />
+
               <div>
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Your business name
+                  Business Name
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  min="0"
-                  step="0.01"
+                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
+                />
+              </div>
+
+              
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Business Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
                   className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
                 />
               </div>
@@ -68,6 +86,36 @@ const FormBusiness = () => {
 
               <div>
                 <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Business Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  rows={4}
+                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="tagline"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Business Tagline
+                </label>
+                <input
+                  type="text"
+                  id="tagline"
+                  name="tagline"
+                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
+                />
+              </div>
+
+              <div>
+                <label
                   htmlFor="creditScore"
                   className="block text-sm font-medium text-gray-700"
                 >
@@ -82,68 +130,6 @@ const FormBusiness = () => {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="fundsNeeded"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Amount of Funds Needed
-                </label>
-                <input
-                  type="number"
-                  id="fundsNeeded"
-                  name="fundsNeeded"
-                  min="0"
-                  step="0.01"
-                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows={4}
-                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="credential"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Credential
-                </label>
-                <input
-                  type="number"
-                  id="credential"
-                  name="credential"
-                  min="0"
-                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="tagline"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Tagline
-                </label>
-                <input
-                  type="text"
-                  id="tagline"
-                  name="tagline"
-                  className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-                />
-              </div>
 
               <div>
                 <button

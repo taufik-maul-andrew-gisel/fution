@@ -36,6 +36,11 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const input = await req.json();
+    const userId = req.headers.get("x-user-id");
+    
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
 
     // validate input (with zod)
     const parsed = lenderInputSchema.safeParse(input);
@@ -43,11 +48,6 @@ export async function POST(req: NextRequest) {
       throw parsed.error;
     }
 
-    // TODO: get from middleware (login info)
-    const userId = "05c54bbb-08fd-495f-b2d8-0394fc60417c";
-    if (!userId) {
-      throw new Error("Unauthorized");
-    }
 
     if ((await User.getById(userId))?.role !== "LENDER") {
       throw new Error("user's role is not LENDER");
