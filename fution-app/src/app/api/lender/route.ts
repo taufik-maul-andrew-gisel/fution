@@ -44,8 +44,7 @@ export async function POST(req: NextRequest) {
     }
 
     // TODO: get from middleware (login info)
-    // const userId = "05c54bbb-08fd-495f-b2d8-0394fc60417c";
-    const userId = req.headers.get("x-user-id");
+    const userId = "05c54bbb-08fd-495f-b2d8-0394fc60417c";
     if (!userId) {
       throw new Error("Unauthorized");
     }
