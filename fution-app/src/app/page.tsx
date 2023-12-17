@@ -1,5 +1,6 @@
 import Nav from "@/global-components/Nav";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -35,14 +36,14 @@ export default function Home() {
                   Invest, borrow, and succeed with FuTion."
                 </p>
                 <div className="flex items-center justify-center h-full w-full">
-                  <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                  <Link href="/home" className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold uppercase rounded shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
                     <img
                       src="/logo1.png"
                       alt="Logo"
                       className="inline-block h-6 w-6 mr-2"
                     />
                     Get Started
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -99,7 +100,7 @@ export default function Home() {
               alt="Example Registration"
               width={500} // Adjust width as needed
               height={300} // Adjust height as needed
-              layout="intrinsic" // or 'responsive' based on your needs
+              // layout="intrinsic" // or 'responsive' based on your needs
             />
           </div>
         </div>

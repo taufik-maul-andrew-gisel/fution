@@ -12,7 +12,6 @@ import Card from "@/components/card";
 const fetchLender = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender`, {
     headers: { Cookie: cookies().toString() },
-    headers: { Cookie: cookies().toString() },
   });
 
   const responseJson: APIResponse<LenderType[]> = await response.json();
@@ -26,7 +25,6 @@ const fetchLender = async () => {
 const fetchBusiness = async () => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/business`, {
     headers: { Cookie: cookies().toString() },
-    headers: { Cookie: cookies().toString() },
   });
   const responseJson: APIResponse<BusinessType[]> = await response.json();
   if (responseJson.status === 401) {
@@ -39,10 +37,7 @@ const fetchBusiness = async () => {
 
 const Page = async () => {
   const { role } = (await clientAuth()) as { role: UserRole };
-  const { role } = (await clientAuth()) as { role: UserRole };
 
-  let businessData: BusinessType[] | undefined,
-    lenderData: LenderType[] | undefined;
   let businessData: BusinessType[] | undefined,
     lenderData: LenderType[] | undefined;
   if (role === "BUSINESS") {
