@@ -11,6 +11,8 @@ import ClientInputError from "@/global-components/ClientInputError";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { transporter } from "@/config/nodemailer";
+import * as React from "react";
 
 // ------------------------------------------------------------
 
@@ -147,6 +149,7 @@ const BusinessCardDetailPage = async ({
   return (
     <>
       {/* Main container */}
+
       <div className="grid grid-cols-[8fr_5fr] gap-5 justify-center p-6 ">
         {/* left side */}
         <div className="flex flex-col row-span-2 text-black">
@@ -186,7 +189,7 @@ const BusinessCardDetailPage = async ({
                 </form>
 
                 <Link
-                  href={"/videocall"}
+                  href={`/videocall/${params.id}`}
                   className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#9ab3f2] transition-all duration-150 ease-in hover:bg-[#5d78bc]"
                 >
                   <div className="flex justify-center">Call</div>
