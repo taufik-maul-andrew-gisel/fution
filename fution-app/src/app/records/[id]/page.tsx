@@ -48,33 +48,60 @@ async function RecordDetail({ params }: { params: { id: string } }) {
 
 <div className="py-6 px-14">
     <div className="grid grid-cols-4 z-0 gap-4">
-        <div className="text-2xl font-bold ml-1">
-            <h2>Loaner</h2>
+        <div className="col-span-4 mt-2 text-2xl font-bold ml-1 mb-2">
+            <h2>Record Details</h2>
         </div>
 
-        <div className="col-span-3 text-2xl font-bold ml-1">
-            <h2>Record</h2>
-        </div>
-
-        {/* loaner */}
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden p-3">
-            <img
-                src="/profile-pic.png"
-                className="w-16 rounded-full mx-auto my-4 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
-            />
-            <h2 className="col-span-3 text-lg font-semibold ml-1">{record?.loaner.name}</h2>
+        {/* loanee */}
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+            <div>
+                <img
+                    src="/profile-pic.png"
+                    className="w-16 rounded-full mx-auto my-4 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+                />
+                <h2 className="col-span-3 text-lg font-semibold ml-1">{record?.loanee.name}</h2>
+            </div>
+            <div className="text-left [&_div]:mb-1 ml-1">
+                <div className="mt-4 flex justify-between">
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>Credit score</p>
+                    <p className="text-sm">
+                        {record?.loanee.creditScore}
+                    </p>
+                </div>
+                <div className="mt-2 flex justify-between">
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>On-time payment rate</p>
+                    <p className="text-sm">
+                        {record?.loanee.credential}%
+                    </p>
+                </div>
+                <div className="mt-2 flex justify-between">
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>Credibility</p>
+                    { record && record.loanee.credibility >= 80 && (
+                        <p className="text-sm text-emerald-600 font-semibold">{record.loanee.credibility}%</p>
+                    ) }
+                    { record && record.loanee.credibility >= 65 && record.loanee.credibility < 80 && (
+                        <p className="text-sm text-yellow-600 font-semibold">{record.loanee.credibility}%</p>
+                    ) }
+                    { record && record.loanee.credibility >= 0 && record.loanee.credibility < 65 && (
+                        <p className="text-sm text-red-600 font-semibold">{record.loanee.credibility}%</p>
+                    ) }
+                </div>
+            </div>
         </div>
 
         {/* record */}
-        <div className="col-span-3 row-span-3 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="col-span-2 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             <div>
                 <p className="text-xl font-bold m-4 text-center">Status - {record?.status}</p>
                 { record?.status === "PAID" && <p className="text-lg font-semibold text-center">Outstanding debt is paid off on time.</p> }
                 { record?.status === "OVERDUE" && <p className="text-lg font-semibold text-center">Outstanding debt is not paid off on time.</p> }
             </div>
             <ul>
-                { record?.status === "PAID" && <li>Date paid: {record?.updatedAt.toLocaleString().split("T")[0]}</li> }
-                { record?.status === "DEBT" && <li>Outstanding amount: {debt?.curr}</li> }
+                { record?.status === "PAID" && <li>Date paid: { record?.updatedAt.toLocaleString().split("T")[0] }</li> }
+                { record?.status === "DEBT" && <li>Amount: { debt?.curr ? toDollarFormat(Number(debt.curr)) : "" }</li> }
+                { record?.status === "PENDING" && <li>Amount: { record.amount ? toDollarFormat(Number(record.amount.toString())) : ""}</li> }
+                { record?.status === "PENDING" && <li>Interest: { record.interest.toString() }%</li> }
+                { record?.status === "DEBT" && <li>Interest: { record.interest.toString() }%</li> }
                 <li>Due: {record?.due.toLocaleString().split("T")[0]}</li>
             </ul>
             <div className="ml-auto mr-0 mb-4">
@@ -89,22 +116,34 @@ async function RecordDetail({ params }: { params: { id: string } }) {
             </div>
         </div>
 
-        <div className="text-2xl font-bold ml-1">
-            <h2>Loanee</h2>
+        {/* loaner */}
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden p-3">
+            <div>
+                <img
+                    src="/profile-pic.png"
+                    className="w-16 rounded-full mx-auto my-4 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+                />
+                <h2 className="col-span-3 text-lg font-semibold ml-1">{record?.loaner.name}</h2>
+            </div>
+            <div className="text-left [&_div]:mb-1 ml-1">
+                <div className="mt-4">
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>Preferred budget range</p>
+                    <p className="text-sm">
+                        {toDollarFormat(Number(record?.loaner.minBudget.toString()))} - {toDollarFormat(Number(record?.loaner.maxBudget.toString()))}
+                    </p>
+                </div>
+                <div className="mt-2">
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>Preferred interest range</p>
+                    <p className="text-sm">
+                        {record?.loaner.minInterest.toString()}% - {record?.loaner.maxInterest.toString()}%
+                    </p>
+                </div>
+            </div>
         </div>
 
-        {/* loanee */}
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
-            <img
-                src="/profile-pic.png"
-                className="w-16 rounded-full mx-auto my-4 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
-            />
-            <h2 className="col-span-3 text-lg font-semibold ml-1">{record?.loanee.name}</h2>
-        </div>
-
-        <div className="text-2xl font-bold ml-1 mt-4 mb-2 col-span-4">
+        <div className="text-2xl font-bold ml-1 mt-2 pt-4 mb-2 col-span-4">
             <h2>Predicted Future Payment</h2>
-            <h4 className="text-base font-semibold mt-2">If you were to pay in the future, you would have to pay...</h4>
+            {/* <h4 className="text-base font-semibold mt-2">If you were to pay in the future, you would have to pay...</h4> */}
         </div>
 
         {/* future payment */}
