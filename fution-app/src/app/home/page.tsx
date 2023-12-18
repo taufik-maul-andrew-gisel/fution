@@ -49,22 +49,22 @@ const fetchRecord = async () => {
   return responseJson.data;
 };
 
-const StatusColour = ({ colour }: { colour: string }) => {
-  switch (colour) {
-    case "yellow":
-      return (
-        <div className="rounded-lg bg-yellow-500 h-5 w-5 inline-block"></div>
-      );
-    case "green":
-      return (
-        <div className="rounded-lg bg-green-500 h-5 w-5 inline-block"></div>
-      );
-    case "red":
-      return <div className="rounded-lg bg-red-500 h-5 w-5 inline-block"></div>;
-    default:
-      break;
-  }
-};
+// const StatusColour = ({ colour }: { colour: string }) => {
+//   switch (colour) {
+//     case "yellow":
+//       return (
+//         <div className="rounded-lg bg-yellow-500 h-5 w-5 inline-block"></div>
+//       );
+//     case "green":
+//       return (
+//         <div className="rounded-lg bg-green-500 h-5 w-5 inline-block"></div>
+//       );
+//     case "red":
+//       return <div className="rounded-lg bg-red-500 h-5 w-5 inline-block"></div>;
+//     default:
+//       break;
+//   }
+// };
 
 // ------------------------------------------------------------------
 
@@ -166,19 +166,25 @@ const Page = async () => {
               >
                 {business && (
                   <>
+                    <li className="flex justify-between">
+                        Credit score <span className="font-semibold">{business.creditScore}</span>
+                    </li>
+                    <li className="flex justify-between">
+                        FuTion score <span className="font-semibold">{business.credential}%</span>
+                    </li>
                     { business.credibility >= 80 && (
                       <li className="flex justify-between">
-                        Credibility: <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
+                        Credibility <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
                       </li>
                     ) }
                     { business.credibility >= 65 && business.credibility < 80 && (
                       <li className="flex justify-between">
-                        Credibility: <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
+                        Credibility <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
                       </li>
                     ) }
                     { business.credibility >= 0 && business.credibility < 65 && (
                       <li className="flex justify-between">
-                        Credibility: <span className="text-red-600 font-semibold">{business.credibility}%</span>
+                        Credibility <span className="text-red-600 font-semibold">{business.credibility}%</span>
                       </li>
                     ) }
                   </>

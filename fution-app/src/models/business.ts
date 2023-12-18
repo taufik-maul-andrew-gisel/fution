@@ -4,7 +4,7 @@ import RecordModel from "./record";
 export default class BusinessModel {
     static async updateBasedOnExistingRecords(id: string) {
         const records = await RecordModel.getRecordsByLoaneeId(id);
-
+        
         // update credential
         let overdues = 0, rejected = 0, paid = 0;
         records.forEach(record => {
@@ -29,7 +29,8 @@ export default class BusinessModel {
             if (record.status === "REJECTED") {
                 rejected++;
             }
-        })
+        });
+        
 
         let numr = (paid + rejected) * 100;
         let denumr = (overdues + 2 * rejected);

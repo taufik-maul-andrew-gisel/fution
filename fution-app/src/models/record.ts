@@ -19,6 +19,15 @@ export default class RecordModel {
 
     if (!record) return;
 
+    if (record.due < new Date()) {
+      if (record.status === "PENDING") {
+          RecordModel.patchStatus({ id: record.id, status: "REJECTED" });
+      }
+      else if (record.status === "DEBT") {
+          RecordModel.patchStatus({ id: record.id, status: "OVERDUE" });
+      }
+  }
+
     const { status, credibility } = BusinessModel.getCredibility(record?.loanee.creditScore, record?.loanee.credential);
     return { ...record, loanee: { ...record.loanee, status, credibility } };
   }

@@ -4,6 +4,7 @@ import { toDollarFormat } from '@/utils/toDollarFormat';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import React from 'react'
+import RecordComponent from './RecordComponent';
 
 async function fetchRecord(id: string) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record/${id}`, {
@@ -69,7 +70,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
                     </p>
                 </div>
                 <div className="mt-2 flex justify-between">
-                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>On-time payment rate</p>
+                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>FuTion score</p>
                     <p className="text-sm">
                         {record?.loanee.credential}%
                     </p>
@@ -91,29 +92,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
 
         {/* record */}
         <div className="col-span-2 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
-            <div>
-                <p className="text-xl font-bold m-4 text-center">Status - {record?.status}</p>
-                { record?.status === "PAID" && <p className="text-lg font-semibold text-center">Outstanding debt is paid off on time.</p> }
-                { record?.status === "OVERDUE" && <p className="text-lg font-semibold text-center">Outstanding debt is not paid off on time.</p> }
-            </div>
-            <ul>
-                { record?.status === "PAID" && <li>Date paid: { record?.updatedAt.toLocaleString().split("T")[0] }</li> }
-                { record?.status === "DEBT" && <li>Amount: { debt?.curr ? toDollarFormat(Number(debt.curr)) : "" }</li> }
-                { record?.status === "PENDING" && <li>Amount: { record.amount ? toDollarFormat(Number(record.amount.toString())) : ""}</li> }
-                { record?.status === "PENDING" && <li>Interest: { record.interest.toString() }%</li> }
-                { record?.status === "DEBT" && <li>Interest: { record.interest.toString() }%</li> }
-                <li>Due: {record?.due.toLocaleString().split("T")[0]}</li>
-            </ul>
-            <div className="ml-auto mr-0 mb-4">
-                { record?.status === "PENDING" && (
-                    <Link href="/home" className="bg-emerald-200 rounded-md hover:bg-emerald-300 flex-grow-0 py-3 px-6 ml-2">
-                        Negotiate
-                    </Link>
-                ) }
-                <Link href="/home" className="bg-sky-200 rounded-md hover:bg-sky-300 flex-grow-0 py-3 px-6 ml-2">
-                    Back
-                </Link>
-            </div>
+            <RecordComponent record={record} debt={debt} />
         </div>
 
         {/* loaner */}
@@ -149,19 +128,19 @@ async function RecordDetail({ params }: { params: { id: string } }) {
         {/* future payment */}
         <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear1}-Q${nextQ1}`}</h4>
-            <p>{toDollarFormat(Math.round(Number(debt?.next[0]) * 100) / 100)}</p>
+            <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[0]) * 100) / 100)}</p>
         </div>
         <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear2}-Q${nextQ2}`}</h4>
-            <p>{toDollarFormat(Math.round(Number(debt?.next[1]) * 100) / 100)}</p>
+            <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[1]) * 100) / 100)}</p>
         </div>
         <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear3}-Q${nextQ3}`}</h4>
-            <p>{toDollarFormat(Math.round(Number(debt?.next[2]) * 100) / 100)}</p>
+            <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[2]) * 100) / 100)}</p>
         </div>
         <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear4}-Q${nextQ4}`}</h4>
-            <p>{toDollarFormat(Math.round(Number(debt?.next[3]) * 100) / 100)}</p>
+            <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[3]) * 100) / 100)}</p>
         </div>
 
         
