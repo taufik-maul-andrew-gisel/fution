@@ -6,9 +6,9 @@ import Link from "next/link";
 const CardBusiness = ({ data }: { data: BusinessType }) => {
   
   return (<>
-<div className="h-full mx-auto right-0 mt-2 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300" style={{ width: "18rem !important" }}>
-  <div className="bg-white rounded overflow-hidden shadow-lg">
-    <div className="text-center p-6 bg-gray-800 border-b">
+<div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
+  <div className="h-full w-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg">
+    <div className="flex-grow text-center p-6 bg-gray-800 border-b">
       <svg
         aria-hidden="true"
         role="img"
@@ -32,9 +32,9 @@ const CardBusiness = ({ data }: { data: BusinessType }) => {
         </Link>
       </div>
     </div>
-    <div className="border-b">
-      <div className="px-2 py-3">
-        <span className="text-sm overflow-ellipsis">{data.tagline}</span>
+    <div className="h-40 border-b">
+      <div className="px-2 py-3 italic">
+        <span className="text-sm italic">{data.tagline}</span>
       </div>
       {/*  */}
       <div className="px-4 py-2 hover:bg-gray-100 flex">
@@ -81,7 +81,7 @@ const CardBusiness = ({ data }: { data: BusinessType }) => {
             Credibility
           </p>
           <p className="text-sm font-medium text-gray-800 leading-none">
-            {data.credential}%
+            {data.credibility}%
           </p>
         </div>
       </div>

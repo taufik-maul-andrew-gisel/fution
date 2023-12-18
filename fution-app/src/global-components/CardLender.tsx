@@ -6,9 +6,9 @@ import Link from "next/link";
 const CardLender = ({ data }: { data: LenderType }) => {
   
   return (<>
-<div className="mx-auto right-0 mt-2 w-60 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
-  <div className="bg-white rounded overflow-hidden shadow-lg">
-    <div className="text-center p-6 bg-gray-800 border-b">
+<div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
+  <div className="h-full w-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg">
+    <div className="flex-grow text-center p-6 bg-gray-800 border-b">
       <svg
         aria-hidden="true"
         role="img"
@@ -32,7 +32,7 @@ const CardLender = ({ data }: { data: LenderType }) => {
         </Link>
       </div>
     </div>
-    <div className="border-b" style={{ paddingTop: "6px !important" }}>
+    <div className="h-40 border-b">
       {/*  */}
       <div className="px-4 py-2 hover:bg-gray-100 flex">
         <div className="text-green-600">

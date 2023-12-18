@@ -114,7 +114,7 @@ const Page = async () => {
 
   return (
     <>
-    <div className="p-6">
+    <div className="py-6 px-14">
       <div className="grid grid-cols-3 z-0 gap-4">
         <div className="text-2xl font-bold ml-1">
           { business && <h2>Your Business</h2> }
@@ -150,8 +150,7 @@ const Page = async () => {
         </div>
 
 
-
-        <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-10 grid grid-cols-3 gap-2">
+        <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7 grid grid-cols-3">
               { records && records.map((record, i) => {
                 if (recordLender) {
                   return <CardRecord key={i} data={{ record, name: recordLender[i] }} />
@@ -160,13 +159,17 @@ const Page = async () => {
                   return <CardRecord key={i} data={{ record, name: recordBusiness[i] }} />
                 }
               }) }
+              {/* <CardRecord data={{ record: records[0], name: recordBusiness[0] }} />
+              <CardRecord data={{ record: records[0], name: recordBusiness[0] }} />
+              <CardRecord data={{ record: records[0], name: recordBusiness[0] }} /> */}
+        </div>
+
+        <div className="text-2xl font-bold ml-1 mt-4">
+          { business && <h2>All Lenders</h2> }
+          { lender && <h2>All Businesses</h2> }
         </div>
         
-        <div className="flex flex-col justify-center content-center text-center pt-4 p-28 text-black">
-          <span className="mb-6 underline leading-6 underline-offset-8 decoration-4 decoration-blue-400">
-            <h2 className="text-3xl font-bold">Featured</h2>
-          </span>
-          <div className="relative overflow-y-auto">
+        <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
             { lender && businessData &&
               businessData.map((d) => {
                 return <CardBusiness data={d} key={d.id} />;
@@ -177,7 +180,6 @@ const Page = async () => {
                 return <CardLender data={d} key={d.id} />;
               })
             }
-          </div>
         </div>
         
       </div>

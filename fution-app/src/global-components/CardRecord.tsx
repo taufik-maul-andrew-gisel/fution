@@ -5,12 +5,12 @@ import Link from "next/link";
 
 const CardRecord = ({ data }: { data: { record: RecordType, name: string | undefined } }) => {
   const { record } = data;
-  const { amount, interest, status, due } = record;
+  const { id, amount, interest, status, due } = record;
   
   return (<>
-<div className="mx-auto right-0 mt-2 w-60 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
-  <div className="bg-white rounded overflow-hidden shadow-lg">
-    <div className="text-center p-6 bg-gray-800 border-b">
+<div className="h-full mx-auto right-0 mt-2 w-60 inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
+  <div className="h-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg">
+    <div className="flex-grow text-center p-6 bg-gray-800 border-b">
       <svg
         aria-hidden="true"
         role="img"
@@ -29,12 +29,12 @@ const CardRecord = ({ data }: { data: { record: RecordType, name: string | undef
         {data.name}
       </p>
       <div className="mt-5">
-        <Link href="{`/lenders/${data.id}`}" className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
+        <Link href={`/record/${id}`} className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
           See Detail
         </Link>
       </div>
     </div>
-    <div className="border-b" style={{ paddingTop: "6px !important" }}>
+    <div className="h-40 border-b" style={{ paddingTop: "6px !important" }}>
       {/*  */}
       <div className="px-4 py-2 hover:bg-gray-100 flex">
         <div className="text-green-600">

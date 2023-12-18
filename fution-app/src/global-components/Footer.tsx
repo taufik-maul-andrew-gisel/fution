@@ -3,10 +3,10 @@ import React from "react";
 function Footer() {
   // const backgroundImage = `${process.env.NEXT_PUBLIC_URL}/backgroundFooter.jpg`;
   return (
-    <footer className="bg-slate-200 text-black p-4">
-      <div className="container mx-auto px-4">
+    <footer className="bg-white border-t-[1] text-black p-4">
+      <div className="container mx-auto">
         {/* Use grid for the base class and apply grid-cols-4 on md screens */}
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start px-10">
           {/* FUTION Information */}
           <div>
             <h2 className="text-lg font-semibold mb-2">FUTION</h2>
