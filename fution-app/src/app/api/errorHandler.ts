@@ -9,7 +9,7 @@ import { ZodError } from "zod";
 export default function errorHandler(error: any) {
   let status = 500,
     errorMsg = "internal server error";
-  // console.error(error);
+  console.error(error);
 
   if (error instanceof ZodError) {
     status = 400;

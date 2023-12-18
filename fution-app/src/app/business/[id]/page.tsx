@@ -11,6 +11,7 @@ import ClientInputError from "@/global-components/ClientInputError";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import LenderModel from "@/models/lender";
 
 // ------------------------------------------------------------
 
@@ -19,7 +20,6 @@ import { NextResponse } from "next/server";
 export const lenderId = async () => {
   const cookiesStore = cookies();
   const token = cookiesStore.get("token");
-
   if (!token) {
     return NextResponse.json(
       {
@@ -36,52 +36,56 @@ export const lenderId = async () => {
   }>(token.value);
 
   const fetchLender = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    });
+    // console.log(process.env.NEXT_PUBLIC_URL);
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
+    //   headers: {
+    //     Cookie: cookies().toString(),
+    //   },
+    // });
 
-    const responseJson: APIResponse<LenderType[]> = await response.json();
-    // console.log(responseJson, "fetchLender line 47");
-    if (responseJson.status === 401) {
-      redirect("/login");
-    }
-    return responseJson.data;
+    // // console.log(response.status);
+    // const responseJson: APIResponse<LenderType[]> = await response.json();
+    // // console.log("AFTER");
+    // // console.log(responseJson, "fetchLender line 46");
+    // if (responseJson.status === 401) {
+    //   redirect("/login");
+    // }
+    return await LenderModel.readAll();
   };
 
-  const found = (await fetchLender())?.find(
-    (element: LenderType) => element.userId === tokenData.id
-  );
+  // console.log("before, <<<< ");
+  // console.log(await fetchLender());
+  const found = (await fetchLender())?.find((element: LenderType) => {
+    // console.log(element);
+    // console.log(tokenData);
+    return element.userId === tokenData.id;
+  });
+  // console.log("after, <<<< ");
 
   return found?.id;
 };
 
-//* PURPOSE: FOR POPULATING DATA
+//* PURPOSE: WILL GET ONE RECORD, THIS RECORD IS TO TAKE ITS RECORDID TO CHANGE STATUS
 //1.fetch all record
-export const fetchAllRecord = async (id: String) => {
+export const fetchAllRecord = async (id: string) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
     headers: {
       Cookie: cookies().toString(),
     },
   });
   const responseJson: APIResponse<RecordType[]> = await response.json();
-  // console.log(responseJson, "fetchAllRecord line 66");
+
   if (responseJson.status === 401) {
     redirect("/login");
   }
-
   //2.find one record based on loaneeId and loanerId
   const lId = await lenderId();
-  // console.log(lId, "lender id");
 
   const found = responseJson.data?.find((element: RecordType) => {
     return element.loaneeId === id && element.loanerId === lId;
   });
 
-  if (found) {
-    return found;
-  }
+  return found;
 };
 
 // * to populate data
@@ -95,7 +99,7 @@ const fetchBusinessById = async (id: string) => {
     }
   );
   const responseJson: APIResponse<BusinessType> = await response.json();
-  // console.log(fetchBusinessById, "fetchBusinessById line 96");
+
   if (responseJson.status === 401) {
     redirect("/login");
   }
@@ -116,30 +120,25 @@ const BusinessCardDetailPage = async ({
   // * if lender click reject button
   const rejectButtonHandler = async () => {
     "use server";
-    if ((await fetchAllRecord) === undefined) {
-      redirect(
-        `/business/${params.id}?error=${business?.name} " has never requested. Therefore, rejected button will not work"`
-      );
-    } else {
-      const recordId = await fetchAllRecord(params.id);
-      const response = await fetch(
-        `http://localhost:3000/api/record/${recordId?.id}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({ status: "REJECTED" }),
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: cookies().toString(),
-          },
-        }
-      );
+
+    const record = await fetchAllRecord(params.id);
+
+    if (record) {
+      const id = record.id;
+      const response = await fetch(`http://localhost:3000/api/record/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ status: "REJECTED" }),
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookies().toString(),
+        },
+      });
       const resJson = await response.json();
-      // console.log(resJson);
+
       if (!response.ok) {
         redirect(`/business/${params.id}?error=${resJson.error}`);
       }
       revalidatePath(`/business/${params.id}`);
-      redirect(`/business/${params.id}`);
     }
   };
 
@@ -148,6 +147,7 @@ const BusinessCardDetailPage = async ({
     <>
       {/* Main container */}
       <div className="grid grid-cols-[8fr_5fr] gap-5 justify-center p-6 ">
+        <ClientInputError />
         {/* left side */}
         <div className="flex flex-col row-span-2 text-black">
           <section className="flex-1 w-full flex flex-col justify-between gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">

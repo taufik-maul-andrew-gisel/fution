@@ -76,6 +76,9 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } } //id in record table
 ) {
+  console.log("masuk");
+  
+
   try {
     const { id } = params;
     const record = await RecordModel.readById(id);
@@ -88,8 +91,7 @@ export async function PATCH(
       id,
       status: result.status,
     });
-
-    return NextResponse.json<APIResponse<unknown>>({
+     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success PATCH /record/[id]",
       data: updatedData,

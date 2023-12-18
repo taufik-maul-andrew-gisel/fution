@@ -23,6 +23,7 @@ const lenderInputSchema = z
 export async function GET() {
   try {
     const lenders = await LenderModel.readAll();
+    // console.log(lenders)
     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success GET /lender",
