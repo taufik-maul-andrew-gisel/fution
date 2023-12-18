@@ -114,7 +114,7 @@ const LenderFillForm = async ({
     });
     const responseJson = await response.json();
     if (responseJson.status === 400) {
-      redirect(`/records/lender/:${params.id}?error=${responseJson.error}`);
+      redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
     }
     console.log(responseJson, "error message check");
     revalidatePath(`/home`);

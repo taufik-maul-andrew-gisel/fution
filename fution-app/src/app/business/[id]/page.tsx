@@ -38,12 +38,12 @@ export const lenderId = async () => {
   const fetchLender = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
       headers: {
-        "Content-Type": "application/json",
         Cookie: cookies().toString(),
       },
     });
 
     const responseJson: APIResponse<LenderType[]> = await response.json();
+    // console.log(responseJson, "fetchLender line 47");
     if (responseJson.status === 401) {
       redirect("/login");
     }
@@ -60,8 +60,13 @@ export const lenderId = async () => {
 //* PURPOSE: FOR POPULATING DATA
 //1.fetch all record
 export const fetchAllRecord = async (id: String) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
+    headers: {
+      Cookie: cookies().toString(),
+    },
+  });
   const responseJson: APIResponse<RecordType[]> = await response.json();
+  // console.log(responseJson, "fetchAllRecord line 66");
   if (responseJson.status === 401) {
     redirect("/login");
   }
@@ -82,10 +87,15 @@ export const fetchAllRecord = async (id: String) => {
 // * to populate data
 const fetchBusinessById = async (id: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/business/${id}`
+    `${process.env.NEXT_PUBLIC_URL}/api/business/${id}`,
+    {
+      headers: {
+        Cookie: cookies().toString(),
+      },
+    }
   );
   const responseJson: APIResponse<BusinessType> = await response.json();
-
+  // console.log(fetchBusinessById, "fetchBusinessById line 96");
   if (responseJson.status === 401) {
     redirect("/login");
   }
@@ -105,6 +115,7 @@ const BusinessCardDetailPage = async ({
 
   // * if lender click reject button
   const rejectButtonHandler = async () => {
+    "use server";
     if ((await fetchAllRecord) === undefined) {
       redirect(
         `/business/${params.id}?error=${business?.name} " has never requested. Therefore, rejected button will not work"`
@@ -118,12 +129,14 @@ const BusinessCardDetailPage = async ({
           body: JSON.stringify({ status: "REJECTED" }),
           headers: {
             "Content-Type": "application/json",
+            Cookie: cookies().toString(),
           },
         }
       );
       const resJson = await response.json();
+      // console.log(resJson);
       if (!response.ok) {
-        redirect(`/record/${params.id}?error=${resJson.error}`);
+        redirect(`/business/${params.id}?error=${resJson.error}`);
       }
       revalidatePath(`/business/${params.id}`);
       redirect(`/business/${params.id}`);

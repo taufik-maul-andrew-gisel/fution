@@ -119,7 +119,7 @@ const businessFillForm = async ({
     });
     const responseJson = await response.json();
     if (responseJson.status === 400) {
-      redirect(`/records/business/:${params.id}?error=${responseJson.error}`);
+      redirect(`/records/business/${params.id}?error=${responseJson.error}`);
     }
     console.log(responseJson, "error message check");
 
