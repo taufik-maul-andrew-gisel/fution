@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { sendLink } from "./nodemailor";
 
 function randomID(len: number) {
   let result = "";
@@ -56,6 +57,17 @@ const Videocall = () => {
       },
     });
   };
+
+  sendLink({
+    roomId: roomID,
+    link:
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      "?roomID=" +
+      roomID,
+  });
 
   return (
     <div
