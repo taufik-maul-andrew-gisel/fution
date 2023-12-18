@@ -12,7 +12,7 @@ export default function Home() {
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
         {/* BANNER */}
-        <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+        <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-[75vh]">
           {/* Banner foto */}
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
@@ -168,53 +168,47 @@ export default function Home() {
             <div className="text-center mb-10">
               <h2 className="landing-page-h2">MARKETPLACE FuTion's</h2>
             </div>
-            <div className="flex justify-center">
+            <div className="grid grid-cols-2 gap-5">
               {/* <!-- Card 1: PEMODAL --> */}
-              <div className="px-4 flex flex-col justify-between items-center w-[300px]">
-                <div className="flex flex-col justify-between items-center h-full p-6 bg-white shadow rounded-lg">
-                  <div className="flex flex-col items-center">
-                    <Image
-                      src="/loanMoney.png"
-                      alt="Loan Money Icon"
-                      width="100"
-                      height="100"
-                      className="mx-auto mb-4"
-                    />
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                      Lender
-                    </h3>
-                    <p className="text-gray-600">
-                      Be part of empowering SMEs by becoming a Lender at FuTion
-                    </p>
-                  </div>
-                  <button className="rounded mt-4 px-6 py-3 bg-sky-600 text-white font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-700 hover:shadow-lg">
-                    Register As Lender
-                  </button>
-                </div>
+              <div className="px-4 flex flex-col justify-between items-center bg-white rounded-lg p-6 shadow w-[100%]">
+                <Image
+                  src="/loanMoney.png"
+                  alt="Loan Money Icon"
+                  width="100"
+                  height="100"
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  Lender
+                </h3>
+                <p className="text-gray-600">
+                  Contribute towards small businesses
+                </p>
               </div>
 
               {/* <!-- Card 3: PEMINJAM --> */}
-              <div className="px-4 flex flex-col justify-between items-center w-[300px]">
-                <div className="flex flex-col justify-between items-center h-full p-6 bg-white shadow rounded-lg">
-                  <div className="flex flex-col items-center">
-                    <Image
-                      src="/loanMoney.png"
-                      alt="Loan Money Icon"
-                      width="100"
-                      height="100"
-                      className="mx-auto mb-4"
-                    />
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                      Bussiness
-                    </h3>
-                    <p className="text-gray-600">Get Money</p>
-                  </div>
-                  <button className="rounded mt-4 px-6 py-3 bg-sky-600 text-white font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-700 hover:shadow-lg">
-                    Register As Bussiness
-                  </button>
-                </div>
+              <div className="px-4 flex flex-col justify-between items-center bg-white rounded-lg p-6 shadow w-[100%]">
+                <Image
+                  src="/loanMoney.png"
+                  alt="Loan Money Icon"
+                  width="100"
+                  height="100"
+                  className="mx-auto mb-4"
+                />
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                  Bussiness
+                </h3>
+                <p className="text-gray-600">Kick-start your business journey</p>
+              </div>
+
+              <div className="col-span-2 flex justify-center">
+                <Link href="/register" className="rounded mt-4 px-6 py-3 bg-sky-200 text-black font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit">
+                  Register
+                </Link>
               </div>
             </div>
+
+
           </div>
         </div>
       </div>

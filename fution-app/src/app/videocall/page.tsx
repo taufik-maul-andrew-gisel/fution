@@ -20,7 +20,8 @@ export function getUrlParams(url = window.location.href) {
   return new URLSearchParams(urlStr);
 }
 
-const videocall = () => {
+const Videocall = () => {
+
   const roomID = getUrlParams().get("roomID") || randomID(5);
   let myMeeting = async (element: any) => {
     // generate Kit Token
@@ -66,4 +67,4 @@ const videocall = () => {
   );
 };
 
-export default videocall;
+export default Videocall;
