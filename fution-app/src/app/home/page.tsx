@@ -111,6 +111,9 @@ const Page = async () => {
     })
   }
   
+  if (!lender && !business) {
+    redirect("/form");
+  }
 
   return (
     <>
