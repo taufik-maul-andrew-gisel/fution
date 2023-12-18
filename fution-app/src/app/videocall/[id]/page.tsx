@@ -21,7 +21,8 @@ export function getUrlParams(url = window.location.href) {
   return new URLSearchParams(urlStr);
 }
 
-const Videocall = () => {
+const Videocall = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   const roomID = getUrlParams().get("roomID") || randomID(5);
   let myMeeting = async (element: any) => {
     // generate Kit Token
@@ -67,6 +68,7 @@ const Videocall = () => {
       window.location.pathname +
       "?roomID=" +
       roomID,
+    id,
   });
 
   return (
