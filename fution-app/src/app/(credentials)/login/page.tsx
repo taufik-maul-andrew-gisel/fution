@@ -2,8 +2,16 @@ import ClientInputError from "@/global-components/ClientInputError";
 import { login } from "./action";
 import Link from "next/link";
 import ImagePanel from "../ImagePanel";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Login = () => {
+
+  const tokenFromCookies = cookies().get("token");
+  if (tokenFromCookies && tokenFromCookies.value.length > 0) {
+      redirect("/home");
+  }
+
   return (
     <>
       <div className="flex min-h-screen">

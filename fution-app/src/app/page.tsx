@@ -12,31 +12,38 @@ export default function Home() {
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
         {/* BANNER */}
-        <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-[75vh]">
+        <div className="relative py-20 flex content-center items-center justify-center">
           {/* Banner foto */}
           <div
-            className="absolute top-0 w-full h-full bg-center bg-cover"
+            className="absolute top-0 w-full h-full bg-center bg-cover blur-[2px]"
             style={{
               backgroundImage: 'url("excited.png")',
             }}
           >
-            <span className="w-full h-full absolute opacity-75 bg-slate-200" />
+            <span className="w-full h-full absolute opacity-75 bg-slate-100" />
           </div>
 
           {/* Banner word */}
           <div className="container relative mx-auto">
             <div className="items-center flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-                <div className="pr-12">
-                  <h1 className="text-black font-semibold text-5xl">
-                    Your story starts with us.
-                  </h1>
-                  <p className="mt-4 text-lg text-black">
-                    FuTion: Where ambitions are financed and dreams realized.
-                    Join the leading platform connecting lenders to growth
-                    opportunities and borrowers to seamless funding solutions.
-                    Invest, borrow, and succeed with FuTion.
-                  </p>
+              <div className="lg:w-6/12 pt-4 ml-auto mr-auto text-center">
+                <div className="pr-12 flex flex-col justify-between">
+                  <div>
+                    <h1 className="text-black font-semibold text-5xl">
+                      Your story starts with us.
+                    </h1>
+                    <p className="my-4 text-lg text-black">
+                      FuTion: Where ambitions are financed and dreams realized.
+                      Join the leading platform connecting lenders to growth
+                      opportunities and borrowers to seamless funding solutions.
+                      Invest, borrow, and succeed with FuTion.
+                    </p>
+                  </div>
+                  <div className="flex justify-center items-center">
+                    <Link href="/register" className="rounded-lg mt-10 px-9 py-4 bg-sky-200 text-black text-lg font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit">
+                      Get Started
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
