@@ -26,44 +26,60 @@ async function Nav() {
 
   return (
     <>
-<div className="flex flex-row justify-between items-center shadow-lg bg-white z-10 h-12 px-10 py-4">
-  <Link href="/">
-    <Image
-        src="/logo.png"
-        alt=""
-        width="200"
-        height="200"
-        className="object-cover"
-    />
-  </Link>
+      <div className="flex flex-row justify-between items-center shadow-lg bg-white z-10 h-12 px-10 py-4">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt=""
+            width="200"
+            height="200"
+            className="object-cover"
+          />
+        </Link>
 
-  <div className="flex">
-      <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">How it works</button>
-      <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">About us</button>
-    {auth ? (
-      <>
-        <form
-          action={async () => {
-            "use server";
-            cookies().get("token") && cookies().delete("token");
-            redirect("/");
-          }}
-        >
-          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Logout</button>
-        </form>
-      </>
-    ) : (
-      <>
-        <Link href="/login">
-          <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Login</h3>
-        </Link>
-        <Link href="/register">
-          <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">Register</h3>
-        </Link>
-      </>
-    )}
-  </div>
-</div>
+        <div className="flex">
+          <Link href="/home">
+            <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+              Home
+            </button>
+          </Link>
+
+          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+            How it works
+          </button>
+          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+            About us
+          </button>
+          {auth ? (
+            <>
+              <form
+                action={async () => {
+                  "use server";
+                  cookies().get("token") && cookies().delete("token");
+                  redirect("/");
+                }}
+              >
+                <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Logout
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Login
+                </h3>
+              </Link>
+              <Link href="/register">
+                <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Register
+                </h3>
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
     </>
   );
 }

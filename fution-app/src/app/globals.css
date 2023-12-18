@@ -34,3 +34,12 @@ body {
   margin-bottom: 2.5rem/* 40px */;
 }
 
+.landing-Footer-h2 {
+  font-size: 1.125 rem/* 18px */;
+  line-height: 1.75 rem/* 28px */;
+  font-weight: 600;
+  margin-bottom: 0.5rem/* 8px */;
+  text-decoration: underline;
+
+}
+
