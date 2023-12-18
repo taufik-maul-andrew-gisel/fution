@@ -7,11 +7,14 @@ import getRealTimeInflation from "@/utils/inflationData";
 
 export default class RecordModel {
   static async readAll() {
-    return await prisma.record.findMany();
+    return await prisma.record.findMany({ orderBy: { updatedAt: "desc" } });
   }
 
   static async readById(id: string) {
-    return await prisma.record.findFirst({ where: { id } });
+    return await prisma.record.findFirst({ 
+      where: { id }, 
+      include: { loanee: true, loaner: true }
+    });
   }
 
   static async readAllByUser(userId: string) {
@@ -21,13 +24,14 @@ export default class RecordModel {
     });
   }
 
-  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string }) {
-    const { amount, due, businessId, lenderId } = input;
+  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string, interest: number }) {
+    const { amount, due, businessId, lenderId, interest } = input;
     return await prisma.record.create({ data: {
       amount,
       due,
       loaneeId: businessId,
       loanerId: lenderId,
+      interest
     } })
   }
 
@@ -63,10 +67,18 @@ export default class RecordModel {
   
   static async patchStatus(input: { id: string; status: LoanStatus }) {
     const { id, status } = input;
-    return await prisma.record.update({
-      where: { id },
-      data: { status },
-    });
+    if (status === "PAID") {
+        const debt = await RecordModel.getDebtAfterInterest(id);
+        return await prisma.record.update({
+          where: { id },
+          data: { status, amount: debt?.curr }
+        })
+    } else {
+      return await prisma.record.update({
+        where: { id },
+        data: { status },
+      });
+    }
   }
 
   static async getRecordsByLoaneeId(loaneeId: string) {

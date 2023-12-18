@@ -74,7 +74,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } } //id in record table
 ) {
   try {
     const { id } = params;
@@ -88,6 +88,7 @@ export async function PATCH(
       id,
       status: result.status,
     });
+
     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success PATCH /record/[id]",

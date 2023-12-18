@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { useState } from "react";
 import { UserRole } from "@prisma/client";
+import Image from "next/image";
 
 async function Nav() {
   let auth = false;
@@ -25,51 +26,60 @@ async function Nav() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 shadow-md bg-white">
-        <div className="flex flex-row justify-between items-center h-20 px-10 py-4">
-          <Link href="/">
-            <h3>
-              <img
-                src="/logo.png"
-                alt="Logo"
-                style={{ width: "200px" }}
-                className="object-cover"
-              />
-            </h3>
+      <div className="flex flex-row justify-between items-center shadow-lg bg-white z-10 h-12 px-10 py-4">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt=""
+            width="200"
+            height="200"
+            className="object-cover"
+          />
+        </Link>
+
+        <div className="flex">
+          <Link href="/home">
+            <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+              Home
+            </button>
           </Link>
 
-          <div className="flex">
-            <Link href="/how-it-works">
-              <h3 className="px-5 py-2 text-black">How it works</h3>
-            </Link>
-            <Link href="/about-us">
-              <h3 className="px-5 py-2 text-black">About us</h3>
-            </Link>
-            {auth ? (
-              <>
-                <form
-                  action={async () => {
-                    "use server";
-                    cookies().get("token") && cookies().delete("token");
-                    redirect("/");
-                  }}
-                >
-                  <button className="px-5 py-2 text-black">Logout</button>
-                </form>
-              </>
-            ) : (
-              <>
-                <Link href="/login">
-                  <h3 className="px-5 py-2 text-black">Login</h3>
-                </Link>
-                <Link href="/register">
-                  <h3 className="px-5 py-2 text-black">Register</h3>
-                </Link>
-              </>
-            )}
-          </div>
+          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+            How it works
+          </button>
+          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+            About us
+          </button>
+          {auth ? (
+            <>
+              <form
+                action={async () => {
+                  "use server";
+                  cookies().get("token") && cookies().delete("token");
+                  redirect("/");
+                }}
+              >
+                <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Logout
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Login
+                </h3>
+              </Link>
+              <Link href="/register">
+                <h3 className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+                  Register
+                </h3>
+              </Link>
+            </>
+          )}
         </div>
-      </nav>
+      </div>
     </>
   );
 }

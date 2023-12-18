@@ -10,6 +10,7 @@ const recordInputSchema = z
     due: z.date(),
     businessId: z.string().uuid(),
     lenderId: z.string().uuid(),
+    interest: z.number().min(0)
   })
   .refine(
     (schema) => schema.due > new Date(),
@@ -34,16 +35,22 @@ export async function POST(req: NextRequest) {
     // step 1: get input
     const input = await req.json();
     input.due = new Date(input.due);
-
+    input.amount = Number(input.amount)
+    input.interest = Number(input.interest)
+    // console.log(input, "<<<<");
+    
     // step 2: validate input
     const parsed = recordInputSchema.safeParse(input);
+    console.log(parsed, "parsed result")
     if (!parsed.success) {
       throw parsed.error;
     }
 
+   
+
     // step 3: POST to db, return response
-    const { amount, due, businessId, lenderId } = parsed.data;
-    const newRecord = await RecordModel.add({ amount, due, businessId, lenderId });
+    const { amount, due, interest, businessId, lenderId } = parsed.data;
+    const newRecord = await RecordModel.add({ amount, due, businessId, lenderId, interest });
     return NextResponse.json<APIResponse<unknown>>(
         { status: 201, message: "success POST /record", data: newRecord }, 
         { status: 201 }
