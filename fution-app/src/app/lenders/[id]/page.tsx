@@ -108,7 +108,6 @@ export const fetchLenderById = async (id: string) => {
 const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
   // * to populate data
   const lender = await fetchLenderById(params.id);
-  console.log(lender);
 
   // * tampilan
   return (
@@ -150,7 +149,7 @@ const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
 
                 <Link
                   className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e7e24c] transition-all duration-150 ease-in hover:bg-[#c06363]"
-                  href={`/testRecordLender/${lender?.id}`} //lendersid
+                  href={`/records/business/${lender?.id}`} //lendersid
                 >
                   Request Fund
                 </Link>

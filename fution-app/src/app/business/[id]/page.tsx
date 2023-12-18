@@ -161,7 +161,7 @@ const BusinessCardDetailPage = async ({
               <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
                 <Link
                   className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#c06363]"
-                  href={`/recordlenders/${params.id}`}
+                  href={`/records/lender/${params.id}`}
                 >
                   Negotiate
                 </Link>
