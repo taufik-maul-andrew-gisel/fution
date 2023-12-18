@@ -10,14 +10,13 @@ const CardRecord = ({
 }) => {
   const { record } = data;
   const { id, amount, interest, status, due } = record;
-
-  return (
-    <>
-      <div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300">
-        <div className="h-full w-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg">
-          <div className="flex-grow text-center p-6 bg-gray-800 border-b flex flex-col justify-between">
-            <div>
-              <svg
+  
+  return (<>
+<div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300"> 
+  <div className="h-full w-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg"> 
+    <div className="flex-grow text-center p-6 bg-gray-800 border-b flex flex-col justify-between">
+        <div>
+            <svg
                 aria-hidden="true"
                 role="img"
                 className="h-24 w-24 text-white rounded-full mx-auto"

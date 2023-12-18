@@ -90,20 +90,20 @@ const businessFillForm = async ({
   params: { id: string }; //this id is lender id
 }) => {
   const bId = await businessId();
-  console.log(bId, "businessId");
-  console.log(params.id, "lenderId");
+  // console.log(bId, "businessId");
+  // console.log(params.id, "lenderId");
 
   const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
     params.id
   );
-  console.log(lenderCurrentValue, "record");
+  // console.log(lenderCurrentValue, "record");
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
     console.log("masuk");
     console.log(formData.get("due"), "due in client");
 
-    const response = await fetch("http://localhost:3000/api/record", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
       method: "POST",
       body: JSON.stringify({
         amount: formData.get("amount"),
