@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Footer() {
@@ -9,22 +10,30 @@ function Footer() {
         <div className="flex justify-between items-start px-10">
           {/* FUTION Information */}
           <div>
-            <h2 className="text-lg font-semibold mb-2">FUTION</h2>
-            <ul className="space-y-1">
-              <li>Home</li>
-              <li>Sitemap</li>
-              <li>FAQ</li>
+            <h2 className="landing-Footer-h2">
+              <ul>Fution</ul>
+            </h2>
+            <ul className="space-y-1 ">
+              <Link className="hover:underline hover:cursor-pointer" href={"/"}>
+                Home
+              </Link>
+              <li className="hover:underline hover:cursor-pointer">Sitemap</li>
+              <li className="hover:underline hover:cursor-pointer">FAQ</li>
             </ul>
           </div>
 
           {/* CONTACT US Information */}
           <div>
-            <h2 className="text-lg font-semibold mb-2">CONTACT US</h2>
+            {/* CONTACT US Information */}
+            <h2 className="landing-Footer-h2">
+              <u className="">Contact Us</u>
+            </h2>
+
             <ul>
               <li className="flex items-center">
                 <img
-                  width="48"
-                  height="48"
+                  width="30"
+                  height="30"
                   src="https://img.icons8.com/color/48/whatsapp--v1.png"
                   alt="whatsapp--v1"
                 />
@@ -32,8 +41,8 @@ function Footer() {
               </li>
               <li className="flex items-center">
                 <img
-                  width="48"
-                  height="48"
+                  width="30"
+                  height="30"
                   src="https://img.icons8.com/ios-glyphs/60/send-mass-email.png"
                   alt="send-mass-email"
                 />
@@ -44,7 +53,9 @@ function Footer() {
 
           {/* Social Media Information */}
           <div>
-            <h2 className="text-lg font-semibold mb-2">SOCIAL MEDIA</h2>
+            <h2 className="landing-Footer-h2">
+              <u className="">Social Media</u>
+            </h2>
             <div className="flex space-x-2">
               {/* Social Media Icons */}
               <img
@@ -76,11 +87,12 @@ function Footer() {
 
           {/* SECURITY Information */}
           <div>
-            <h2 className="text-lg font-semibold mb-2">SECURITY</h2>
+            <h2 className="landing-Footer-h2">SECURITY</h2>
             <img
               src="/security.png"
               alt="Security Badge"
-              className="w-auto h-20"
+              width={100}
+              height={100}
             />
           </div>
         </div>
