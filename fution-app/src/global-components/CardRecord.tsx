@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { RecordType } from "@/app/api/typedef";
 import Link from "next/link";
+import { toDollarFormat } from "@/utils/toDollarFormat";
 
 const CardRecord = ({
   data,
@@ -67,7 +68,7 @@ const CardRecord = ({
                   Debt
                 </p>
                 <p className="text-sm font-medium text-gray-800 leading-none">
-                  ${amount.toString()}
+                  {toDollarFormat(Number(amount.toString()))}
                 </p>
               </div>
             </div>

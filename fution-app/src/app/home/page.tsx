@@ -166,12 +166,21 @@ const Page = async () => {
               >
                 {business && (
                   <>
-                    <li className="flex justify-between">
-                      Credibility: <span>{business.credibility}%</span>
-                    </li>
-                    <li className="flex justify-between">
-                      Status: <StatusColour colour={business.status} />
-                    </li>
+                    { business.credibility >= 80 && (
+                      <li className="flex justify-between">
+                        Credibility: <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
+                      </li>
+                    ) }
+                    { business.credibility >= 65 && business.credibility < 80 && (
+                      <li className="flex justify-between">
+                        Credibility: <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
+                      </li>
+                    ) }
+                    { business.credibility >= 0 && business.credibility < 65 && (
+                      <li className="flex justify-between">
+                        Credibility: <span className="text-red-600 font-semibold">{business.credibility}%</span>
+                      </li>
+                    ) }
                   </>
                 )}
               </ul>
