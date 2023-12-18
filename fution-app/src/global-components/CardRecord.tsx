@@ -31,7 +31,7 @@ const CardRecord = ({ data }: { data: { record: RecordType, name: string | undef
             </p>
         </div>
         <div className="mt-5">
-            <Link href={`/record/${id}`} className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
+            <Link href={`/records/${id}`} className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100">
             See Detail
             </Link>
         </div>
