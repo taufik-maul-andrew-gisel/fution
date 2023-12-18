@@ -54,7 +54,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
         </div>
 
         {/* loanee */}
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
             <div>
                 <img
                     src="/profile-pic.png"
@@ -69,13 +69,18 @@ async function RecordDetail({ params }: { params: { id: string } }) {
                         {record?.loanee.creditScore}
                     </p>
                 </div>
-                <div className="mt-2 flex justify-between">
-                    <p className="font-semibold" style={{ fontSize: "0.9rem" }}>FuTion score</p>
+                <div className="mt-2 flex justify-between tooltip">
+                    <div className="flex">
+                        <p className="font-semibold" style={{ fontSize: "0.9rem" }}>FuTion score</p>
+                        <div className="tooltiptext text-sm">
+                            This score based on the ratio of how many rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
+                        </div>
+                    </div>
                     <p className="text-sm">
                         {record?.loanee.credential}%
                     </p>
                 </div>
-                <div className="mt-2 flex justify-between">
+                <div className="mt-2 flex justify-between tooltip">
                     <p className="font-semibold" style={{ fontSize: "0.9rem" }}>Credibility</p>
                     { record && record.loanee.credibility >= 80 && (
                         <p className="text-sm text-emerald-600 font-semibold">{record.loanee.credibility}%</p>
@@ -86,17 +91,20 @@ async function RecordDetail({ params }: { params: { id: string } }) {
                     { record && record.loanee.credibility >= 0 && record.loanee.credibility < 65 && (
                         <p className="text-sm text-red-600 font-semibold">{record.loanee.credibility}%</p>
                     ) }
+                    <div className="tooltiptext text-sm">
+                        This score is based on the ratio of a business's credit score to its FuTion score.
+                    </div>
                 </div>
             </div>
         </div>
 
         {/* record */}
-        <div className="col-span-2 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="col-span-2 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7">
             <RecordComponent record={record} debt={debt} />
         </div>
 
         {/* loaner */}
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden p-3">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm p-3">
             <div>
                 <img
                     src="/profile-pic.png"
@@ -126,19 +134,19 @@ async function RecordDetail({ params }: { params: { id: string } }) {
         </div>
 
         {/* future payment */}
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear1}-Q${nextQ1}`}</h4>
             <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[0]) * 100) / 100)}</p>
         </div>
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear2}-Q${nextQ2}`}</h4>
             <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[1]) * 100) / 100)}</p>
         </div>
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear3}-Q${nextQ3}`}</h4>
             <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[2]) * 100) / 100)}</p>
         </div>
-        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+        <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
             <h4 className="text-base font-semibold my-1">{`${nextYear4}-Q${nextQ4}`}</h4>
             <p className="text-sm">{toDollarFormat(Math.round(Number(debt?.next[3]) * 100) / 100)}</p>
         </div>

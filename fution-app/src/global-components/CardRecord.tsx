@@ -142,7 +142,7 @@ const CardRecord = ({
                 <p className="text-sm font-medium text-gray-800 leading-none">
                   Status
                 </p>
-                { (status === "DEBT" || status === "OVERDUE") 
+                { (status === "REJECTED" || status === "OVERDUE") 
                 ? (
                   <p className="text-sm font-medium text-red-600 leading-none">
                     {status}

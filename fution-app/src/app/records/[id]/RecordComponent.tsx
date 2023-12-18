@@ -10,11 +10,11 @@ function RecordComponent({ record, debt }: { record?: RecordDetailType, debt?: {
 } }) {
 return (<>
     <div>
-        { record?.status === "REJECTED" && <p className="text-xl font-bold m-4 text-center text-red-500">REJECTED</p> }
-        { record?.status === "OVERDUE" && <p className="text-xl font-bold m-4 text-center text-red-500">OVERDUE</p> }
-        { record?.status === "PENDING" && <p className="text-xl font-bold m-4 text-center">PENDING</p> }
-        { record?.status === "PAID" && <p className="text-xl font-bold m-4 text-center text-emerald-500">PAID</p> }
-        { record?.status === "DEBT" && <p className="text-xl font-bold m-4 text-center">DEBT</p> }
+        { record?.status === "REJECTED" && <p className="text-xl font-bold mt-4 mb-2 text-center text-red-500">REJECTED</p> }
+        { record?.status === "OVERDUE" && <p className="text-xl font-bold mt-4 mb-2 text-center text-red-500">OVERDUE</p> }
+        { record?.status === "PENDING" && <p className="text-xl font-bold mt-4 mb-2 text-center">PENDING</p> }
+        { record?.status === "PAID" && <p className="text-xl font-bold mt-4 mb-2 text-center text-emerald-500">PAID</p> }
+        { record?.status === "DEBT" && <p className="text-xl font-bold mt-4 mb-2 text-center">DEBT</p> }
     </div>
     <div className="text-sm">
         { record?.status === "PAID" && <p className="mb-2">Loan is paid successfully.</p> }
@@ -59,7 +59,7 @@ return (<>
             </div>
         ) }
         { record?.status === "REJECTED" && <p>This request has been rejected by {record.loaner.name}.</p> }
-        { record?.status === "OVERDUE" && <p className="mb-2">This loan is not paid back before the due date.</p> }
+        { record?.status === "OVERDUE" && <p className="mb-2">This loan is not paid off before the due date.</p> }
         { record?.status === "OVERDUE" && (
             <div className="flex justify-between items-center pr-3 font-semibold text-base">
                 <p>Amount</p> 
@@ -72,16 +72,12 @@ return (<>
                 <p>{ record.interest.toString() }%</p> 
             </div>
         ) }
+        { record?.status === "OVERDUE" && <p className="mt-2">Payment is no longer possible on this website. If you intend to pay this off, please contact your lender for more information.</p> }
 
     </div>
     <div className="ml-auto mr-0 mb-4 font-semibold text-sm">
         {/* need authorisation */}
         { record?.status === "DEBT" && (<>
-            <Link href="/home" className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-5 ml-2 shadow">
-                Pay
-            </Link>
-        </>) }
-        { record?.status === "OVERDUE" && (<>
             <Link href="/home" className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-5 ml-2 shadow">
                 Pay
             </Link>
