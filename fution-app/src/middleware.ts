@@ -29,6 +29,8 @@ export const middleware = async (request: NextRequest) => {
 
     const cookiesStore = cookies();
     const token = cookiesStore.get("token");
+    console.log(token, "middleware");
+    
     
     if (!token) {
       return NextResponse.json({

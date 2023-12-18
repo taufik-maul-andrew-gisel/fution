@@ -17,14 +17,21 @@ import { validateHeaderValue } from "http";
 import { unknown } from "zod";
 import Cookies from "js-cookie";
 
-const token = Cookies.get("token"); // => 'value'
-// const role = req.headers.get("x-user-role") as UserRole;
+// ------------------------------------------------------------
 
 // ! function outside functional component
-//* PURPOSE: FOR GETTING BUSINESS ID
-export const businessId = async () => {
+//* PURPOSE: FOR GETTING LENDER ID
+export const lenderId = async () => {
+  const token = Cookies.get("token");
+
   if (!token) {
-    throw new Error("Unauthorized");
+    return NextResponse.json(
+      {
+        status: 401,
+        error: "Unauthorized",
+      },
+      { status: 401 }
+    );
   }
   const tokenData = await readPayloadJose<{
     id: string;
@@ -32,25 +39,22 @@ export const businessId = async () => {
     role: string;
   }>(token);
 
-  const fetchBusiness = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/business`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: token,
-        },
-      }
-    );
-    const responseJson: APIResponse<BusinessType[]> = await response.json();
+  const fetchLender = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `token=${token}`,
+      },
+    });
+    const responseJson: APIResponse<LenderType[]> = await response.json();
     if (responseJson.status === 401) {
       redirect("/login");
     }
     return responseJson.data;
   };
 
-  const found = (await fetchBusiness())?.find(
-    (element: BusinessType) => element.userId === tokenData.id
+  const found = (await fetchLender())?.find(
+    (element: LenderType) => element.userId === tokenData.id
   );
 
   return found?.id;
@@ -59,14 +63,11 @@ export const businessId = async () => {
 //* PURPOSE: FOR POPULATING DATA
 //1.fetch all record
 export const fetchAllRecord = async (id: String) => {
-  if (!token) {
-    throw new Error("Unauthorized");
-  }
-
+  const token = Cookies.get("token");
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
     headers: {
       "Content-Type": "application/json",
-      Cookie: token,
+      Cookie: `token=${token}`,
     },
   });
   const responseJson: APIResponse<RecordType[]> = await response.json();
@@ -75,11 +76,11 @@ export const fetchAllRecord = async (id: String) => {
   }
 
   //2.find one record based on loaneeId and loanerId
-  const bId = await businessId();
-  console.log(bId, "business id");
+  const lId = await lenderId();
+  // console.log(lId, "lender id");
 
   const found = responseJson.data?.find((element: RecordType) => {
-    return element.loanerId === id && element.loaneeId === bId;
+    return element.loaneeId === id && element.loanerId === lId;
   });
 
   if (found) {
@@ -87,14 +88,16 @@ export const fetchAllRecord = async (id: String) => {
   }
 };
 
-//----------------------------------------------------------------
+//--------------------------------------------------------
 
 // !Functional component
-const BusinessFillRecord = ({
+const LenderFillRecord = ({
   params,
 }: {
-  params: { id: string }; //this id is lenders id
+  params: { id: string }; //this id is business id
 }) => {
+  console.log(params.id, "lenders id");
+
   const navigation = useRouter();
 
   const [formValue, setFormValue] = useState({
@@ -103,29 +106,21 @@ const BusinessFillRecord = ({
     interest: "",
   });
 
-  const [bId, setBId] = useState<string | undefined>("");
+  let lId: string | undefined = "intiallId";
 
-  const fetchData = async () => {
-    try {
-      console.log("masuk use effect");
-      setBId(await businessId());
+  useEffect(() => {
+    async () => {
+      lId = await lenderId();
 
       const isThereRecords = await fetchAllRecord(params.id);
-      console.log(isThereRecords);
-      if (isThereRecords) {
+      if (isThereRecords !== undefined) {
         setFormValue({
           amount: isThereRecords.amount.toString(),
           due: isThereRecords.due.toString(),
           interest: isThereRecords.interest.toString(),
         });
       }
-    } catch (error) {
-      console.log("Error in fetchData:");
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
+    };
   }, []);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,20 +137,21 @@ const BusinessFillRecord = ({
       amount: Number(formValue.amount),
       due: formValue.due,
       interest: Number(formValue.interest),
-      businessId: bId,
+      businessId: lId,
       lenderId: params.id,
     };
-    if (!token) {
-      throw new Error("Unauthorized");
-    }
+
     const response = await fetch("http://localhost:3000/api/record", {
       method: "POST",
       body: JSON.stringify(theBody),
       headers: {
         "Content-Type": "application/json",
-        Cookie: token,
+        credentials: "include",
       },
     });
+
+    const responseJson = await response.json();
+    console.log(responseJson);
 
     setFormValue({
       amount: "",
@@ -164,7 +160,7 @@ const BusinessFillRecord = ({
     });
 
     navigation.refresh();
-    navigation.push(`/lender/${params.id}`);
+    navigation.push(`/business/${params.id}`);
   };
 
   return (
@@ -243,4 +239,4 @@ const BusinessFillRecord = ({
   );
 };
 
-export default BusinessFillRecord;
+export default LenderFillRecord;

@@ -1,13 +1,97 @@
-import { APIResponse, BusinessType, LenderType } from "@/app/api/typedef";
+import {
+  APIResponse,
+  BusinessType,
+  LenderType,
+  RecordType,
+} from "@/app/api/typedef";
+import { readPayloadJose } from "@/utils/jwt";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
-const fetchLenderById = async (id: string) => {
+// --------------------------------------------------------------------
+
+// ! function outside functional component
+//* PURPOSE: FOR GETTING BUSINESS ID
+export const businessId = async () => {
+  const cookiesStore = cookies();
+  const token = cookiesStore.get("token");
+
+  if (!token) {
+    return NextResponse.json(
+      {
+        status: 401,
+        error: "Unauthorized",
+      },
+      { status: 401 }
+    );
+  }
+  const tokenData = await readPayloadJose<{
+    id: string;
+    username: string;
+    role: string;
+  }>(token.value);
+
+  const fetchBusiness = async () => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/business`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookies().toString(),
+        },
+      }
+    );
+    const responseJson: APIResponse<BusinessType[]> = await response.json();
+    if (responseJson.status === 401) {
+      redirect("/login");
+    }
+    return responseJson.data;
+  };
+
+  const found = (await fetchBusiness())?.find(
+    (element: BusinessType) => element.userId === tokenData.id
+  );
+
+  return found?.id;
+};
+
+//* PURPOSE: FOR POPULATING DATA
+//1.fetch all record
+export const fetchAllRecord = async (id: String) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookies().toString(),
+    },
+  });
+  const responseJson: APIResponse<RecordType[]> = await response.json();
+  if (responseJson.status === 401) {
+    redirect("/login");
+  }
+
+  //2.find one record based on loaneeId and loanerId
+  const bId = await businessId();
+
+  const found = responseJson.data?.find((element: RecordType) => {
+    return element.loanerId === id && element.loaneeId === bId;
+  });
+
+  if (found) {
+    return found;
+  }
+};
+
+// * to populate data
+export const fetchLenderById = async (id: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/lender/${id}`,
     {
-      headers: { Cookie: cookies().toString() },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookies().toString(),
+      },
     }
   );
   const responseJson: APIResponse<LenderType> = await response.json();
@@ -18,9 +102,15 @@ const fetchLenderById = async (id: string) => {
   return responseJson.data;
 };
 
-const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
-  const lender = await fetchLenderById(params.id);
+//----------------------------------------------------------------
 
+// !Functional component
+const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
+  // * to populate data
+  const lender = await fetchLenderById(params.id);
+  console.log(lender);
+
+  // * tampilan
   return (
     <>
       {/* Main container */}
@@ -60,7 +150,7 @@ const LenderCardDetailPage = async ({ params }: { params: { id: string } }) => {
 
                 <Link
                   className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e7e24c] transition-all duration-150 ease-in hover:bg-[#c06363]"
-                  href={`/recordbusiness/${params.id}`} //lendersid
+                  href={`/testRecordLender/${lender?.id}`} //lendersid
                 >
                   Request Fund
                 </Link>

@@ -1,48 +1,45 @@
-"use client";
-// !IMPORT
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 import {
   APIResponse,
   BusinessType,
   LenderType,
   RecordType,
 } from "@/app/api/typedef";
-import User from "@/models/user";
-import { NextResponse } from "next/server";
 import { readPayloadJose } from "@/utils/jwt";
-import ClientInputError from "@/global-components/ClientInputError";
-import { validateHeaderValue } from "http";
-import { unknown } from "zod";
-import Cookies from "js-cookie";
-
-const token = Cookies.get("token"); // => 'value'
-// const role = req.headers.get("x-user-role") as UserRole;
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 // ! function outside functional component
 //* PURPOSE: FOR GETTING BUSINESS ID
 export const businessId = async () => {
+  const cookiesStore = cookies();
+  const token = cookiesStore.get("token");
+
   if (!token) {
-    throw new Error("Unauthorized");
+    return NextResponse.json(
+      {
+        status: 401,
+        error: "Unauthorized",
+      },
+      { status: 401 }
+    );
   }
   const tokenData = await readPayloadJose<{
     id: string;
     username: string;
     role: string;
-  }>(token);
+  }>(token.value);
 
   const fetchBusiness = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/business`,
       {
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: token,
-        },
+        headers: { Cookie: cookies().toString() },
       }
     );
     const responseJson: APIResponse<BusinessType[]> = await response.json();
+
     if (responseJson.status === 401) {
       redirect("/login");
     }
@@ -56,17 +53,13 @@ export const businessId = async () => {
   return found?.id;
 };
 
-//* PURPOSE: FOR POPULATING DATA
+// //* PURPOSE: FOR POPULATING DATA
 //1.fetch all record
 export const fetchAllRecord = async (id: String) => {
-  if (!token) {
-    throw new Error("Unauthorized");
-  }
-
   const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
     headers: {
       "Content-Type": "application/json",
-      Cookie: token,
+      Cookie: cookies().toString(),
     },
   });
   const responseJson: APIResponse<RecordType[]> = await response.json();
@@ -75,11 +68,11 @@ export const fetchAllRecord = async (id: String) => {
   }
 
   //2.find one record based on loaneeId and loanerId
-  const bId = await businessId();
-  console.log(bId, "business id");
+  const lId = await businessId();
+  // console.log(lId, "lender id");
 
   const found = responseJson.data?.find((element: RecordType) => {
-    return element.loanerId === id && element.loaneeId === bId;
+    return element.loaneeId === id && element.loanerId === lId;
   });
 
   if (found) {
@@ -87,84 +80,41 @@ export const fetchAllRecord = async (id: String) => {
   }
 };
 
-//----------------------------------------------------------------
+//--------------------------------------------------------
 
 // !Functional component
-const BusinessFillRecord = ({
+const businessFillForm = async ({
   params,
 }: {
-  params: { id: string }; //this id is lenders id
+  params: { id: string }; //this id is business id
 }) => {
-  const navigation = useRouter();
+  const lId = await businessId();
 
-  const [formValue, setFormValue] = useState({
-    amount: "",
-    due: "",
-    interest: "",
-  });
+  const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
+    params.id
+  );
+  console.log(lenderCurrentValue);
 
-  const [bId, setBId] = useState<string | undefined>("");
+  const onSubmitHandler = async (formData: FormData) => {
+    "use server";
 
-  const fetchData = async () => {
-    try {
-      console.log("masuk use effect");
-      setBId(await businessId());
-
-      const isThereRecords = await fetchAllRecord(params.id);
-      console.log(isThereRecords);
-      if (isThereRecords) {
-        setFormValue({
-          amount: isThereRecords.amount.toString(),
-          due: isThereRecords.due.toString(),
-          interest: isThereRecords.interest.toString(),
-        });
-      }
-    } catch (error) {
-      console.log("Error in fetchData:");
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValue({
-      ...formValue,
-      [event.target.id]: event.target.value,
-    });
-  };
-
-  const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const theBody = {
-      amount: Number(formValue.amount),
-      due: formValue.due,
-      interest: Number(formValue.interest),
-      businessId: bId,
-      lenderId: params.id,
-    };
-    if (!token) {
-      throw new Error("Unauthorized");
-    }
-    const response = await fetch("http://localhost:3000/api/record", {
+    await fetch("http://localhost:3001/api/record", {
       method: "POST",
-      body: JSON.stringify(theBody),
+      body: JSON.stringify({
+        amount: formData.get("amount"),
+        interest: formData.get("interest"),
+        due: formData.get("due"),
+        businessId: lId,
+        lenderId: params.id,
+      }),
       headers: {
         "Content-Type": "application/json",
-        Cookie: token,
+        Cookie: cookies().toString(),
       },
     });
 
-    setFormValue({
-      amount: "",
-      due: "",
-      interest: "",
-    });
-
-    navigation.refresh();
-    navigation.push(`/lender/${params.id}`);
+    revalidatePath("/");
+    redirect("/");
   };
 
   return (
@@ -173,11 +123,10 @@ const BusinessFillRecord = ({
         <h1 className="text-black text-center text-4xl font-bold m-10">
           Record Form
         </h1>
-        <ClientInputError />
 
         <form
           className=" w-1/2 m-10 border-2 border-slate-200 bg-slate-50 text-black rounded-lg p-4 space-y-4"
-          onSubmit={onSubmitHandler}
+          action={onSubmitHandler}
         >
           <div>
             <label
@@ -188,10 +137,12 @@ const BusinessFillRecord = ({
             </label>
             <input
               type="number"
+              name="amount"
               id="amount"
+              defaultValue={
+                lenderCurrentValue ? lenderCurrentValue.amount.toString() : ""
+              }
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-              value={formValue.amount}
-              onChange={onChangeHandler}
             />
           </div>
 
@@ -205,9 +156,11 @@ const BusinessFillRecord = ({
             <input
               type="date"
               id="due"
+              name="date"
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-              value={formValue.due}
-              onChange={onChangeHandler}
+              defaultValue={
+                lenderCurrentValue ? lenderCurrentValue.due.toString() : ""
+              }
             />
           </div>
 
@@ -222,9 +175,11 @@ const BusinessFillRecord = ({
               type="number"
               step="0.1"
               id="interest"
+              name="interest"
+              defaultValue={
+                lenderCurrentValue ? lenderCurrentValue.interest.toString() : ""
+              }
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
-              value={formValue.interest}
-              onChange={onChangeHandler}
             />
           </div>
 
@@ -243,4 +198,4 @@ const BusinessFillRecord = ({
   );
 };
 
-export default BusinessFillRecord;
+export default businessFillForm;
