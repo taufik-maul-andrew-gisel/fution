@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { RecordType } from "@/app/api/typedef";
 import Link from "next/link";
+import { toDollarFormat } from "@/utils/toDollarFormat";
 
 const CardRecord = ({
   data,
@@ -67,7 +68,7 @@ const CardRecord = ({
                   Debt
                 </p>
                 <p className="text-sm font-medium text-gray-800 leading-none">
-                  ${amount.toString()}
+                  {toDollarFormat(Number(amount.toString()))}
                 </p>
               </div>
             </div>
@@ -141,9 +142,21 @@ const CardRecord = ({
                 <p className="text-sm font-medium text-gray-800 leading-none">
                   Status
                 </p>
-                <p className="text-sm font-medium text-gray-800 leading-none">
-                  {status}
-                </p>
+                { (status === "REJECTED" || status === "OVERDUE") 
+                ? (
+                  <p className="text-sm font-medium text-red-600 leading-none">
+                    {status}
+                  </p>
+                ) : (status === "PAID" ? (
+                      <p className="text-sm font-medium text-emerald-600 leading-none">
+                        {status}
+                      </p>
+                    ) : (
+                      <p className="text-sm font-medium text-gray-800 leading-none">
+                        {status}
+                      </p>
+                    )
+                ) }
               </div>
             </div>
             {/*  */}

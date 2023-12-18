@@ -86,9 +86,26 @@ const CardBusiness = ({ data }: { data: BusinessType }) => {
                 <p className="text-sm font-medium text-gray-800 leading-none">
                   Credibility
                 </p>
-                <p className="text-sm font-medium text-gray-800 leading-none">
+                {/* <p className="text-sm font-medium text-gray-800 leading-none">
                   {data.credibility}%
-                </p>
+                </p> */}
+
+
+                { data.credibility >= 80 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-emerald-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
+                { data.credibility >= 65 && data.credibility < 80 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-yellow-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
+                { data.credibility >= 0 && data.credibility < 65 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-red-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
               </div>
             </div>
           </div>

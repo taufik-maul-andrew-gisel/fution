@@ -34,3 +34,40 @@ body {
   margin-bottom: 2.5rem/* 40px */;
 }
 
+.landing-Footer-h2 {
+  font-size: 1.125 rem/* 18px */;
+  line-height: 1.75 rem/* 28px */;
+  font-weight: 600;
+  margin-bottom: 0.5rem/* 8px */;
+  text-decoration: underline;
+
+}
+
+.tooltip {
+  position: relative;
+  /* display: inline-block; */
+  /* border-bottom: 1px dotted black; */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 280px;
+  background-color: rgb(154, 154, 154);
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 50;
+  bottom: 0px;
+  left: 105%;
+
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

@@ -49,22 +49,22 @@ const fetchRecord = async () => {
   return responseJson.data;
 };
 
-const StatusColour = ({ colour }: { colour: string }) => {
-  switch (colour) {
-    case "yellow":
-      return (
-        <div className="rounded-lg bg-yellow-500 h-5 w-5 inline-block"></div>
-      );
-    case "green":
-      return (
-        <div className="rounded-lg bg-green-500 h-5 w-5 inline-block"></div>
-      );
-    case "red":
-      return <div className="rounded-lg bg-red-500 h-5 w-5 inline-block"></div>;
-    default:
-      break;
-  }
-};
+// const StatusColour = ({ colour }: { colour: string }) => {
+//   switch (colour) {
+//     case "yellow":
+//       return (
+//         <div className="rounded-lg bg-yellow-500 h-5 w-5 inline-block"></div>
+//       );
+//     case "green":
+//       return (
+//         <div className="rounded-lg bg-green-500 h-5 w-5 inline-block"></div>
+//       );
+//     case "red":
+//       return <div className="rounded-lg bg-red-500 h-5 w-5 inline-block"></div>;
+//     default:
+//       break;
+//   }
+// };
 
 // ------------------------------------------------------------------
 
@@ -118,6 +118,10 @@ const Page = async () => {
       return name;
     });
   }
+  
+  if (!lender && !business) {
+    redirect("/form");
+  }
 
   return (
     <>
@@ -133,7 +137,7 @@ const Page = async () => {
           </div>
 
           <div className="flex flex-col text-black">
-            <section className="flex-1 w-full flex flex-col gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">
+            <section className="flex-1 w-full flex flex-col gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm py-2 px-5">
               <div>
                 <img
                   src="/profile-pic.png"
@@ -163,28 +167,55 @@ const Page = async () => {
                 {business && (
                   <>
                     <li className="flex justify-between">
-                      Credibility: <span>{business.credibility}%</span>
+                        Credit score <span className="font-semibold">{business.creditScore}</span>
                     </li>
-                    <li className="flex justify-between">
-                      Status: <StatusColour colour={business.status} />
+                    <li className="flex justify-between tooltip">
+                        FuTion score <span className="font-semibold">{business.credential}%</span>
+                        <div className="tooltiptext text-sm">
+                            This score based on the ratio of how many rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
+                        </div>
                     </li>
+                    { business.credibility >= 80 && (
+                      <li className="flex justify-between tooltip">
+                        Credibility <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                      </div>
+                      </li>
+                    ) }
+                    { business.credibility >= 65 && business.credibility < 80 && (
+                      <li className="flex justify-between tooltip">
+                        Credibility <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                      </div>
+                      </li>
+                    ) }
+                    { business.credibility >= 0 && business.credibility < 65 && (
+                      <li className="flex justify-between tooltip">
+                        Credibility <span className="text-red-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                      </div>
+                      </li>
+                    ) }
                   </>
                 )}
               </ul>
               {lender && (
                 <>
                   <p className="text-justify">
-                    A visionary investor eagerly empowers small businesses with
+                    Empowers small businesses with
                     strategic loans, fostering growth and innovation. Passionate
-                    about supporting entrepreneurs, they bring financial
-                    expertise to propel promising ventures toward success.
+                    about supporting entrepreneurs, as they bring financial
+                    expertise to achieve success.
                   </p>
                 </>
               )}
             </section>
           </div>
 
-          <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7 grid grid-cols-3">
+          <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7 grid grid-cols-3">
             {records &&
               records.map((record, i) => {
                 if (recordLender) {
@@ -213,7 +244,7 @@ const Page = async () => {
             {lender && <h2>All Businesses</h2>}
           </div>
 
-          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7">
             {lender &&
               businessData &&
               businessData.map((d) => {

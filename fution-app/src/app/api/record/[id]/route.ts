@@ -4,6 +4,7 @@ import RecordModel from "@/models/record";
 import { APIResponse } from "../../typedef";
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
+import BusinessModel from "@/models/business";
 
 const recordPutSchema = z.object({
     amount: z.number().min(0),
@@ -22,6 +23,9 @@ export async function GET(
     if (!record) {
       throw new Error("data not found");
     }
+    
+    // update credential
+    await BusinessModel.updateBasedOnExistingRecords(record?.loanee.id);
 
     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
@@ -71,7 +75,6 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 }
       
-      
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } } //id in record table
@@ -87,7 +90,7 @@ export async function PATCH(
       throw new Error("data not found");
     }
     const result = await req.json();
-    const updatedData = await RecordModel.patchStatus({
+    let updatedData = await RecordModel.patchStatus({
       id,
       status: result.status,
     });

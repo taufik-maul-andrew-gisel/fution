@@ -4,6 +4,7 @@ import { getQuartersBetweenTwoDates, getNextQuarter } from "@/utils/quarter";
 import calculateInterest from "@/utils/interest";
 import { Decimal } from "@prisma/client/runtime/library";
 import getRealTimeInflation from "@/utils/inflationData";
+import BusinessModel from "./business";
 
 export default class RecordModel {
   static async readAll() {
@@ -11,10 +12,24 @@ export default class RecordModel {
   }
 
   static async readById(id: string) {
-    return await prisma.record.findFirst({ 
+    const record = await prisma.record.findFirst({ 
       where: { id }, 
       include: { loanee: true, loaner: true }
     });
+
+    if (!record) return;
+
+    if (record.due < new Date()) {
+      if (record.status === "PENDING") {
+          RecordModel.patchStatus({ id: record.id, status: "REJECTED" });
+      }
+      else if (record.status === "DEBT") {
+          RecordModel.patchStatus({ id: record.id, status: "OVERDUE" });
+      }
+  }
+
+    const { status, credibility } = BusinessModel.getCredibility(record?.loanee.creditScore, record?.loanee.credential);
+    return { ...record, loanee: { ...record.loanee, status, credibility } };
   }
 
   static async readAllByUser(userId: string) {
