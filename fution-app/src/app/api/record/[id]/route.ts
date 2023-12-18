@@ -88,6 +88,7 @@ export async function PATCH(
       id,
       status: result.status,
     });
+
     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success PATCH /record/[id]",

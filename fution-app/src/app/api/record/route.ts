@@ -35,13 +35,18 @@ export async function POST(req: NextRequest) {
     // step 1: get input
     const input = await req.json();
     input.due = new Date(input.due);
-    console.log(input, "<<<<");
+    input.amount = Number(input.amount)
+    input.interest = Number(input.interest)
+    // console.log(input, "<<<<");
     
     // step 2: validate input
     const parsed = recordInputSchema.safeParse(input);
+    console.log(parsed, "parsed result")
     if (!parsed.success) {
       throw parsed.error;
     }
+
+   
 
     // step 3: POST to db, return response
     const { amount, due, interest, businessId, lenderId } = parsed.data;

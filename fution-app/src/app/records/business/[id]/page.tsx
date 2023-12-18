@@ -4,6 +4,7 @@ import {
   LenderType,
   RecordType,
 } from "@/app/api/typedef";
+import ClientInputError from "@/global-components/ClientInputError";
 import { readPayloadJose } from "@/utils/jwt";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -89,18 +90,20 @@ const businessFillForm = async ({
   params: { id: string }; //this id is lender id
 }) => {
   const bId = await businessId();
-  console.log(bId, "businessId");
-  console.log(params.id, "lenderId");
+  // console.log(bId, "businessId");
+  // console.log(params.id, "lenderId");
 
   const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
     params.id
   );
-  console.log(lenderCurrentValue, "record");
+  // console.log(lenderCurrentValue, "record");
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
+    console.log("masuk");
+    console.log(formData.get("due"), "due in client");
 
-    await fetch("http://localhost:3001/api/record", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
       method: "POST",
       body: JSON.stringify({
         amount: formData.get("amount"),
@@ -114,24 +117,26 @@ const businessFillForm = async ({
         Cookie: cookies().toString(),
       },
     });
+    const responseJson = await response.json();
+    if (responseJson.status === 400) {
+      redirect(`/records/business/${params.id}?error=${responseJson.error}`);
+    }
+    console.log(responseJson, "error message check");
 
-    revalidatePath("/");
-    redirect("/");
+    revalidatePath(`/home`);
+    redirect(`/home`);
   };
 
   return (
     <>
-      {console.log(
-        lenderCurrentValue?.due.toString(),
-        "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<><>Jhygujgfhjgfdsgdfhdg"
-      )}
       <div className="flex flex-col items-center min-h-screen">
         <h1 className="text-black text-center text-4xl font-bold m-10">
           Record Form
         </h1>
 
+        <ClientInputError />
         <form
-          className=" w-1/2 m-10 border-2 border-slate-200 bg-slate-50 text-black rounded-lg p-4 space-y-4"
+          className=" px-10 w-1/2 m-10 border-2 border-slate-200 bg-slate-50 text-black rounded-lg p-4 space-y-4"
           action={onSubmitHandler}
         >
           <div>
@@ -162,7 +167,7 @@ const businessFillForm = async ({
             <input
               type="date"
               id="due"
-              name="date"
+              name="due"
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
               defaultValue={
                 lenderCurrentValue
