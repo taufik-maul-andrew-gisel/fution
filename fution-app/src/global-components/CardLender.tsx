@@ -91,6 +91,9 @@ const CardLender = async ({ data }: { data: LenderType }) => {
   const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
     data.id
   );
+
+  const id = data.id;
+  // console.log(id, "96");
   return (
     <>
       <div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300">
@@ -118,7 +121,7 @@ const CardLender = async ({ data }: { data: LenderType }) => {
             <div className="mt-5">
               {!lenderCurrentValue ? (
                 <Link
-                  href={`/records/business/${data.id}`}
+                  href={`/records/business/${id}`}
                   className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
                 >
                   Request Funds

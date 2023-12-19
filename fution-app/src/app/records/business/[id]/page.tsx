@@ -65,7 +65,7 @@ export const fetchAllRecord = async (id: String) => {
     },
   });
   const responseJson: APIResponse<RecordType[]> = await response.json();
-  console.log(responseJson, "record sblm di filter");
+  // console.log(responseJson, "record sblm di filter");
   if (responseJson.status === 401) {
     redirect("/login");
   }
@@ -89,6 +89,7 @@ const businessFillForm = async ({
 }: {
   params: { id: string }; //this id is lender id
 }) => {
+  // console.log("masuk");
   const bId = await businessId();
   // console.log(bId, "businessId");
   // console.log(params.id, "lenderId");
@@ -96,10 +97,14 @@ const businessFillForm = async ({
   const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
     params.id
   );
-  // console.log(lenderCurrentValue, "record");
+  console.log(lenderCurrentValue, "record");
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
+    const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
+      params.id
+    );
+    console.log(lenderCurrentValue, "record");
     if (lenderCurrentValue) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/record/${lenderCurrentValue.id}`,
@@ -120,11 +125,11 @@ const businessFillForm = async ({
       if (responseJson.status === 400) {
         redirect(`/records/business/${params.id}?error=${responseJson.error}`);
       }
-      console.log(responseJson, "masuk ga ya 123 <<<<<");
+      // console.log(responseJson, "masuk ga ya 123 <<<<<");
 
       revalidatePath(`/records/${lenderCurrentValue.id}`);
       redirect(`/records/${lenderCurrentValue.id}`);
-    } else if (!lenderCurrentValue) {
+    } else {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/record`,
         {
@@ -146,7 +151,7 @@ const businessFillForm = async ({
       if (responseJson.status === 400) {
         redirect(`/records/business/${params.id}?error=${responseJson.error}`);
       }
-      console.log(responseJson, "error message check");
+      // console.log(responseJson, "error message check");
 
       revalidatePath(`/home`);
       redirect(`/home`);
