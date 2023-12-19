@@ -13,81 +13,6 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import LenderModel from "@/models/lender";
 
-// ------------------------------------------------------------
-
-// ! function outside functional component
-//* PURPOSE: FOR GETTING LENDER ID
-export const lenderId = async () => {
-  const cookiesStore = cookies();
-  const token = cookiesStore.get("token");
-  if (!token) {
-    return NextResponse.json(
-      {
-        status: 401,
-        error: "Unauthorized",
-      },
-      { status: 401 }
-    );
-  }
-  const tokenData = await readPayloadJose<{
-    id: string;
-    username: string;
-    role: string;
-  }>(token.value);
-
-  const fetchLender = async () => {
-    // console.log(process.env.NEXT_PUBLIC_URL);
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
-    //   headers: {
-    //     Cookie: cookies().toString(),
-    //   },
-    // });
-
-    // // console.log(response.status);
-    // const responseJson: APIResponse<LenderType[]> = await response.json();
-    // // console.log("AFTER");
-    // // console.log(responseJson, "fetchLender line 46");
-    // if (responseJson.status === 401) {
-    //   redirect("/login");
-    // }
-    return await LenderModel.readAll();
-  };
-
-  // console.log("before, <<<< ");
-  // console.log(await fetchLender());
-  const found = (await fetchLender())?.find((element: LenderType) => {
-    // console.log(element);
-    // console.log(tokenData);
-    return element.userId === tokenData.id;
-  });
-  // console.log("after, <<<< ");
-
-  return found?.id;
-};
-
-//* PURPOSE: WILL GET ONE RECORD, THIS RECORD IS TO TAKE ITS RECORDID TO CHANGE STATUS
-//1.fetch all record
-export const fetchAllRecord = async (id: string) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-  const responseJson: APIResponse<RecordType[]> = await response.json();
-
-  if (responseJson.status === 401) {
-    redirect("/login");
-  }
-  //2.find one record based on loaneeId and loanerId
-  const lId = await lenderId();
-
-  const found = responseJson.data?.find((element: RecordType) => {
-    return element.loaneeId === id && element.loanerId === lId;
-  });
-
-  return found;
-};
-
 // * to populate data
 const fetchBusinessById = async (id: string) => {
   const response = await fetch(
@@ -116,31 +41,6 @@ const BusinessCardDetailPage = async ({
 }) => {
   // * to populate data
   const business = await fetchBusinessById(params.id);
-
-  // * if lender click reject button
-  const rejectButtonHandler = async () => {
-    "use server";
-
-    const record = await fetchAllRecord(params.id);
-
-    if (record) {
-      const id = record.id;
-      const response = await fetch(`http://localhost:3000/api/record/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ status: "REJECTED" }),
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookies().toString(),
-        },
-      });
-      const resJson = await response.json();
-
-      if (!response.ok) {
-        redirect(`/business/${params.id}?error=${resJson.error}`);
-      }
-      revalidatePath(`/business/${params.id}`);
-    }
-  };
 
   // * tampilan
   return (
@@ -172,19 +72,14 @@ const BusinessCardDetailPage = async ({
             </div>
 
             <div className="container mx-auto px-20">
-              <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
+              {/* <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
                 <Link
                   href={`/records/lender/${params.id}`}
                   className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
                 >
                   Negotiate
                 </Link>
-                <form action={rejectButtonHandler}>
-                  <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e49393] transition-all duration-150 ease-in hover:bg-[#c06363]">
-                    Reject
-                  </button>
-                </form>
-              </div>
+              </div> */}
               <ClientInputError />
             </div>
           </section>
