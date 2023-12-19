@@ -125,7 +125,7 @@ const BusinessCardDetailPage = async ({
     } else {
       const recordId = await fetchAllRecord(params.id);
       const response = await fetch(
-        `http://localhost:3000/api/record/${recordId?.id}`,
+        `${process.env.NEXT_PUBLIC_UR}${recordId?.id}`,
         {
           method: "PATCH",
           body: JSON.stringify({ status: "REJECTED" }),

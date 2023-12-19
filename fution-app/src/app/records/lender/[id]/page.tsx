@@ -98,7 +98,7 @@ const LenderFillForm = async ({
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
 
-    const response = await fetch("http://localhost:3000/api/record", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_UR}api/record`, {
       method: "POST",
       body: JSON.stringify({
         amount: formData.get("amount"),
