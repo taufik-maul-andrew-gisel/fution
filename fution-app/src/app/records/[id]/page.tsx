@@ -63,7 +63,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="py-6 px-14">
+      <div className="py-6 px-20">
         <div className="grid grid-cols-4 z-0 gap-4">
           <div className="col-span-4 mt-2 text-2xl font-bold ml-1 mb-2">
             <h2>Record Details</h2>
@@ -93,7 +93,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
                     FuTion score
                   </p>
                   <div className="tooltiptext text-sm">
-                    This score based on the ratio of how many rejected requests
+                    This score based on the ratio of rejected requests
                     and on-time paid loans, to the total number of requests a
                     business makes. Each factor has different weightings.
                   </div>

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/global-components/Nav";
 import Footer from "@/global-components/Footer";
+import FooterAlt from "@/global-components/FooterAlt";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="sticky top-0 z-20">
+        <div className="sticky top-0 z-20 px-14 bg-white">
           <Nav />
         </div>
         <div className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
           {children}
         </div>
-        <Footer />
+        <div className="px-20 bg-white pt-6 pb-2" style={{ boxShadow: "1px 1px 1px 1px grey" }}>
+          <FooterAlt />
+        </div>
       </body>
     </html>
   );
