@@ -98,25 +98,6 @@ const LenderFillForm = async ({
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
 
-<<<<<<< HEAD
-    const response = await fetch(`${process.env.NEXT_PUBLIC_UR}api/record`, {
-      method: "POST",
-      body: JSON.stringify({
-        amount: formData.get("amount"),
-        interest: formData.get("interest"),
-        due: formData.get("due"),
-        businessId: params.id,
-        lenderId: lId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookies().toString(),
-      },
-    });
-    const responseJson = await response.json();
-    if (responseJson.status === 400) {
-      redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
-=======
     if (lenderCurrentValue) {
       const response = await fetch(
         `http://localhost:3000/api/record/${lenderCurrentValue.id}`,
@@ -162,7 +143,6 @@ const LenderFillForm = async ({
       console.log(responseJson, "error message check");
       revalidatePath(`/lender/${params.id}`);
       redirect(`/lender/${params.id}`);
->>>>>>> 9af4ef172374a93545c3fb3c3f2f8537e3ae040d
     }
   };
 
