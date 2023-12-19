@@ -40,8 +40,29 @@ body {
   font-weight: 600;
   margin-bottom: 0.5rem/* 8px */;
   text-decoration: underline;
-
 }
+
+.footer-text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-text h4 {
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
+.footer-text p {
+  padding: 4px 0;
+  font-size: 14px;
+}
+
+.footer-text p:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
 
 .tooltip {
   position: relative;
@@ -67,7 +88,30 @@ body {
   transition: opacity 1s;
 }
 
+.tooltip .tooltiptext-left {
+  visibility: hidden;
+  width: 280px;
+  background-color: rgb(154, 154, 154);
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 50;
+  bottom: 0px;
+  right: 105%;
+
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 .tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip:hover .tooltiptext-left {
   visibility: visible;
   opacity: 1;
 }

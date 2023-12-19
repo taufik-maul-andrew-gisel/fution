@@ -26,7 +26,7 @@ async function Nav() {
 
   return (
     <>
-      <div className="flex flex-row justify-between items-center shadow-lg bg-white z-10 h-12 px-10 py-4">
+      <div className="flex flex-row justify-between items-center shadow-lg bg-white z-10 h-12 py-4">
         <Link href="/">
           <Image
             src="/logo.png"
@@ -51,7 +51,7 @@ async function Nav() {
             How it works
           </Link>
           <Link
-            href="/#banner"
+            href="/"
             className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
           >
             About us

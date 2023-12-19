@@ -125,7 +125,7 @@ const Page = async () => {
 
   return (
     <>
-      <div className="py-6 px-14">
+      <div className="py-6 px-20">
         <div className="grid grid-cols-3 z-0 gap-4">
           <div className="text-2xl font-bold ml-1">
             {business && <h2>Your Business</h2>}
@@ -166,27 +166,27 @@ const Page = async () => {
               >
                 {business && (
                   <>
-                    <li className="flex justify-between">
-                        Credit score <span className="font-semibold">{business.creditScore}</span>
+                    <li className="flex justify-between font-semibold">
+                        Credit score <span className="font-normal">{business.creditScore}</span>
                     </li>
-                    <li className="flex justify-between tooltip">
-                        FuTion score <span className="font-semibold">{business.credential}%</span>
-                        <div className="tooltiptext text-sm">
-                            This score based on the ratio of how many rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
+                    <li className="flex justify-between font-semibold tooltip">
+                        FuTion score <span className="font-normal">{business.credential}%</span>
+                        <div className="tooltiptext text-sm font-normal">
+                          This score based on the ratio of rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
                         </div>
                     </li>
                     { business.credibility >= 80 && (
-                      <li className="flex justify-between tooltip">
+                      <li className="flex justify-between font-semibold tooltip">
                         Credibility <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
-                        <div className="tooltiptext text-sm">
+                        <div className="tooltiptext text-sm font-normal">
                           This score is based on the ratio of a business's credit score to its FuTion score.
-                      </div>
+                        </div>
                       </li>
                     ) }
                     { business.credibility >= 65 && business.credibility < 80 && (
-                      <li className="flex justify-between tooltip">
+                      <li className="flex justify-between font-semibold tooltip">
                         Credibility <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
-                        <div className="tooltiptext text-sm">
+                        <div className="tooltiptext text-sm font-normal">
                           This score is based on the ratio of a business's credit score to its FuTion score.
                       </div>
                       </li>
@@ -194,7 +194,7 @@ const Page = async () => {
                     { business.credibility >= 0 && business.credibility < 65 && (
                       <li className="flex justify-between tooltip">
                         Credibility <span className="text-red-600 font-semibold">{business.credibility}%</span>
-                        <div className="tooltiptext text-sm">
+                        <div className="tooltiptext text-sm font-normal">
                           This score is based on the ratio of a business's credit score to its FuTion score.
                       </div>
                       </li>
