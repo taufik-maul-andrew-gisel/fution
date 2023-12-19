@@ -35,10 +35,8 @@ export default function Home() {
                     <h1 className="text-black font-semibold text-5xl">
                       Your story starts with us.
                     </h1>
-                    <p className="my-4 text-lg text-black">
-                      FuTion: Where ambitions are financed and dreams realized.
-                      Join the leading platform connecting lenders to growth
-                      opportunities and borrowers to seamless funding solutions.
+                    <p className="mt-5 mb-4 text-lg text-black font-semibold">
+                      FuTion: your business funding solution. Where ambitions are financed and dreams realized.
                       Invest, borrow, and succeed with FuTion.
                     </p>
                   </div>
@@ -73,29 +71,25 @@ export default function Home() {
                 <div className="flex flex-col items-center md:items-start">
                   <div className="font-bold mb-2">STEP 1</div>
                   <p>
-                    Apply fast. Fill out our simple application in minutes with
-                    no impact to your credit.
+                    Register as a borrower or lender. Fill out our simple forms and you can start requesting or lending funds in no time.
                   </p>
                 </div>
                 <div className="flex flex-col items-center md:items-start">
-                  <div className="font-bold mb-2">STEP 1</div>
+                  <div className="font-bold mb-2">STEP 2</div>
                   <p>
-                    Apply fast. Fill out our simple application in minutes with
-                    no impact to your credit.
+                    Negotiate with your potential partners about the loaned funds, the interest and the pay-back due date.
                   </p>
                 </div>
                 <div className="flex flex-col items-center md:items-start">
-                  <div className="font-bold mb-2">STEP 1</div>
+                  <div className="font-bold mb-2">STEP 3</div>
                   <p>
-                    Apply fast. Fill out our simple application in minutes with
-                    no impact to your credit.
+                    Utilize our special features such as real-time video call to smoothen out the negotation process.
                   </p>
                 </div>
                 <div className="flex flex-col items-center md:items-start">
-                  <div className="font-bold mb-2">STEP 1</div>
+                  <div className="font-bold mb-2">STEP 4</div>
                   <p>
-                    Apply fast. Fill out our simple application in minutes with
-                    no impact to your credit.
+                    For businesses, aim to keep your rejections and number of late payments low, as they affect your credibility. Lenders are more likely to help you if you are more credible!
                   </p>
                 </div>
                 {/* ... other steps */}
@@ -106,9 +100,11 @@ export default function Home() {
               <Image
                 src="/ExampleRegistration.png"
                 alt="Example Registration"
-                width={500} // Adjust width as needed
+                width={600} // Adjust width as needed
                 height={300} // Adjust height as needed
                 // layout="intrinsic" // or 'responsive' based on your needs
+                className="border-[1px] rounded-lg"
+                style={{ boxShadow: "1px 1px 10px 0px gray" }}
               />
             </div>
           </div>
