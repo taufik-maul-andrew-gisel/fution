@@ -39,7 +39,7 @@ return (<>
             </div>
         )}
         { record?.status === "PENDING" && <p className="mt-2">Click the negoitate button and submit the same values as above to accept the request.</p> }
-        { record?.status === "PENDING" && <p className="mb-2">{record.loanee.name} is currently in debt.</p> }
+        { record?.status === "DEBT" && <p className="mb-2">{record.loanee.name} is currently in debt.</p> }
         { record?.status === "DEBT" && (
             <div className="flex justify-between items-center pr-3 font-semibold text-base">
                 <p>Amount</p> 
