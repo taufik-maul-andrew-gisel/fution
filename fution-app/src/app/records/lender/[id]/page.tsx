@@ -72,7 +72,7 @@ export const fetchAllRecord = async (id: String) => {
   // console.log(lId, "lender id");
 
   const found = responseJson.data?.find((element: RecordType) => {
-    return element.loaneeId === lId && element.loanerId === id;
+    return element.loaneeId === id && element.loanerId === lId;
   });
 
   return found;
@@ -84,7 +84,7 @@ export const fetchAllRecord = async (id: String) => {
 const LenderFillForm = async ({
   params,
 }: {
-  params: { id: string }; //this id is lender id
+  params: { id: string }; //this id is business id
 }) => {
   const lId = await lenderId();
   // console.log(lId, "lenderId");
@@ -98,27 +98,52 @@ const LenderFillForm = async ({
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
 
-    const response = await fetch("http://localhost:3000/api/record", {
-      method: "POST",
-      body: JSON.stringify({
-        amount: formData.get("amount"),
-        interest: formData.get("interest"),
-        due: formData.get("due"),
-        businessId: params.id,
-        lenderId: lId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookies().toString(),
-      },
-    });
-    const responseJson = await response.json();
-    if (responseJson.status === 400) {
-      redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
+    if (lenderCurrentValue) {
+      const response = await fetch(
+        `http://localhost:3000/api/record/${lenderCurrentValue.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            amount: formData.get("amount"),
+            interest: formData.get("interest"),
+            due: formData.get("due"),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookies().toString(),
+          },
+        }
+      );
+      const responseJson = await response.json();
+      if (responseJson.status === 400) {
+        redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
+      }
+      console.log(responseJson, "error message check");
+      revalidatePath(`/records/lender/${params.id}`);
+      redirect(`/records/lender/${params.id}`);
+    } else if (!lenderCurrentValue) {
+      const response = await fetch("http://localhost:3000/api/record", {
+        method: "POST",
+        body: JSON.stringify({
+          amount: formData.get("amount"),
+          interest: formData.get("interest"),
+          due: formData.get("due"),
+          businessId: params.id,
+          lenderId: lId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookies().toString(),
+        },
+      });
+      const responseJson = await response.json();
+      if (responseJson.status === 400) {
+        redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
+      }
+      console.log(responseJson, "error message check");
+      revalidatePath(`/records/lender/${params.id}`);
+      redirect(`/records/lender/${params.id}`);
     }
-    console.log(responseJson, "error message check");
-    revalidatePath(`/home`);
-    redirect(`/home`);
   };
 
   return (
