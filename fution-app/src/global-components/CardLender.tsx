@@ -94,7 +94,6 @@ const CardLender = async ({ data }: { data: LenderType }) => {
     data.id
   );
 
-  const id = data.id;
   // console.log(id, "96");
   return (
     <>
@@ -113,13 +112,30 @@ const CardLender = async ({ data }: { data: LenderType }) => {
               </p>
             </div>
             <div className="mt-5">
-              <Link
+              {!lenderCurrentValue ? (
+                <Link
+                  href={`/records/business/${data.id}`}
+                  className="border rounded-full py-2 px-4 text-xs font-semibold"
+                  style={{ background: "rgb(209 213 219)" }}
+                >
+                  Request Funds
+                </Link>
+              ) : (
+                <Link
+                  href={`/home`}
+                  className="border rounded-full py-2 px-4 text-xs font-semibold cursor-not-allowed"
+                  style={{ background: "rgb(209 213 219)" }}
+                >
+                  Request Funds
+                </Link>
+              )}
+              {/* <Link
                 href={`/records/business/${data.id}`}
                 className="border rounded-full py-2 px-4 text-xs font-semibold"
                 style={{ background: "rgb(209 213 219)" }}
               >
                 Request Funds
-              </Link>
+              </Link> */}
             </div>
           </div>
 
