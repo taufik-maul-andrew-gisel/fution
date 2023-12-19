@@ -7,84 +7,12 @@ import {
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { readPayloadJose } from "@/utils/jwt";
-import ClientInputError from "@/global-components/ClientInputError";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { transporter } from "@/config/nodemailer";
-import * as React from "react";
-
-// ------------------------------------------------------------
-
-// ! function outside functional component
-//* PURPOSE: FOR GETTING LENDER ID
-export const lenderId = async () => {
-  const cookiesStore = cookies();
-  const token = cookiesStore.get("token");
-
-  if (!token) {
-    return NextResponse.json(
-      {
-        status: 401,
-        error: "Unauthorized",
-      },
-      { status: 401 }
-    );
-  }
-  const tokenData = await readPayloadJose<{
-    id: string;
-    username: string;
-    role: string;
-  }>(token.value);
-
-  const fetchLender = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
-      headers: {
-        Cookie: cookies().toString(),
-      },
-    });
-
-    const responseJson: APIResponse<LenderType[]> = await response.json();
-    // console.log(responseJson, "fetchLender line 47");
-    if (responseJson.status === 401) {
-      redirect("/login");
-    }
-    return responseJson.data;
-  };
-
-  const found = (await fetchLender())?.find(
-    (element: LenderType) => element.userId === tokenData.id
-  );
-
-  return found?.id;
-};
-
-//* PURPOSE: FOR POPULATING DATA
-//1.fetch all record
-export const fetchAllRecord = async (id: String) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-  const responseJson: APIResponse<RecordType[]> = await response.json();
-  // console.log(responseJson, "fetchAllRecord line 66");
-  if (responseJson.status === 401) {
-    redirect("/login");
-  }
-
-  //2.find one record based on loaneeId and loanerId
-  const lId = await lenderId();
-  // console.log(lId, "lender id");
-
-  const found = responseJson.data?.find((element: RecordType) => {
-    return element.loaneeId === id && element.loanerId === lId;
-  });
-
-  if (found) {
-    return found;
-  }
-};
+import LenderModel from "@/models/lender";
+import { toDollarFormat } from "@/utils/toDollarFormat";
+import User from "@/models/user";
 
 // * to populate data
 const fetchBusinessById = async (id: string) => {
@@ -97,7 +25,7 @@ const fetchBusinessById = async (id: string) => {
     }
   );
   const responseJson: APIResponse<BusinessType> = await response.json();
-  // console.log(fetchBusinessById, "fetchBusinessById line 96");
+
   if (responseJson.status === 401) {
     redirect("/login");
   }
@@ -115,49 +43,22 @@ const BusinessCardDetailPage = async ({
   // * to populate data
   const business = await fetchBusinessById(params.id);
 
-  // * if lender click reject button
-  const rejectButtonHandler = async () => {
-    "use server";
-    if ((await fetchAllRecord) === undefined) {
-      redirect(
-        `/business/${params.id}?error=${business?.name} " has never requested. Therefore, rejected button will not work"`
-      );
-    } else {
-      const recordId = await fetchAllRecord(params.id);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_UR}${recordId?.id}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({ status: "REJECTED" }),
-          headers: {
-            "Content-Type": "application/json",
-            Cookie: cookies().toString(),
-          },
-        }
-      );
-      const resJson = await response.json();
-      // console.log(resJson);
-      if (!response.ok) {
-        redirect(`/business/${params.id}?error=${resJson.error}`);
-      }
-      revalidatePath(`/business/${params.id}`);
-      redirect(`/business/${params.id}`);
-    }
-  };
+  let user;
+  if (business) user = await User.getById(business.userId);
 
   // * tampilan
   return (
     <>
       {/* Main container */}
 
-      <div className="grid grid-cols-[8fr_5fr] gap-5 justify-center p-6 ">
+      <div className=" px-20 grid grid-cols-3 gap-5 justify-center p-6 ">
         {/* left side */}
-        <div className="flex flex-col row-span-2 text-black">
-          <section className="flex-1 w-full flex flex-col justify-between gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">
+        <div className="flex flex-col col-span-2 row-span-2 text-black">
+          <section className="flex-1 w-full flex flex-col justify-between gap-3 bg-white border-t border-b sm:rounded sm:border shadow py-2 px-5">
             <div>
               <img
                 src="/profile-pic.png"
-                className="w-44 rounded-full mx-auto my-10 p-0 border-[4px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+                className="w-36 rounded-full mx-auto my-10 p-0 border-[4px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
               />
               <h1 className="text-2xl font-bold text-center">
                 {business?.name}
@@ -172,58 +73,76 @@ const BusinessCardDetailPage = async ({
                 {business?.description}
               </p>
             </div>
-
-            <div className="container mx-auto px-20">
-              <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
-                <Link
-                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#c06363]"
-                  href={`/records/lender/${params.id}`}
-                >
-                  Negotiate
-                </Link>
-
-                <form action={rejectButtonHandler}>
-                  <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e49393] transition-all duration-150 ease-in hover:bg-[#c06363]">
-                    Reject
-                  </button>
-                </form>
-
-                <Link
-                  href={`/videocall/${params.id}`}
-                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#9ab3f2] transition-all duration-150 ease-in hover:bg-[#5d78bc]"
-                >
-                  <div className="flex justify-center">Call</div>
-                </Link>
-              </div>
-              <ClientInputError />
-            </div>
           </section>
         </div>
         {/* left side */}
 
         {/* right side */}
         <div className="text-black">
-          <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
+          <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow">
             <div className="border-b">
               <div className="flex justify-between px-6 -mb-px">
                 <h3 className="py-6 font-bold text-xl">Business Information</h3>
               </div>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
+
+            <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
               <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">{business?.monthlyRevenue.toString()}</p>
+              <p className="text-grey">
+                {toDollarFormat(Number(business?.monthlyRevenue.toString()))}
+              </p>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
+
+            <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
               <p className="font-semibold">Credit score</p>
               <p className="text-grey">{business?.creditScore}</p>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Credibility</p>
+
+            <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
+              <div className="font-semibold flex gap-2">
+                FuTion score
+                <div className="w-6 h-6 rounded-full bg-slate-200 text-gray-600 tooltip">
+                  <div className="text-center">?</div>
+                  <div className="tooltiptext-left text-sm font-normal">
+                    This score based on the ratio of rejected requests and
+                    on-time paid loans, to the total number of requests a
+                    business makes. Each factor has different weightings.
+                  </div>
+                </div>
+              </div>
               <p className="text-grey">{business?.credential}%</p>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Status</p>
-              <p className="text-grey">{business?.status}</p>
+
+            <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
+              <div className="font-semibold flex gap-2">
+                Credibility
+                <div className="w-6 h-6 rounded-full bg-slate-200 text-gray-600 tooltip">
+                  <div className="text-center">?</div>
+                  <div className="tooltiptext-left text-sm font-normal">
+                    This score is based on the ratio of a business's credit
+                    score to its FuTion score.
+                  </div>
+                </div>
+              </div>
+              {business && business.credibility >= 80 && (
+                <p className="text-emerald-600 font-semibold">
+                  {business.credibility}%
+                </p>
+              )}
+              {business &&
+                business.credibility >= 65 &&
+                business.credibility < 80 && (
+                  <p className="text-yellow-600 font-semibold">
+                    {business.credibility}%
+                  </p>
+                )}
+              {business &&
+                business.credibility >= 0 &&
+                business.credibility < 65 && (
+                  <p className="text-red-600 font-semibold">
+                    {business.credibility}%
+                  </p>
+                )}
             </div>
           </div>
         </div>
@@ -232,24 +151,16 @@ const BusinessCardDetailPage = async ({
           <div className="flex-grow flex flex-col bg-white border-t border-b sm:rounded sm:border shadow overflow-hidden">
             <div className="border-b">
               <div className="flex justify-between px-6 -mb-px">
-                <h3 className="py-6 font-bold text-xl">Business Information</h3>
+                <h3 className="py-6 font-bold text-xl">Contacts</h3>
               </div>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">CA$21.28</p>
+            <div className="border-b flex justify-between items-center gap-2 py-4 px-6">
+              <p className="font-semibold">Owner</p>
+              <p className="text-grey">{user?.username}</p>
             </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">CA$21.28</p>
-            </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">CA$21.28</p>
-            </div>
-            <div className="border-b grid grid-cols-2 py-4 px-6">
-              <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">CA$21.28</p>
+            <div className="border-b flex justify-between items-center gap-2 py-4 px-6">
+              <p className="font-semibold">Email</p>
+              <p className="text-grey">{business?.email}</p>
             </div>
           </div>
         </div>

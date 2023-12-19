@@ -125,7 +125,7 @@ const Page = async () => {
 
   return (
     <>
-      <div className="py-6 px-14">
+      <div className="py-6 px-20">
         <div className="grid grid-cols-3 z-0 gap-4">
           <div className="text-2xl font-bold ml-1">
             {business && <h2>Your Business</h2>}
@@ -137,7 +137,7 @@ const Page = async () => {
           </div>
 
           <div className="flex flex-col text-black">
-            <section className="flex-1 w-full flex flex-col gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden py-2 px-5">
+            <section className="flex-1 w-full flex flex-col gap-3 bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm py-2 px-5">
               <div>
                 <img
                   src="/profile-pic.png"
@@ -166,25 +166,37 @@ const Page = async () => {
               >
                 {business && (
                   <>
-                    <li className="flex justify-between">
-                        Credit score <span className="font-semibold">{business.creditScore}</span>
+                    <li className="flex justify-between font-semibold">
+                        Credit score <span className="font-normal">{business.creditScore}</span>
                     </li>
-                    <li className="flex justify-between">
-                        FuTion score <span className="font-semibold">{business.credential}%</span>
+                    <li className="flex justify-between font-semibold tooltip">
+                        FuTion score <span className="font-normal">{business.credential}%</span>
+                        <div className="tooltiptext text-sm font-normal">
+                          This score based on the ratio of rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
+                        </div>
                     </li>
                     { business.credibility >= 80 && (
-                      <li className="flex justify-between">
+                      <li className="flex justify-between font-semibold tooltip">
                         Credibility <span className="text-emerald-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm font-normal">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                        </div>
                       </li>
                     ) }
                     { business.credibility >= 65 && business.credibility < 80 && (
-                      <li className="flex justify-between">
+                      <li className="flex justify-between font-semibold tooltip">
                         Credibility <span className="text-yellow-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm font-normal">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                      </div>
                       </li>
                     ) }
                     { business.credibility >= 0 && business.credibility < 65 && (
-                      <li className="flex justify-between">
+                      <li className="flex justify-between tooltip">
                         Credibility <span className="text-red-600 font-semibold">{business.credibility}%</span>
+                        <div className="tooltiptext text-sm font-normal">
+                          This score is based on the ratio of a business's credit score to its FuTion score.
+                      </div>
                       </li>
                     ) }
                   </>
@@ -193,17 +205,17 @@ const Page = async () => {
               {lender && (
                 <>
                   <p className="text-justify">
-                    A visionary investor eagerly empowers small businesses with
+                    Empowers small businesses with
                     strategic loans, fostering growth and innovation. Passionate
-                    about supporting entrepreneurs, they bring financial
-                    expertise to propel promising ventures toward success.
+                    about supporting entrepreneurs, as they bring financial
+                    expertise to achieve success.
                   </p>
                 </>
               )}
             </section>
           </div>
 
-          <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7 grid grid-cols-3">
+          <div className="col-span-2 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7 grid grid-cols-3">
             {records &&
               records.map((record, i) => {
                 if (recordLender) {
@@ -232,7 +244,7 @@ const Page = async () => {
             {lender && <h2>All Businesses</h2>}
           </div>
 
-          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm overflow-hidden pt-2 pb-4 px-7">
+          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7">
             {lender &&
               businessData &&
               businessData.map((d) => {

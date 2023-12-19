@@ -39,7 +39,7 @@ export async function GET(
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const { id } = params;
+        const { id } = params; //record id
         const record = await RecordModel.readById(id);
         if (!record) {
             throw new Error("data not found");
@@ -59,6 +59,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         // get user input to PUT
         const input = await req.json();
         input.due = new Date(input.due);
+        input.amount = Number(input.amount)
+        input.interest = Number(input.interest)
         const parsed = recordPutSchema.safeParse(input);
         if (!parsed.success) {
             throw parsed.error;
@@ -79,6 +81,9 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } } //id in record table
 ) {
+  console.log("masuk");
+  
+
   try {
     const { id } = params;
     const record = await RecordModel.readById(id);
@@ -91,8 +96,7 @@ export async function PATCH(
       id,
       status: result.status,
     });
-
-    return NextResponse.json<APIResponse<unknown>>({
+     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success PATCH /record/[id]",
       data: updatedData,

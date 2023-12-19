@@ -113,7 +113,7 @@ export const sendLink = async ({
       // Anda juga dapat menggunakan `html` untuk konten yang diformat HTML
     });
 
-    console.log("Message sent to: %s", info.envelope.to);
+    console.log("Message sent: %s", info.envelope.to[0]);
   } catch (err) {
     console.error("Error sending email: ", err);
   }

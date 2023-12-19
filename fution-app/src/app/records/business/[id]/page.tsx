@@ -100,31 +100,57 @@ const businessFillForm = async ({
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
-    console.log("masuk");
-    console.log(formData.get("due"), "due in client");
+    if (lenderCurrentValue) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/record/${lenderCurrentValue.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            amount: formData.get("amount"),
+            interest: formData.get("interest"),
+            due: formData.get("due"),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookies().toString(),
+          },
+        }
+      );
+      const responseJson = await response.json();
+      if (responseJson.status === 400) {
+        redirect(`/records/business/${params.id}?error=${responseJson.error}`);
+      }
+      console.log(responseJson, "masuk ga ya 123 <<<<<");
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
-      method: "POST",
-      body: JSON.stringify({
-        amount: formData.get("amount"),
-        interest: formData.get("interest"),
-        due: formData.get("due"),
-        businessId: bId,
-        lenderId: params.id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookies().toString(),
-      },
-    });
-    const responseJson = await response.json();
-    if (responseJson.status === 400) {
-      redirect(`/records/business/${params.id}?error=${responseJson.error}`);
+      revalidatePath(`/records/${lenderCurrentValue.id}`);
+      redirect(`/records/${lenderCurrentValue.id}`);
+    } else if (!lenderCurrentValue) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/record`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            amount: formData.get("amount"),
+            interest: formData.get("interest"),
+            due: formData.get("due"),
+            businessId: bId,
+            lenderId: params.id,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Cookie: cookies().toString(),
+          },
+        }
+      );
+      const responseJson = await response.json();
+      if (responseJson.status === 400) {
+        redirect(`/records/business/${params.id}?error=${responseJson.error}`);
+      }
+      console.log(responseJson, "error message check");
+
+      revalidatePath(`/home`);
+      redirect(`/home`);
     }
-    console.log(responseJson, "error message check");
-
-    revalidatePath(`/home`);
-    redirect(`/home`);
   };
 
   return (
