@@ -28,6 +28,7 @@ const CardRecord = ({
       <Link
         href={`/records/${id}`}
         className="border bg-gray-300 rounded-full py-2 px-4 text-xs font-semibold"
+        style={{ background: "rgb(209 213 219)" }}
       >
         See Details
       </Link>
