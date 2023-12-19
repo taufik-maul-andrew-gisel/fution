@@ -12,7 +12,10 @@ export default function Home() {
         {/* FUTION'S NAVBAR SECTION */}
         {/* ------------------------------------------------------------------------------- */}
         {/* BANNER */}
-        <div className="relative py-20 flex content-center items-center justify-center">
+        <div
+          id="banner"
+          className="relative py-20 flex content-center items-center justify-center"
+        >
           {/* Banner foto */}
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover blur-[2px]"
@@ -40,7 +43,10 @@ export default function Home() {
                     </p>
                   </div>
                   <div className="flex justify-center items-center">
-                    <Link href="/register" className="rounded-lg mt-10 px-9 py-4 bg-sky-200 text-black text-lg font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit">
+                    <Link
+                      href="/register"
+                      className="rounded-lg mt-10 px-9 py-4 bg-sky-200 text-black text-lg font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit"
+                    >
                       Get Started
                     </Link>
                   </div>
@@ -55,56 +61,59 @@ export default function Home() {
         {/* ------------------------------------------------------------------------------- */}
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* main container div */}
-        <div className="flex flex-col md:flex-row bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 w-full">
-          {/* Text Section */}
-          <div className="flex flex-col text-black items-center md:items-start md:w-1/2 px-10 py-10">
-            <h2 className="landing-page-h2 md:text-left">
-              FuTion's Matching Process
-            </h2>
-            <div className="space-y-6">
-              {/* Repeat this div for each step */}
-              <div className="flex flex-col items-center md:items-start">
-                <div className="font-bold mb-2">STEP 1</div>
-                <p>
-                  Apply fast. Fill out our simple application in minutes with no
-                  impact to your credit.
-                </p>
+        <section id="matchingprocess">
+          <div className="flex flex-col md:flex-row bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100 w-full">
+            {/* Text Section */}
+            <div className="flex flex-col text-black items-center md:items-start md:w-1/2 px-10 py-10">
+              <h2 className="landing-page-h2 md:text-left">
+                FuTion's Matching Process
+              </h2>
+              <div className="space-y-6">
+                {/* Repeat this div for each step */}
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="font-bold mb-2">STEP 1</div>
+                  <p>
+                    Apply fast. Fill out our simple application in minutes with
+                    no impact to your credit.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="font-bold mb-2">STEP 1</div>
+                  <p>
+                    Apply fast. Fill out our simple application in minutes with
+                    no impact to your credit.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="font-bold mb-2">STEP 1</div>
+                  <p>
+                    Apply fast. Fill out our simple application in minutes with
+                    no impact to your credit.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="font-bold mb-2">STEP 1</div>
+                  <p>
+                    Apply fast. Fill out our simple application in minutes with
+                    no impact to your credit.
+                  </p>
+                </div>
+                {/* ... other steps */}
               </div>
-              <div className="flex flex-col items-center md:items-start">
-                <div className="font-bold mb-2">STEP 1</div>
-                <p>
-                  Apply fast. Fill out our simple application in minutes with no
-                  impact to your credit.
-                </p>
-              </div>
-              <div className="flex flex-col items-center md:items-start">
-                <div className="font-bold mb-2">STEP 1</div>
-                <p>
-                  Apply fast. Fill out our simple application in minutes with no
-                  impact to your credit.
-                </p>
-              </div>
-              <div className="flex flex-col items-center md:items-start">
-                <div className="font-bold mb-2">STEP 1</div>
-                <p>
-                  Apply fast. Fill out our simple application in minutes with no
-                  impact to your credit.
-                </p>
-              </div>
-              {/* ... other steps */}
+            </div>
+            {/* Image Section */}
+            <div className="md:w-1/2 flex justify-center items-center px-32 py-10">
+              <Image
+                src="/ExampleRegistration.png"
+                alt="Example Registration"
+                width={500} // Adjust width as needed
+                height={300} // Adjust height as needed
+                // layout="intrinsic" // or 'responsive' based on your needs
+              />
             </div>
           </div>
-          {/* Image Section */}
-          <div className="md:w-1/2 flex justify-center items-center px-32 py-10">
-            <Image
-              src="/ExampleRegistration.png"
-              alt="Example Registration"
-              width={500} // Adjust width as needed
-              height={300} // Adjust height as needed
-              // layout="intrinsic" // or 'responsive' based on your needs
-            />
-          </div>
-        </div>
+        </section>
+
         {/* main container div */}
         {/* FUTION'S MATCHING PROCESS SECTION*/}
         {/* ------------------------------------------------------------------------------- */}
@@ -205,17 +214,20 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-gray-800 mb-4">
                   Bussiness
                 </h3>
-                <p className="text-gray-600">Kick-start your business journey</p>
+                <p className="text-gray-600">
+                  Kick-start your business journey
+                </p>
               </div>
 
               <div className="col-span-2 flex justify-center">
-                <Link href="/register" className="rounded mt-4 px-6 py-3 bg-sky-200 text-black font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit">
+                <Link
+                  href="/register"
+                  className="rounded mt-4 px-6 py-3 bg-sky-200 text-black font-semibold shadow-md transition duration-300 ease-in-out hover:bg-sky-300 hover:shadow-lg w-fit"
+                >
                   Register
                 </Link>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
