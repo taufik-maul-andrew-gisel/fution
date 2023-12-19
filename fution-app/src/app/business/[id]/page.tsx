@@ -14,81 +14,6 @@ import LenderModel from "@/models/lender";
 import { toDollarFormat } from "@/utils/toDollarFormat";
 import User from "@/models/user";
 
-// ------------------------------------------------------------
-
-// ! function outside functional component
-//* PURPOSE: FOR GETTING LENDER ID
-export const lenderId = async () => {
-  const cookiesStore = cookies();
-  const token = cookiesStore.get("token");
-  if (!token) {
-    return NextResponse.json(
-      {
-        status: 401,
-        error: "Unauthorized",
-      },
-      { status: 401 }
-    );
-  }
-  const tokenData = await readPayloadJose<{
-    id: string;
-    username: string;
-    role: string;
-  }>(token.value);
-
-  const fetchLender = async () => {
-    // console.log(process.env.NEXT_PUBLIC_URL);
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
-    //   headers: {
-    //     Cookie: cookies().toString(),
-    //   },
-    // });
-
-    // // console.log(response.status);
-    // const responseJson: APIResponse<LenderType[]> = await response.json();
-    // // console.log("AFTER");
-    // // console.log(responseJson, "fetchLender line 46");
-    // if (responseJson.status === 401) {
-    //   redirect("/login");
-    // }
-    return await LenderModel.readAll();
-  };
-
-  // console.log("before, <<<< ");
-  // console.log(await fetchLender());
-  const found = (await fetchLender())?.find((element: LenderType) => {
-    // console.log(element);
-    // console.log(tokenData);
-    return element.userId === tokenData.id;
-  });
-  // console.log("after, <<<< ");
-
-  return found?.id;
-};
-
-//* PURPOSE: WILL GET ONE RECORD, THIS RECORD IS TO TAKE ITS RECORDID TO CHANGE STATUS
-//1.fetch all record
-export const fetchAllRecord = async (id: string) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-  const responseJson: APIResponse<RecordType[]> = await response.json();
-
-  if (responseJson.status === 401) {
-    redirect("/login");
-  }
-  //2.find one record based on loaneeId and loanerId
-  const lId = await lenderId();
-
-  const found = responseJson.data?.find((element: RecordType) => {
-    return element.loaneeId === id && element.loanerId === lId;
-  });
-
-  return found;
-};
-
 // * to populate data
 const fetchBusinessById = async (id: string) => {
   const response = await fetch(
@@ -163,7 +88,9 @@ const BusinessCardDetailPage = async ({
 
             <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
               <p className="font-semibold">Monthly revenue</p>
-              <p className="text-grey">{toDollarFormat(Number(business?.monthlyRevenue.toString()))}</p>
+              <p className="text-grey">
+                {toDollarFormat(Number(business?.monthlyRevenue.toString()))}
+              </p>
             </div>
 
             <div className="border-b py-4 pl-6 pr-8 flex justify-between items-center">
@@ -177,7 +104,9 @@ const BusinessCardDetailPage = async ({
                 <div className="w-6 h-6 rounded-full bg-slate-200 text-gray-600 tooltip">
                   <div className="text-center">?</div>
                   <div className="tooltiptext-left text-sm font-normal">
-                  This score based on the ratio of rejected requests and on-time paid loans, to the total number of requests a business makes. Each factor has different weightings.
+                    This score based on the ratio of rejected requests and
+                    on-time paid loans, to the total number of requests a
+                    business makes. Each factor has different weightings.
                   </div>
                 </div>
               </div>
@@ -190,13 +119,30 @@ const BusinessCardDetailPage = async ({
                 <div className="w-6 h-6 rounded-full bg-slate-200 text-gray-600 tooltip">
                   <div className="text-center">?</div>
                   <div className="tooltiptext-left text-sm font-normal">
-                    This score is based on the ratio of a business's credit score to its FuTion score.
+                    This score is based on the ratio of a business's credit
+                    score to its FuTion score.
                   </div>
                 </div>
               </div>
-              { business && business.credibility >= 80 && <p className="text-emerald-600 font-semibold">{business.credibility}%</p> }
-              { business && business.credibility >= 65 && business.credibility < 80 && <p className="text-yellow-600 font-semibold">{business.credibility}%</p> }
-              { business && business.credibility >= 0 && business.credibility < 65 && <p className="text-red-600 font-semibold">{business.credibility}%</p> }
+              {business && business.credibility >= 80 && (
+                <p className="text-emerald-600 font-semibold">
+                  {business.credibility}%
+                </p>
+              )}
+              {business &&
+                business.credibility >= 65 &&
+                business.credibility < 80 && (
+                  <p className="text-yellow-600 font-semibold">
+                    {business.credibility}%
+                  </p>
+                )}
+              {business &&
+                business.credibility >= 0 &&
+                business.credibility < 65 && (
+                  <p className="text-red-600 font-semibold">
+                    {business.credibility}%
+                  </p>
+                )}
             </div>
           </div>
         </div>

@@ -1,7 +1,13 @@
 import React from "react";
+import Image from "next/image";
 import { HiOutlineArrowTrendingUp } from "react-icons/hi2";
 import { AiOutlineDollarCircle } from "react-icons/ai";
-import { LenderType } from "@/app/api/typedef";
+import {
+  APIResponse,
+  BusinessType,
+  LenderType,
+  RecordType,
+} from "@/app/api/typedef";
 import Link from "next/link";
 import { toDollarFormat } from "@/utils/toDollarFormat";
 
