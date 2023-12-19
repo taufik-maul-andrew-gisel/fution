@@ -1,4 +1,4 @@
-import Nav from "@/global-components/Nav";
+import { FaRegFaceGrin } from "react-icons/fa6";
 import React, { use } from "react";
 import {
   APIResponse,
@@ -141,7 +141,7 @@ const Page = async () => {
               <div>
                 <img
                   src="/profile-pic.png"
-                  className="w-28 rounded-full mx-auto my-10 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
+                  className="w-28 rounded-full mx-auto my-7 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
                 />
                 {business && (
                   <h1 className="text-2xl font-bold text-center">
@@ -154,14 +154,14 @@ const Page = async () => {
                   </h1>
                 )}
                 {business && (
-                  <p className="block my-2 font-semibold text-center">
+                  <p className="block my-1 font-semibold text-center">
                     {business.tagline}
                   </p>
                 )}
               </div>
 
               <ul
-                className="container mx-auto px-20"
+                className="container mx-auto px-20 pb-2"
                 style={{ fontSize: "0.95rem", lineHeight: "1.4rem" }}
               >
                 {business && (
@@ -207,8 +207,7 @@ const Page = async () => {
                   <p className="text-justify">
                     Empowers small businesses with
                     strategic loans, fostering growth and innovation. Passionate
-                    about supporting entrepreneurs, as they bring financial
-                    expertise to achieve success.
+                    about supporting entrepreneurs towards success.
                   </p>
                 </>
               )}
@@ -233,7 +232,17 @@ const Page = async () => {
                     />
                   );
                 }
-              })}
+              })
+            }
+
+            { (!records || records.length === 0) && (
+              <div className="container col-span-full w-full h-full flex flex-col gap-4 items-center justify-center">
+                <div className="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center">
+                  <FaRegFaceGrin color="white" size="60px" />
+                </div>
+                <div className="text-[rgb(175,180,192)]">Wow, such empty</div>
+              </div>
+            ) }
             {/* <CardRecord data={{ record: records[0], name: recordBusiness[0] }} />
               <CardRecord data={{ record: records[0], name: recordBusiness[0] }} />
               <CardRecord data={{ record: records[0], name: recordBusiness[0] }} /> */}
@@ -244,7 +253,7 @@ const Page = async () => {
             {lender && <h2>All Businesses</h2>}
           </div>
 
-          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7">
+          <div className="col-span-3 grid grid-cols-4 text-center text-black bg-white border-t border-b shadow pt-2 pb-4 px-7">
             {lender &&
               businessData &&
               businessData.map((d) => {
