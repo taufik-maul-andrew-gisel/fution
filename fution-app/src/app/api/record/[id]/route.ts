@@ -39,7 +39,7 @@ export async function GET(
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const { id } = params; //record id
+        const { id } = params;
         const record = await RecordModel.readById(id);
         if (!record) {
             throw new Error("data not found");

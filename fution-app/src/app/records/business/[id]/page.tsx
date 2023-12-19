@@ -10,13 +10,12 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
-
+//--------------------------------------------------
 // ! function outside functional component
 //* PURPOSE: FOR GETTING BUSINESS ID
 export const businessId = async () => {
   const cookiesStore = cookies();
   const token = cookiesStore.get("token");
-
   if (!token) {
     return NextResponse.json(
       {
@@ -31,7 +30,6 @@ export const businessId = async () => {
     username: string;
     role: string;
   }>(token.value);
-
   const fetchBusiness = async () => {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/api/business`,
@@ -40,21 +38,17 @@ export const businessId = async () => {
       }
     );
     const responseJson: APIResponse<BusinessType[]> = await response.json();
-
     if (responseJson.status === 401) {
       redirect("/login");
     }
     return responseJson.data;
   };
-
   const found = (await fetchBusiness())?.find(
     (element: BusinessType) => element.userId === tokenData.id
   );
-
   return found?.id;
 };
-
-// //* PURPOSE: FOR POPULATING DATA
+//* PURPOSE: FOR POPULATING DATA
 //1.fetch all record
 export const fetchAllRecord = async (id: String) => {
   //lender id
@@ -69,20 +63,15 @@ export const fetchAllRecord = async (id: String) => {
   if (responseJson.status === 401) {
     redirect("/login");
   }
-
   //2.find one record based on loaneeId and loanerId
   const bId = await businessId();
   // console.log(bId, "lender id");
-
   const found = responseJson.data?.find((element: RecordType) => {
     return element.loaneeId === bId && element.loanerId === id;
   });
-
   return found;
 };
-
 //--------------------------------------------------------
-
 // !Functional component
 const businessFillForm = async ({
   params,
@@ -93,13 +82,19 @@ const businessFillForm = async ({
   // console.log(bId, "businessId");
   // console.log(params.id, "lenderId");
 
+  // console.log(lenderCurrentValue, "record");
   const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
     params.id
   );
-  // console.log(lenderCurrentValue, "record");
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
+    console.log("masuk");
+    console.log(formData.get("due"), "due in client");
+    const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
+      params.id
+    );
+
     if (lenderCurrentValue) {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_URL}/api/record/${lenderCurrentValue.id}`,
@@ -159,7 +154,6 @@ const businessFillForm = async ({
         <h1 className="text-black text-center text-4xl font-bold m-10">
           Record Form
         </h1>
-
         <ClientInputError />
         <form
           className=" px-10 w-1/2 m-10 border-2 border-slate-200 bg-slate-50 text-black rounded-lg p-4 space-y-4"
@@ -182,7 +176,6 @@ const businessFillForm = async ({
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
             />
           </div>
-
           <div>
             <label
               htmlFor="due"
@@ -202,7 +195,6 @@ const businessFillForm = async ({
               }
             />
           </div>
-
           <div>
             <label
               htmlFor="interest"
@@ -221,7 +213,6 @@ const businessFillForm = async ({
               className="mt-1 p-2 w-full border rounded-lg focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 text-black"
             />
           </div>
-
           <div>
             <button
               type="submit"
@@ -236,5 +227,4 @@ const businessFillForm = async ({
     </>
   );
 };
-
 export default businessFillForm;

@@ -97,6 +97,9 @@ const LenderFillForm = async ({
 
   const onSubmitHandler = async (formData: FormData) => {
     "use server";
+    const lenderCurrentValue: RecordType | undefined = await fetchAllRecord(
+      params.id
+    );
 
     if (lenderCurrentValue) {
       const response = await fetch(
