@@ -51,7 +51,7 @@ async function Nav() {
             How it works
           </Link>
           <Link
-            href="/#banner"
+            href="/"
             className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
           >
             About us
