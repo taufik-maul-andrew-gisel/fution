@@ -32,7 +32,6 @@ export const sendLink = async ({
       to: foundEmailById?.email,
       subject: "Link Meeting",
       text: `Here is your meeting link: ${link} and Room ID: ${roomId}`,
-      // Anda juga dapat menggunakan `html` untuk konten yang diformat HTML
     });
 
     console.log("Message sent: %s", info.messageId);
