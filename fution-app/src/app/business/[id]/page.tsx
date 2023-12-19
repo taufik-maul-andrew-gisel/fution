@@ -174,24 +174,16 @@ const BusinessCardDetailPage = async ({
             <div className="container mx-auto px-20">
               <div className="md:flex md:flex-row-reverse items-center py-2 gap-3">
                 <Link
-                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#7cd17f] transition-all duration-150 ease-in hover:bg-[#c06363]"
                   href={`/records/lender/${params.id}`}
+                  className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
                 >
                   Negotiate
                 </Link>
-
                 <form action={rejectButtonHandler}>
                   <button className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#e49393] transition-all duration-150 ease-in hover:bg-[#c06363]">
                     Reject
                   </button>
                 </form>
-
-                <Link
-                  href={`/videocall/${params.id}`}
-                  className="px-5 flex-1 border rounded-[10px] py-2 text-black bg-[#9ab3f2] transition-all duration-150 ease-in hover:bg-[#5d78bc]"
-                >
-                  <div className="flex justify-center">Call</div>
-                </Link>
               </div>
               <ClientInputError />
             </div>

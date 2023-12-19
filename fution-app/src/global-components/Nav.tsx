@@ -44,12 +44,18 @@ async function Nav() {
             </button>
           </Link>
 
-          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+          <Link
+            href="#matchingprocess"
+            className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
+          >
             How it works
-          </button>
-          <button className="px-5 py-2 text-black hover:underline hover:cursor-pointer">
+          </Link>
+          <Link
+            href="#banner"
+            className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
+          >
             About us
-          </button>
+          </Link>
           {auth ? (
             <>
               <form
