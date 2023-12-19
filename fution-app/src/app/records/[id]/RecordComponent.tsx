@@ -257,33 +257,26 @@ async function RecordComponent({
           </p>
         )}
       </div>
-      <div className="ml-auto mr-0 mb-4 font-semibold text-sm">
+      <div className="ml-auto mr-0 mb-1 mt-3 font-semibold text-sm flex items-end">
         {/* need authorisation */}
         {record?.status === "DEBT" && (
-          <>
+          <div className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
             <Link
               href="/home"
-              className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-5 ml-2 shadow"
+              className="w-full h-full"
             >
               Pay
             </Link>
-          </>
+          </div>
         )}
 
         {/* no need authorisation */}
         {record?.status === "PENDING" && (
           <>
-            {/* <Link
-              href="/home"
-              className="bg-red-200 rounded-lg hover:bg-red-300 flex-grow-0 py-2 px-5 ml-2 shadow"
-            >
-              Reject
-            </Link> */}
-
             {/* LOGIC FOR REJECT (ONLY LENDERS SIDE WILL APPEAR) */}
             {theRole === "LENDER" && (
               <form action={rejectButtonHandler}>
-                <button className="bg-red-200 rounded-lg hover:bg-red-300 flex-grow-0 py-2 px-5 ml-2 shadow">
+                <button className="bg-red-200 rounded-lg hover:bg-red-300 flex-grow-0 py-2 px-4 ml-2 shadow">
                   Reject
                 </button>
               </form>
@@ -294,11 +287,12 @@ async function RecordComponent({
             {(() => {
               if (record.updatedAmount % 2 != 0 && theRole === "LENDER") {
                 return (
-                  <Link
+                  <Link 
                     href={`/records/lender/${record.loaneeId}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
-                  >
-                    Negotiate
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
+                    <div className="w-full h-full">
+                      Negotiate
+                    </div>
                   </Link>
                 );
               } else if (
@@ -306,20 +300,26 @@ async function RecordComponent({
                 theRole === "BUSINESS"
               ) {
                 return (
-                  <Link
+                  <Link 
                     href={`/records/business/${record.loaner.id}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
+                  <div
+                    className="w-full h-full"
                   >
                     Negotiate
+                  </div>
                   </Link>
                 );
               } else {
                 return (
-                  <Link
+                  <Link 
                     href={`/records/${record.id}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-5 ml-2 shadow cursor-not-allowed"
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow cursor-not-allowed">
+                  <div
+                    className="w-full h-full"
                   >
                     Negotiate
+                  </div>
                   </Link>
                 );
               }
@@ -329,21 +329,27 @@ async function RecordComponent({
 
             {/* LOGIC FOR CALL (ONLY LENDERS SIDE WILL APPEAR) */}
             {theRole === "LENDER" && (
-              <Link
+              <Link 
                 href={`/videocall/${record.loaneeId}`} //idnya business
-                className="bg-blue-200 rounded-lg hover:bg-blue-300 flex-grow-0 py-2 px-5 ml-2 shadow"
+                className="bg-blue-200 rounded-lg hover:bg-blue-300 flex-grow-0 py-2 px-4 ml-2 shadow">
+              <div
+                className="w-full h-full"
               >
                 Call
+              </div>
               </Link>
             )}
             {/* LOGIC FOR CALL (ONLY LENDERS SIDE WILL APPEAR) */}
           </>
         )}
-        <Link
+        <Link 
           href="/home"
-          className="bg-sky-200 rounded-lg hover:bg-sky-300 flex-grow-0 py-2 px-5 ml-2 shadow"
+          className="bg-sky-200 rounded-lg hover:bg-sky-300 flex-grow-0 py-2 px-4 ml-2 shadow">
+        <div
+          className="w-full h-full"
         >
           Back
+        </div>
         </Link>
       </div>
     </>
