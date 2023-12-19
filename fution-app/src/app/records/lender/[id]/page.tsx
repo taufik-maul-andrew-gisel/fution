@@ -119,8 +119,8 @@ const LenderFillForm = async ({
         redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
       }
       console.log(responseJson, "error message check");
-      revalidatePath(`/records/lender/${params.id}`);
-      redirect(`/records/lender/${params.id}`);
+      revalidatePath(`/records/${lenderCurrentValue.id}`);
+      redirect(`/records/${lenderCurrentValue.id}`);
     } else if (!lenderCurrentValue) {
       const response = await fetch("http://localhost:3000/api/record", {
         method: "POST",
@@ -141,8 +141,8 @@ const LenderFillForm = async ({
         redirect(`/records/lender/${params.id}?error=${responseJson.error}`);
       }
       console.log(responseJson, "error message check");
-      revalidatePath(`/records/lender/${params.id}`);
-      redirect(`/records/lender/${params.id}`);
+      revalidatePath(`/lender/${params.id}`);
+      redirect(`/lender/${params.id}`);
     }
   };
 
