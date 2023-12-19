@@ -6,7 +6,6 @@ import React from "react";
 function RecordComponent({
   record,
   debt,
-  businessId,
 }: {
   record?: RecordDetailType;
   debt?: {
@@ -14,7 +13,6 @@ function RecordComponent({
     curr: string;
     next: string[];
   };
-  businessId: string;
 }) {
   return (
     <>
@@ -140,7 +138,7 @@ function RecordComponent({
               Negotiate
             </Link>
             <Link
-              href={`/videocall/${businessId}`} //idnya business
+              href={`/videocall/${record.loaneeId}`} //idnya business
               className="bg-blue-200 rounded-lg hover:bg-blue-300 flex-grow-0 py-2 px-5 ml-2 shadow"
             >
               Call

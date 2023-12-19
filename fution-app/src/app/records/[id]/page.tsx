@@ -137,7 +137,6 @@ async function RecordDetail({ params }: { params: { id: string } }) {
               <RecordComponent
                 record={record}
                 debt={debt}
-                businessId={record?.loanee.id}
               />
             )}
           </div>

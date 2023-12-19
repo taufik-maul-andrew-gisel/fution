@@ -45,13 +45,13 @@ async function Nav() {
           </Link>
 
           <Link
-            href="#matchingprocess"
+            href="/#matchingprocess"
             className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
           >
             How it works
           </Link>
           <Link
-            href="#banner"
+            href="/#banner"
             className="px-5 py-2 text-black hover:underline hover:cursor-pointer"
           >
             About us
