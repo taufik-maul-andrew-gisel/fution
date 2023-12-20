@@ -9,7 +9,7 @@
     {
         "amount": 2000,
         "createdAt": "2023-01-12",
-        "due": "2023-10-01",
+        "due": "2024-10-01",
         "loaneeId": "5f55ecbd-6a9d-4259-a11c-c028cfa212a3",
         "loanerId": "9c5c9ce8-ed62-4bd5-8613-5094411c5790"
     },
