@@ -119,7 +119,7 @@ async function RecordComponent({
           </p>
         )}
         {record?.status === "DEBT" && (
-          <p className="text-xl font-bold mt-4 mb-2 text-center">DEBT</p>
+          <p className="text-xl font-bold mt-4 mb-2 text-center">UNPAID</p>
         )}
       </div>
       <div className="text-sm">
@@ -163,6 +163,14 @@ async function RecordComponent({
         )}
         {record?.status === "DEBT" && (
           <p className="mb-2">{record.loanee.name} is currently in debt.</p>
+        )}
+        {record?.status === "DEBT" && (
+          <div className="flex justify-between items-center pr-3 font-semibold text-base">
+            <p>Loaned</p>
+            <p>
+              {record?.updatedAt.toLocaleString().split("T")[0]}
+            </p>
+          </div>
         )}
         {record?.status === "DEBT" && (
           <div className="flex justify-between items-center pr-3 font-semibold text-base">
