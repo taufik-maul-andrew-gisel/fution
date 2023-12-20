@@ -1,6 +1,1 @@
-name: Habibi
-email: gisellesamanthawong49@gmail.com
-monthlyRevenue: 10000
-creditScore: 777
-description: Savor the extraordinary at Habibi, where culinary artistry meets the grill. Indulge in our succulent kebabs, expertly crafted with premium ingredients and tantalizing flavors. From traditional classics to innovative twists, every bite is a journey through perfection. Elevate your dining experience with Habibi.
-tagline: Halo gantang manis cantik
+Savor the extraordinary at Habibi, where culinary artistry meets the grill. Indulge in our succulent kebabs, expertly crafted with premium ingredients and tantalizing flavors. From traditional classics to innovative twists, every bite is a journey through perfection. Elevate your dining experience with Habibi.
