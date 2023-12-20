@@ -25,7 +25,7 @@ export default function RootLayout({
         <div className="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
           {children}
         </div>
-        <div className="px-20 bg-white pt-6 pb-2" style={{ boxShadow: "1px 1px 1px 1px grey" }}>
+        <div className="px-20 bg-white pt-7 pb-3" style={{ boxShadow: "1px 1px 1px 1px grey" }}>
           <FooterAlt />
         </div>
       </body>

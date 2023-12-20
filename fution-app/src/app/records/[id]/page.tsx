@@ -6,7 +6,9 @@ import Link from "next/link";
 import React from "react";
 import RecordComponent from "./RecordComponent";
 
+// !fetch one record(include loanee detail and loaner detail with loanee credibility) based on record Id
 async function fetchRecord(id: string) {
+  //record Id
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record/${id}`, {
     headers: { Cookie: cookies().toString() },
   });
@@ -26,6 +28,7 @@ async function fetchRecordDebt(id: string) {
   return resJson.data;
 }
 
+// !functional component
 async function RecordDetail({ params }: { params: { id: string } }) {
   const recordId = params.id;
   const record = await fetchRecord(recordId);
@@ -93,8 +96,8 @@ async function RecordDetail({ params }: { params: { id: string } }) {
                     FuTion score
                   </p>
                   <div className="tooltiptext text-sm">
-                    This score based on the ratio of rejected requests
-                    and on-time paid loans, to the total number of requests a
+                    This score based on the ratio of rejected requests and
+                    on-time paid loans, to the total number of requests a
                     business makes. Each factor has different weightings.
                   </div>
                 </div>
@@ -134,10 +137,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
           {/* record */}
           <div className="col-span-2 flex flex-col justify-between text-black bg-white border-t border-b sm:rounded sm:border shadow pt-2 pb-4 px-7">
             {record?.loanee.id && (
-              <RecordComponent
-                record={record}
-                debt={debt}
-              />
+              <RecordComponent record={record} debt={debt} />
             )}
           </div>
 
@@ -175,7 +175,8 @@ async function RecordDetail({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="text-2xl font-bold ml-1 mt-2 pt-4 mb-2 col-span-4">
+          { (record?.status === "PENDING" || record?.status === "DEBT") && (<>
+            <div className="text-2xl font-bold ml-1 mt-2 pt-4 mb-2 col-span-4">
             <h2>Predicted Future Payment</h2>
             {/* <h4 className="text-base font-semibold mt-2">If you were to pay in the future, you would have to pay...</h4> */}
           </div>
@@ -205,6 +206,8 @@ async function RecordDetail({ params }: { params: { id: string } }) {
               {toDollarFormat(Math.round(Number(debt?.next[3]) * 100) / 100)}
             </p>
           </div>
+          </>) }
+          
         </div>
       </div>
 

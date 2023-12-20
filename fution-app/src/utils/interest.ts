@@ -36,8 +36,6 @@ function calculateInterest(initValue: Decimal, interest: Decimal, inflations: De
         output.next[i] = RHS.times(output.curr);
     })
 
-    // console.log(inflations);
-
     return output
 }
 

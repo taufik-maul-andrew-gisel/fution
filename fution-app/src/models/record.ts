@@ -112,7 +112,7 @@ export default class RecordModel {
     // need 4 params: initValue, interest, inflations, futureInflation
     const initValue = record.amount;
     const interest = record.interest;
-    const period = getQuartersBetweenTwoDates(record.createdAt, new Date());
+    const period = getQuartersBetweenTwoDates(record.updatedAt, new Date());
     const inflationData = await getRealTimeInflation();
 
     // get inflation rate for each term, plus the future prediction for the next four terms

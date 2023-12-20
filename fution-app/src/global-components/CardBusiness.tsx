@@ -1,94 +1,56 @@
 import React from "react";
-import Image from "next/image";
 import { BusinessType } from "@/app/api/typedef";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import Link from "next/link";
+import { MdCreditScore } from "react-icons/md";
 
 const CardBusiness = ({ data }: { data: BusinessType }) => {
   return (
     <>
-      <div className="h-full w-full mx-auto right-0 mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300">
-        <div className="h-full w-full flex flex-col justify-between bg-white rounded overflow-hidden shadow-lg">
-          <div className="flex-grow text-center p-6 bg-gray-800 border-b flex flex-col justify-between">
-            <div>
-              <svg
-                aria-hidden="true"
-                role="img"
-                className="h-24 w-24 text-white rounded-full mx-auto"
-                width={32}
-                height={32}
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 256 256"
-              >
-                <path
-                  fill="currentColor"
-                  d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"
-                />
-              </svg>
-              <p className="pt-2 text-lg font-semibold text-gray-50">
-                {data.name}
-              </p>
-            </div>
-            <div className="mt-5">
+<div className="h-full w-full mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300">
+  <div className="h-full w-full flex flex-col justify-between rounded-lg shadow-lg">
+    <div className="flex-grow text-center p-6 border-b flex flex-col justify-between rounded-lg" style={{ background: "#505254" }}>
+      <div>
+        <p className="pt-2 text-lg font-semibold" style={{ color: "rgb(209 213 219)" }}>
+          {data.name}
+        </p>
+      </div>
+      <div className="mt-5">
               <Link
                 href={`/business/${data.id}`}
-                className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-100"
+                className="border bg-gray-300 rounded-full py-2 px-4 text-xs font-semibold"
+                style={{ background: "rgb(209 213 219)" }}
               >
                 See Details
               </Link>
             </div>
           </div>
           <div className="h-40 border-b">
-            <div className="px-2 py-3 italic">
-              <span className="text-sm italic">{data.tagline}</span>
+            <div className="px-1 py-2">
+              <span className="text-sm" style={{ fontStyle: "italic" }}>{data.tagline}</span>
             </div>
-            {/*  */}
-            <div className="px-4 py-2 hover:bg-gray-100 flex">
-              <div className="text-green-600">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1}
-                  viewBox="0 0 24 24"
-                  className="w-5 h-5"
-                >
-                  <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-              </div>
-              <div className="pl-3 flex flex-row  space-x-2">
-                <p className="text-sm font-medium text-gray-800 leading-none">
-                  Credit Score
+
+            <div className="px-4 py-2 hover:bg-gray-100 flex justify-between">
+              <div className="flex gap-2 items-center">
+                <MdCreditScore />
+                <p className="text-sm font-medium text-gray-800">
+                  Credit score
                 </p>
-                <p className="text-sm font-medium text-gray-800 leading-none">
+              </div>
+                <p className="text-sm font-medium text-gray-800">
                   {data.creditScore}
                 </p>
-              </div>
             </div>
             {/*  */}
             {/*  */}
-            <div className="px-4 py-2 hover:bg-gray-100 flex">
-              <div className="text-green-600">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1}
-                  viewBox="0 0 24 24"
-                  className="w-5 h-5"
-                >
-                  <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-              </div>
-              <div className="pl-3 flex flex-row  space-x-2">
-                <p className="text-sm font-medium text-gray-800 leading-none">
-                  Credibility
-                </p>
-                {/* <p className="text-sm font-medium text-gray-800 leading-none">
-                  {data.credibility}%
-                </p> */}
-
+            <div className="px-4 py-2 hover:bg-gray-100 ">
+              <div className="flex gap-2 items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <IoMdCheckmarkCircleOutline />
+                  <p className="text-sm font-medium text-gray-800">
+                    Credibility
+                  </p>
+                </div>
 
                 { data.credibility >= 80 && (
                   <p className="text-sm font-medium leading-none">

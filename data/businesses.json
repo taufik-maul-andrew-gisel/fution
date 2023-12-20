@@ -29,4 +29,15 @@
     "tagline": "Value the Australian way",
     "userId": "f84b2d57-3b51-4a3f-99f2-7c0378a44b7f"
   }
+  ,
+  {
+    "id": "6cc35576-7c88-4482-aedc-3800c7a17c93",
+    "name": "WeebWares",
+    "email": "gisellesamanthawong49@gmail.com",
+    "monthlyRevenue": 69420,
+    "creditScore": 820,
+    "description": "WeebWares crafts a vibrant array of anime-inspired merchandise, from adorable plushies to stylish apparel and exclusive collectibles. Immerse yourself in the world of Japanese pop culture with our carefully curated and uniquely designed products, celebrating the passion and creativity of the anime community.",
+    "tagline": "Omae wa shinderu",
+    "userId": "1d62b983-5eb0-4825-a564-4479fad41663"
+  }
 ]
