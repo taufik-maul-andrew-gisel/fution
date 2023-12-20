@@ -36,6 +36,7 @@ async function load() {
         const recordsWIthISODates = records.map((record) => {
             record.createdAt = new Date(record.createdAt);
             record.due = new Date(record.due);
+            if (record.updatedAt) record.updatedAt = new Date(record.updatedAt);
             return record;
         });
         await prisma.record.createMany({ data: recordsWIthISODates });

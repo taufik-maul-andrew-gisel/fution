@@ -2,9 +2,9 @@ import prisma from "../../prisma/config";
 import RecordModel from "./record";
 
 export default class BusinessModel {
-    static async updateBasedOnExistingRecords(id: string) {
+    static async updateBasedOnExistingRecords(id: string) { //business id
         const records = await RecordModel.getRecordsByLoaneeId(id);
-
+        
         // update credential
         let overdues = 0, rejected = 0, paid = 0;
         records.forEach(record => {
@@ -29,7 +29,8 @@ export default class BusinessModel {
             if (record.status === "REJECTED") {
                 rejected++;
             }
-        })
+        });
+        
 
         let numr = (paid + rejected) * 100;
         let denumr = (overdues + 2 * rejected);
@@ -87,6 +88,7 @@ export default class BusinessModel {
 
     static async add(input: {
         name: string;
+        email: string;
         monthlyRevenue: number;
         creditScore: number;
         description: string;

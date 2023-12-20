@@ -4,6 +4,7 @@ import RecordModel from "@/models/record";
 import { APIResponse } from "../../typedef";
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
+import BusinessModel from "@/models/business";
 
 const recordPutSchema = z.object({
     amount: z.number().min(0),
@@ -16,12 +17,15 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = params; //record id
     const record = await RecordModel.readById(id);
 
     if (!record) {
       throw new Error("data not found");
     }
+    
+    // update credential
+    await BusinessModel.updateBasedOnExistingRecords(record?.loanee.id);
 
     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
@@ -55,6 +59,8 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         // get user input to PUT
         const input = await req.json();
         input.due = new Date(input.due);
+        input.amount = Number(input.amount)
+        input.interest = Number(input.interest)
         const parsed = recordPutSchema.safeParse(input);
         if (!parsed.success) {
             throw parsed.error;
@@ -71,11 +77,13 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 }
       
-      
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } } //id in record table
 ) {
+
+  
+
   try {
     const { id } = params;
     const record = await RecordModel.readById(id);
@@ -84,11 +92,11 @@ export async function PATCH(
       throw new Error("data not found");
     }
     const result = await req.json();
-    const updatedData = await RecordModel.patchStatus({
+    let updatedData = await RecordModel.patchStatus({
       id,
       status: result.status,
     });
-    return NextResponse.json<APIResponse<unknown>>({
+     return NextResponse.json<APIResponse<unknown>>({
       status: 200,
       message: "success PATCH /record/[id]",
       data: updatedData,

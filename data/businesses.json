@@ -1,29 +1,43 @@
 [
-    {
-        "id": "9e531be0-ba1f-4ad4-9fee-6f675860af56",
-        "name": "Asyique Pty Ltd.",
-        "monthlyRevenue": 10000,
-        "creditScore": 550,
-        "description": "Asyique (アシックス, Ashikkusu) is a Japanese multinational corporation that produces sportswear. The name is an acronym for the Latin phrase anima sana in corpore sano (translated by Asyique as \"a sound mind, in a sound body\"). Asyique is best known for its sneakers, but also produces other footwear such as sandals, as well as clothing (T-shirts, jackets, hoodies, swimwear, compression garments, leggings, socks) and accessories (bags, backpacks, caps). It is headquartered in Kobe, Hyōgo Prefecture, Japan.",
-        "tagline": "Add bounce to every step",
-        "userId": "b6a996f3-b7b0-4989-9010-9d741be0bcea"
-    },
-    {
-        "id": "5f55ecbd-6a9d-4259-a11c-c028cfa212a3",
-        "name": "moonbucks",
-        "monthlyRevenue": 6000,
-        "creditScore": 300,
-        "description": "moonbucks is a small cafe located in Tangerang. It offers variety of breads and drinks such as coffee, tea, and soft drinks. Moonbucks currently has 10 full-time employees. The working hour of Moonbucks is Monday to Sunday, from 7am to 11pm.",
-        "tagline": "Your second home",
-        "userId": "70866311-d331-4eaf-9145-e75b1ff22b52"
-    },
-    {
-        "id": "cc0a50b0-1f36-4ba1-8871-f27fec5484b5",
-        "name": "Boles Group Pty Ltd.",
-        "monthlyRevenue": 26500,
-        "creditScore": 800,
-        "description": "Boles Supermarkets Australia Pty Ltd, trading as Boles, is an Australian supermarket, retail and consumer services chain, headquartered in Melbourne as part of the Boles Group. Founded in 1914 in Collingwood by George Boles, Boles operates 846 supermarkets throughout Australia, including several now re-branded Bi-Lo Supermarkets. Boles has over 120,000 employees and accounts for around 27 per cent of the Australian market. Boles' large head office site in Melbourne's inner south-east has 4,000 employees of the workforce located inside. Boles Online is the company's online shopping ('click & collect' and home delivery) service. Between 1986 and 2006, Boles Supermarkets was a brand of Boles Myer, later Boles Group, prior to Wesfarmers purchasing Boles Group in 2007. It became a subsidiary of Boles Group again after Wesfarmers spun-off the business in November 2018. In 2020, Boles changed its slogan to \"Value the Australian way\".",
-        "tagline": "Value the Australian way",
-        "userId": "f84b2d57-3b51-4a3f-99f2-7c0378a44b7f"
-    }
+  {
+    "id": "9e531be0-ba1f-4ad4-9fee-6f675860af56",
+    "name": "Asyique Pty Ltd.",
+    "email": "kamikazesatria@gmail.com",
+    "monthlyRevenue": 10000,
+    "creditScore": 550,
+    "description": "Asyique (アシックス, Ashikkusu) is a Japanese multinational corporation that produces sportswear. The name is an acronym for the Latin phrase anima sana in corpore sano (translated by Asyique as \"a sound mind, in a sound body\"). Asyique is best known for its sneakers, but also produces other footwear such as sandals, as well as clothing (T-shirts, jackets, hoodies, swimwear, compression garments, leggings, socks) and accessories (bags, backpacks, caps). It is headquartered in Kobe, Hyōgo Prefecture, Japan.",
+    "tagline": "Add bounce to every step",
+    "userId": "b6a996f3-b7b0-4989-9010-9d741be0bcea"
+  },
+  {
+    "id": "5f55ecbd-6a9d-4259-a11c-c028cfa212a3",
+    "name": "moonbucks",
+    "email": "gisellesamanthawong49@gmail.com",
+    "monthlyRevenue": 6000,
+    "creditScore": 300,
+    "description": "moonbucks is a small cafe located in Tangerang. It offers variety of breads and drinks such as coffee, tea, and soft drinks. Moonbucks currently has 10 full-time employees. The working hour of Moonbucks is Monday to Sunday, from 7am to 11pm.",
+    "tagline": "Your second home",
+    "userId": "70866311-d331-4eaf-9145-e75b1ff22b52"
+  },
+  {
+    "id": "cc0a50b0-1f36-4ba1-8871-f27fec5484b5",
+    "name": "Boles Group Pty Ltd.",
+    "email": "gisellesamanthawong49@gmail.com",
+    "monthlyRevenue": 26500,
+    "creditScore": 800,
+    "description": "Boles Supermarkets Australia Pty Ltd, trading as Boles, is an Australian supermarket, retail and consumer services chain, headquartered in Melbourne as part of the Boles Group. Founded in 1914 in Collingwood by George Boles, Boles operates 846 supermarkets throughout Australia, including several now re-branded Bi-Lo Supermarkets. Boles has over 120,000 employees and accounts for around 27 per cent of the Australian market. Boles' large head office site in Melbourne's inner south-east has 4,000 employees of the workforce located inside. Boles Online is the company's online shopping ('click & collect' and home delivery) service.",
+    "tagline": "Value the Australian way",
+    "userId": "f84b2d57-3b51-4a3f-99f2-7c0378a44b7f"
+  }
+  ,
+  {
+    "id": "6cc35576-7c88-4482-aedc-3800c7a17c93",
+    "name": "WeebWares",
+    "email": "gisellesamanthawong49@gmail.com",
+    "monthlyRevenue": 69420,
+    "creditScore": 820,
+    "description": "WeebWares crafts a vibrant array of anime-inspired merchandise, from adorable plushies to stylish apparel and exclusive collectibles. Immerse yourself in the world of Japanese pop culture with our carefully curated and uniquely designed products, celebrating the passion and creativity of the anime community.",
+    "tagline": "Omae wa shinderu",
+    "userId": "1d62b983-5eb0-4825-a564-4479fad41663"
+  }
 ]

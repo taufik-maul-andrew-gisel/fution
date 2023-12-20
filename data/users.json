@@ -28,5 +28,17 @@
         "username": "shellin",
         "password": "shellin",
         "role": "LENDER"
+    },
+    {
+        "id": "ab3b5e87-98fc-4583-b80a-1d98e5a0580d",
+        "username": "aditya",
+        "password": "aditya",
+        "role": "LENDER"
+    },
+    {
+        "id": "1d62b983-5eb0-4825-a564-4479fad41663",
+        "username": "vincent",
+        "password": "vincent",
+        "role": "BUSINESS"
     }
 ]

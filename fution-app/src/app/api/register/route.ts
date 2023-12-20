@@ -25,15 +25,16 @@ export const POST = async (request: Request) => {
       password: parsedData.data.password,
       role: parsedData.data.role as UserRole,
     });
+    
 
     return NextResponse.json<APIResponse<unknown>>(
       {
-        status: 200,
+        status: 201,
         message: "success POST /register",
         data: result,
       },
       {
-        status: 200,
+        status: 201,
       }
     );
   } catch (error) {

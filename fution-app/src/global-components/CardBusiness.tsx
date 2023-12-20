@@ -1,41 +1,79 @@
 import React from "react";
-import Image from "next/image";
 import { BusinessType } from "@/app/api/typedef";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import Link from "next/link";
+import { MdCreditScore } from "react-icons/md";
 
 const CardBusiness = ({ data }: { data: BusinessType }) => {
-  
-  return <li>{data.name}</li>
-  // return (
-  //   <div className="flex flex-wrap justify-center gap-4">
-  //     {[1, 2, 3, 4, 5, 6, 7.8, 9].map(
-  //       (
-  //         _,
-  //         index // Loop untuk membuat beberapa kartu
-  //       ) => (
-  //         <div
-  //           key={index}
-  //           className="max-w-sm rounded overflow-hidden shadow-lg"
-  //         >
-  //           <div className="w-full relative" style={{ height: "200px" }}>
-  //             <Image src={imageUrl} alt={`CardBusiness image ${index}`} fill />
-  //           </div>
-  //           <div className="px-6 py-4">
-  //             <div className="font-bold text-xl mb-2 mt-4">{title}</div>
-  //             <p className="text-gray-700 text-base">{description}</p>
-  //           </div>
-  //           <div className="px-6 pt-4 pb-2">
-  //             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-  //               #tag1
-  //             </span>
-  //             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-  //               #tag2
-  //             </span>
-  //           </div>
-  //         </div>
-  //       )
-  //     )}
-  //   </div>
-  // );
+  return (
+    <>
+<div className="h-full w-full mt-2 inline-block p-2 hover:scale-105 ease-in-out duration-300">
+  <div className="h-full w-full flex flex-col justify-between rounded-lg shadow-lg">
+    <div className="flex-grow text-center p-6 border-b flex flex-col justify-between rounded-lg" style={{ background: "#505254" }}>
+      <div>
+        <p className="pt-2 text-lg font-semibold" style={{ color: "rgb(209 213 219)" }}>
+          {data.name}
+        </p>
+      </div>
+      <div className="mt-5">
+              <Link
+                href={`/business/${data.id}`}
+                className="border bg-gray-300 rounded-full py-2 px-4 text-xs font-semibold"
+                style={{ background: "rgb(209 213 219)" }}
+              >
+                See Details
+              </Link>
+            </div>
+          </div>
+          <div className="h-40 border-b">
+            <div className="px-1 py-2">
+              <span className="text-sm" style={{ fontStyle: "italic" }}>{data.tagline}</span>
+            </div>
+
+            <div className="px-4 py-2 hover:bg-gray-100 flex justify-between">
+              <div className="flex gap-2 items-center">
+                <MdCreditScore />
+                <p className="text-sm font-medium text-gray-800">
+                  Credit score
+                </p>
+              </div>
+                <p className="text-sm font-medium text-gray-800">
+                  {data.creditScore}
+                </p>
+            </div>
+            {/*  */}
+            {/*  */}
+            <div className="px-4 py-2 hover:bg-gray-100 ">
+              <div className="flex gap-2 items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <IoMdCheckmarkCircleOutline />
+                  <p className="text-sm font-medium text-gray-800">
+                    Credibility
+                  </p>
+                </div>
+
+                { data.credibility >= 80 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-emerald-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
+                { data.credibility >= 65 && data.credibility < 80 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-yellow-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
+                { data.credibility >= 0 && data.credibility < 65 && (
+                  <p className="text-sm font-medium leading-none">
+                    <span className="text-red-600 font-semibold">{data.credibility}%</span>
+                  </p>
+                ) }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default CardBusiness;

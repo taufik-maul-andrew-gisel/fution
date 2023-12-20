@@ -4,14 +4,32 @@ import { getQuartersBetweenTwoDates, getNextQuarter } from "@/utils/quarter";
 import calculateInterest from "@/utils/interest";
 import { Decimal } from "@prisma/client/runtime/library";
 import getRealTimeInflation from "@/utils/inflationData";
+import BusinessModel from "./business";
 
 export default class RecordModel {
   static async readAll() {
-    return await prisma.record.findMany();
+    return await prisma.record.findMany({ orderBy: { updatedAt: "desc" } });
   }
 
   static async readById(id: string) {
-    return await prisma.record.findFirst({ where: { id } });
+    const record = await prisma.record.findFirst({ 
+      where: { id }, 
+      include: { loanee: true, loaner: true }
+    });
+
+    if (!record) return;
+
+    if (record.due < new Date()) {
+      if (record.status === "PENDING") {
+          RecordModel.patchStatus({ id: record.id, status: "REJECTED" });
+      }
+      else if (record.status === "DEBT") {
+          RecordModel.patchStatus({ id: record.id, status: "OVERDUE" });
+      }
+  }
+
+    const { status, credibility } = BusinessModel.getCredibility(record?.loanee.creditScore, record?.loanee.credential);
+    return { ...record, loanee: { ...record.loanee, status, credibility } };
   }
 
   static async readAllByUser(userId: string) {
@@ -21,13 +39,14 @@ export default class RecordModel {
     });
   }
 
-  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string }) {
-    const { amount, due, businessId, lenderId } = input;
+  static async add(input: { amount: number, due: Date, businessId: string, lenderId: string, interest: number }) {
+    const { amount, due, businessId, lenderId, interest } = input;
     return await prisma.record.create({ data: {
       amount,
       due,
       loaneeId: businessId,
       loanerId: lenderId,
+      interest
     } })
   }
 
@@ -63,10 +82,25 @@ export default class RecordModel {
   
   static async patchStatus(input: { id: string; status: LoanStatus }) {
     const { id, status } = input;
-    return await prisma.record.update({
-      where: { id },
-      data: { status },
-    });
+    if (status === "PAID") {
+        const debt = await RecordModel.getDebtAfterInterest(id);
+        return await prisma.record.update({
+          where: { id },
+          data: { status, amount: debt?.curr }
+        })
+    } else if (status === "OVERDUE") {
+      // const debt = await RecordModel.getDebtAfterInterest(id);
+      const record = await prisma.record.findFirst({ where: { id } });
+      return await prisma.record.update({
+        where: { id },
+        data: { status, updatedAt: record?.updatedAt }
+      })
+    } else {
+      return await prisma.record.update({
+        where: { id },
+        data: { status },
+      });
+    }
   }
 
   static async getRecordsByLoaneeId(loaneeId: string) {
@@ -82,10 +116,11 @@ export default class RecordModel {
     const record = await RecordModel.readById(id);
     if (!record) return;
     
+    
     // need 4 params: initValue, interest, inflations, futureInflation
     const initValue = record.amount;
     const interest = record.interest;
-    const period = getQuartersBetweenTwoDates(record.createdAt, new Date());
+    const period = getQuartersBetweenTwoDates(record.updatedAt, new Date());
     const inflationData = await getRealTimeInflation();
 
     // get inflation rate for each term, plus the future prediction for the next four terms

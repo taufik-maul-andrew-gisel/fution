@@ -56,6 +56,8 @@ export default class User {
         role: true,
       },
     });
+    // console.log(user);
+    
     return user;
   }
 }
