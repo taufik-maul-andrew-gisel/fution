@@ -1,9 +1,15 @@
-import ClientAuth from '@/global-components/ClientAuth'
-import React from 'react'
+import ClientAuth from "@/global-components/ClientAuth";
+import React from "react";
 
+async function VidCallLayout({ children }: { children: React.ReactNode }) {
+  // console.log(children, "<<<<<<<<<<<,");
+  // console.log(ClientAuth, "inii");
 
-function VidCallLayout({ children }: { children: React.ReactNode }) {
-    return <ClientAuth>{ children }</ClientAuth>
+  return (
+    <>
+      <ClientAuth>{children}</ClientAuth>
+    </>
+  );
 }
 
-export default VidCallLayout
+export default VidCallLayout;
