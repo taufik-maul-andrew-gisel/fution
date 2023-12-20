@@ -29,7 +29,7 @@ export const createAccount = async (formData: FormData) => {
       // Mengembalikan error via redirect
       return redirect(`/register?error=${errFinalMessage}`);
     }
-    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}api/register`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/register`, {
       method: "POST",
       // Karena backendnya menerima tipe data "json" (lihat function POST pada /src/routes/users/route.ts), maka kita harus menerima bodynya dalam bentuk json juga.
       body: JSON.stringify({
