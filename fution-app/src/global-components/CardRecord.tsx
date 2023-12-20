@@ -42,7 +42,7 @@ const CardRecord = ({
         <div className="flex gap-2 items-center">
           <AiOutlineDollarCircle />
           <p className="text-sm font-medium text-gray-800">
-            Debt
+            Initial loan
           </p>
         </div>
           <p className="text-sm font-medium text-gray-800">
