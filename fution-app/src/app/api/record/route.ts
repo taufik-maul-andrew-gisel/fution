@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     
     // step 2: validate input
     const parsed = recordInputSchema.safeParse(input);
-    console.log(parsed, "parsed result")
+    // console.log(parsed, "parsed result")
     if (!parsed.success) {
       throw parsed.error;
     }

@@ -16,7 +16,6 @@ import LenderModel from "@/models/lender";
 
 //------------------------------------------------------------
 // ! function outside functional component
-
 //* PURPOSE: TO CHECK IF IT IS A BUSINESS OR LENDER
 const checkRole = async () => {
   const cookiesStore = cookies();
@@ -32,78 +31,6 @@ const checkRole = async () => {
   return tokenData.role;
 };
 
-//* PURPOSE: FOR GETTING LENDER ID
-export const lenderId = async () => {
-  const cookiesStore = cookies();
-  const token = cookiesStore.get("token");
-  if (!token) {
-    return NextResponse.json(
-      {
-        status: 401,
-        error: "Unauthorized",
-      },
-      { status: 401 }
-    );
-  }
-  const tokenData = await readPayloadJose<{
-    id: string;
-    username: string;
-    role: string;
-  }>(token.value);
-
-  const fetchLender = async () => {
-    // console.log(process.env.NEXT_PUBLIC_URL);
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lender}`, {
-    //   headers: {
-    //     Cookie: cookies().toString(),
-    //   },
-    // });
-
-    // // console.log(response.status);
-    // const responseJson: APIResponse<LenderType[]> = await response.json();
-    // // console.log("AFTER");
-    // // console.log(responseJson, "fetchLender line 46");
-    // if (responseJson.status === 401) {
-    //   redirect("/login");
-    // }
-    return await LenderModel.readAll();
-  };
-
-  // console.log("before, <<<< ");
-  // console.log(await fetchLender());
-  const found = (await fetchLender())?.find((element: LenderType) => {
-    // console.log(element);
-    // console.log(tokenData);
-    return element.userId === tokenData.id;
-  });
-  // console.log("after, <<<< ");
-
-  return found?.id;
-};
-
-//* PURPOSE: WILL GET ONE RECORD, THIS RECORD IS TO TAKE ITS RECORDID TO CHANGE STATUS
-//1.fetch all record
-export const fetchAllRecord = async (id: string) => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/record`, {
-    headers: {
-      Cookie: cookies().toString(),
-    },
-  });
-  const responseJson: APIResponse<RecordType[]> = await response.json();
-
-  if (responseJson.status === 401) {
-    redirect("/login");
-  }
-  //2.find one record based on loaneeId and loanerId
-  const lId = await lenderId();
-
-  const found = responseJson.data?.find((element: RecordType) => {
-    return element.loaneeId === id && element.loanerId === lId;
-  });
-
-  return found;
-};
-
 // ! functional component
 async function RecordComponent({
   record,
@@ -116,33 +43,60 @@ async function RecordComponent({
     next: string[];
   };
 }) {
+  // console.log(record, "123");
+  // console.log("<<<<<<<<");
+  // console.log(debt, "124");
   const theRole = await checkRole();
   // * if lender click reject button
   const rejectButtonHandler = async () => {
     "use server";
 
-    let oneRecord =
-      record?.loaneeId && (await fetchAllRecord(record?.loaneeId));
-
-    if (oneRecord) {
-      const id = oneRecord.id;
-      const response = await fetch(`http://localhost:3000/api/record/${id}`, {
+    const response = await fetch(
+      `http://localhost:3000/api/record/${record?.id}`,
+      {
         method: "PATCH",
         body: JSON.stringify({ status: "REJECTED" }),
         headers: {
           "Content-Type": "application/json",
           Cookie: cookies().toString(),
         },
-      });
-      const resJson = await response.json();
-
-      if (!response.ok) {
-        redirect(`/records/${record?.id}?error=${resJson.error}`);
       }
-      revalidatePath(`/records/${record?.id}`);
-      redirect(`/records/${record?.id}`);
+    );
+    const resJson = await response.json();
+
+    if (!response.ok) {
+      redirect(`/records/${record?.id}?error=${resJson.error}`);
     }
+    revalidatePath(`/records/${record?.id}`);
+    revalidatePath(`/home`);
+    redirect(`/records/${record?.id}`);
   };
+
+  const payButtonHandler = async () => {
+    "use server";
+
+    const response = await fetch(
+      `http://localhost:3000/api/record/${record?.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ status: "PAID" }),
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookies().toString(),
+        },
+      }
+    );
+    const resJson = await response.json();
+    // console.log(resJson, "164");
+
+    if (!response.ok) {
+      redirect(`/records/${record?.id}?error=${resJson.error}`);
+    }
+    revalidatePath(`/records/${record?.id}`);
+    revalidatePath(`/home`);
+    redirect(`/records/${record?.id}`);
+  };
+
   return (
     <>
       <div>
@@ -259,15 +213,21 @@ async function RecordComponent({
       </div>
       <div className="ml-auto mr-0 mb-1 mt-3 font-semibold text-sm flex items-end">
         {/* need authorisation */}
-        {record?.status === "DEBT" && (
-          <div className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
-            <Link
+        {record?.status === "DEBT" && theRole === "BUSINESS" && (
+          <>
+            {/* <Link
               href="/home"
               className="w-full h-full"
             >
               Pay
-            </Link>
-          </div>
+            </Link> */}
+
+            <form action={payButtonHandler}>
+              <button className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-5 ml-2 shadow">
+                Pay
+              </button>
+            </form>
+          </>
         )}
 
         {/* no need authorisation */}
@@ -287,12 +247,11 @@ async function RecordComponent({
             {(() => {
               if (record.updatedAmount % 2 != 0 && theRole === "LENDER") {
                 return (
-                  <Link 
+                  <Link
                     href={`/records/lender/${record.loaneeId}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
-                    <div className="w-full h-full">
-                      Negotiate
-                    </div>
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
+                  >
+                    <div className="w-full h-full">Negotiate</div>
                   </Link>
                 );
               } else if (
@@ -300,26 +259,20 @@ async function RecordComponent({
                 theRole === "BUSINESS"
               ) {
                 return (
-                  <Link 
+                  <Link
                     href={`/records/business/${record.loaner.id}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow">
-                  <div
-                    className="w-full h-full"
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow"
                   >
-                    Negotiate
-                  </div>
+                    <div className="w-full h-full">Negotiate</div>
                   </Link>
                 );
               } else {
                 return (
-                  <Link 
+                  <Link
                     href={`/records/${record.id}`}
-                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow cursor-not-allowed">
-                  <div
-                    className="w-full h-full"
+                    className="bg-emerald-200 rounded-lg hover:bg-emerald-300 flex-grow-0 py-2 px-4 ml-2 shadow cursor-not-allowed"
                   >
-                    Negotiate
-                  </div>
+                    <div className="w-full h-full">Negotiate</div>
                   </Link>
                 );
               }
@@ -329,27 +282,21 @@ async function RecordComponent({
 
             {/* LOGIC FOR CALL (ONLY LENDERS SIDE WILL APPEAR) */}
             {theRole === "LENDER" && (
-              <Link 
+              <Link
                 href={`/videocall/${record.loaneeId}`} //idnya business
-                className="bg-blue-200 rounded-lg hover:bg-blue-300 flex-grow-0 py-2 px-4 ml-2 shadow">
-              <div
-                className="w-full h-full"
+                className="bg-blue-200 rounded-lg hover:bg-blue-300 flex-grow-0 py-2 px-4 ml-2 shadow"
               >
-                Call
-              </div>
+                <div className="w-full h-full">Call</div>
               </Link>
             )}
             {/* LOGIC FOR CALL (ONLY LENDERS SIDE WILL APPEAR) */}
           </>
         )}
-        <Link 
+        <Link
           href="/home"
-          className="bg-sky-200 rounded-lg hover:bg-sky-300 flex-grow-0 py-2 px-4 ml-2 shadow">
-        <div
-          className="w-full h-full"
+          className="bg-sky-200 rounded-lg hover:bg-sky-300 flex-grow-0 py-2 px-4 ml-2 shadow"
         >
-          Back
-        </div>
+          <div className="w-full h-full">Back</div>
         </Link>
       </div>
     </>

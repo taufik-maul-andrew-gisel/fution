@@ -17,7 +17,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = params; //record id
     const record = await RecordModel.readById(id);
 
     if (!record) {
@@ -81,7 +81,7 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } } //id in record table
 ) {
-  console.log("masuk");
+
   
 
   try {
