@@ -59,7 +59,7 @@ export const fetchAllRecord = async (id: String) => {
     },
   });
   const responseJson: APIResponse<RecordType[]> = await response.json();
-  console.log(responseJson, "record sblm di filter");
+  // console.log(responseJson, "record sblm di filter");
   if (responseJson.status === 401) {
     redirect("/login");
   }
