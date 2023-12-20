@@ -11,7 +11,7 @@ export const sendLink = async ({
   link: string;
   id: string;
 }) => {
-  // console.log(link, 1111111111111111111);
+  // console.log(link, 111111111111111)
 
   const foundEmailById = await BusinessModel.readById(id);
   const transporter = nodemailer.createTransport({
