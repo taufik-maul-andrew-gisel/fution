@@ -175,7 +175,8 @@ async function RecordDetail({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="text-2xl font-bold ml-1 mt-2 pt-4 mb-2 col-span-4">
+          { (record?.status === "PENDING" || record?.status === "DEBT") && (<>
+            <div className="text-2xl font-bold ml-1 mt-2 pt-4 mb-2 col-span-4">
             <h2>Predicted Future Payment</h2>
             {/* <h4 className="text-base font-semibold mt-2">If you were to pay in the future, you would have to pay...</h4> */}
           </div>
@@ -205,6 +206,8 @@ async function RecordDetail({ params }: { params: { id: string } }) {
               {toDollarFormat(Math.round(Number(debt?.next[3]) * 100) / 100)}
             </p>
           </div>
+          </>) }
+          
         </div>
       </div>
 
