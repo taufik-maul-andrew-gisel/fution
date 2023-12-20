@@ -6,10 +6,9 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 const Login = () => {
-
   const tokenFromCookies = cookies().get("token");
   if (tokenFromCookies && tokenFromCookies.value.length > 0) {
-      redirect("/home");
+    redirect("/home");
   }
 
   return (
@@ -77,7 +76,6 @@ const Login = () => {
                 No FuTion Account?
               </Link>
             </div>
-            
           </div>
         </div>
         {/* Right Pane */}

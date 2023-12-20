@@ -102,8 +102,11 @@ export const sendLink = async ({
       from: process.env.USERNODEMAILER,
       to: foundEmailById?.email,
       subject: "Link Meeting",
-      html: htmlToSend,
+      text: `Here is your meeting link: ${link} and Room ID: ${roomId}`,
+      // Anda juga dapat menggunakan `html` untuk konten yang diformat HTML
     });
+    console.log(info.envelope.to[0], "<<<<<<<<<<");
+
     console.log("Message sent: %s", info.envelope.to[0]);
   } catch (err) {
     console.error("Error sending email: ", err);
