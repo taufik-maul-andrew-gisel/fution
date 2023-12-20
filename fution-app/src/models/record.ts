@@ -88,6 +88,13 @@ export default class RecordModel {
           where: { id },
           data: { status, amount: debt?.curr }
         })
+    } else if (status === "OVERDUE") {
+      // const debt = await RecordModel.getDebtAfterInterest(id);
+      const record = await prisma.record.findFirst({ where: { id } });
+      return await prisma.record.update({
+        where: { id },
+        data: { status, updatedAt: record?.updatedAt }
+      })
     } else {
       return await prisma.record.update({
         where: { id },
@@ -108,6 +115,7 @@ export default class RecordModel {
   static async getDebtAfterInterest(id: string) {
     const record = await RecordModel.readById(id);
     if (!record) return;
+    
     
     // need 4 params: initValue, interest, inflations, futureInflation
     const initValue = record.amount;
