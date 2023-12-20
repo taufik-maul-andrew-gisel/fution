@@ -74,7 +74,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
 
           {/* loanee */}
           <div className="flex flex-col text-black text-center bg-white border-t border-b sm:rounded sm:border shadow backdrop-blur-sm pt-2 pb-4 px-7">
-            <div>
+            <Link href={`/business/${record?.loaneeId}`}>
               <img
                 src="/profile-pic.png"
                 className="w-16 rounded-full mx-auto my-4 p-0 border-[3px] box-content border-[#231f39] shadow-[0px_27px_16px_-11px_rgba(31,27,56,0.25)] transition-all duration-150 ease-in hover:scale-105 cursor-pointer slide-in-elliptic-top-fwd"
@@ -82,7 +82,7 @@ async function RecordDetail({ params }: { params: { id: string } }) {
               <h2 className="col-span-3 text-lg font-semibold ml-1">
                 {record?.loanee.name}
               </h2>
-            </div>
+            </Link>
             <div className="text-left [&_div]:mb-1 ml-1">
               <div className="mt-4 flex justify-between">
                 <p className="font-semibold" style={{ fontSize: "0.9rem" }}>

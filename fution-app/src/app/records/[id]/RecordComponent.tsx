@@ -119,7 +119,7 @@ async function RecordComponent({
           </p>
         )}
         {record?.status === "DEBT" && (
-          <p className="text-xl font-bold mt-4 mb-2 text-center">UNPAID</p>
+          <p className="text-xl font-bold mt-4 mb-2 text-center text-yellow-600">UNPAID</p>
         )}
       </div>
       <div className="text-sm">

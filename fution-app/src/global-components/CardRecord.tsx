@@ -92,7 +92,7 @@ const CardRecord = ({
                   </p>
                 ) : (
                   status === "DEBT" ? (
-                  <p className="text-sm font-medium text-gray-800">
+                  <p className="text-sm font-medium text-yellow-600">
                     UNPAID
                   </p>) : (<p className="text-sm font-medium text-gray-800">
                     {status}
